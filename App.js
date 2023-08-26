@@ -1,20 +1,33 @@
+import * as React from "react";
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Provider, useSelector } from "react-redux";
+import { store } from './src/redux/store';
+import AuthStack from './src/routes/AuthStack';
+import AuthenticatedStack from './src/routes/AuthenticatedStack';
 
-export default function App() {
+function Navigation() {
+  const isLogin = useSelector((state) => state.auth.isLogin);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {isLogin ? <AuthenticatedStack /> : <AuthStack />}
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function App() {
+  return (
+    <>
+      <StatusBar style="light" />
+      <Navigation />
+    </>
+  );
+}
+
+export default () => {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+};

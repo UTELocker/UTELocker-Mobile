@@ -1,33 +1,138 @@
-import { login } from '../api/authAPi';
-import AuthContent from '../components/Auth/AuthContent';
-import { useDispatch } from 'react-redux';
-import { setIsLogin } from '../redux/authSlice';
-import { useState } from 'react';
-import LoadingOverlay from '../components/ui/LoadingOverlay';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, ImageBackground, Animated, Alert, TouchableOpacity } from "react-native";
+import { Colors } from "../constants/styles";
+import PrepareLoginComponent from "../components/Auth/PrepareLoginComponent";
+import LoginComponent from "../components/Auth/LoginComponent";
+import { ListGroup } from "../api/authAPi";
 
-function LoginScreen({navigation}) {
-  const [isLoadingOverlayVisible, setIsLoadingOverlayVisible] = useState(false);
-  const dispatch = useDispatch();
+const LoginScreen = () => {
+    const [ email, setEmail ] = useState('');
+    const [ listGroup, setListGroup ] = useState([]);
+    const [ step, setStep ] = useState(0);
 
-  const onAuthenticate = async (credentials) => {
-    const { email, password } = credentials;
-    setIsLoadingOverlayVisible(true);
-    const res = await login(email, password);
-    if (res.status === 'success') {
-      dispatch(setIsLogin(res.data.token));
-      setIsLoadingOverlayVisible(false);
-    } else {
-      Alert.alert('Login failed', res.message);
-    }
-  }
+    const onLogin = () => {
+        if (email === '') {
+            Alert.alert('Please enter your email');
+            return;
+        } else if (!email.includes('@')) {
+            Alert.alert('Please enter a valid email');
+            return;
+        }
+        const fetchGroup = async () => {
+            const res = await ListGroup(email);
+            if (res.status === 'success') {
+                const data = res.data;
+                console.log('data', data);
+                setListGroup([]);
+                data.map((item) => {
+                    setListGroup((prev) => [...prev, {
+                        label: item.name,
+                        value: item.id,
+                    }]);
+                });
+                console.log('listGroup', listGroup);
+                setStep(1);
+            } else {
+                Alert.alert('Error', res.message);
+            }
+        };
+        fetchGroup();
+    };
 
-  if (isLoadingOverlayVisible) {
     return (
-      <LoadingOverlay message={'Logging in...'} />
-    );
-  }
+        <View
+            style={styles.container}
+        >
+            <ImageBackground
+                source={require('../../assets/locker_login.png')}
+                resizeMode="cover"
+                style={styles.imageBackground}
+            >
+                <View style={{ height: '45%' }} />
+                <View
+                    style={{
+                        width: '100%',
+                        backgroundColor: Colors.white,
+                        borderTopLeftRadius: 30,
+                        borderTopRightRadius: 30,
+                        alignItems: 'center',
+                    }}
+                >
+                    {
+                        step === 1 ?
+                        <TouchableOpacity
+                        onPress={() => {
+                            setStep(0);
+                        }}
+                        style={{
+                            position: 'absolute',
+                            top: 30,
+                            left: 30,
 
-  return <AuthContent isLogin navigation={navigation} onAuthenticate={onAuthenticate}/>;
-}
+                        }}
+                    >
+                        <Text>
+                            Return
+                        </Text>
+                    </TouchableOpacity> : null
+                    }
+                    <Text
+                        style={{
+                            fontSize: 20,
+                            color: Colors.dark,
+                            marginTop: 20,
+                        }}
+                    >
+                        Welcome to
+                    </Text>
+                    <Text
+                        style={{
+                            fontSize: 35,
+                            color: Colors.dark,
+                            fontWeight: '900',
+                            marginTop: 5,
+                        }}
+                    >
+                        UTE LOCKER
+                    </Text>
+                    {
+                        step === 0 ?
+                        <View
+                            style={{
+                                alignItems: 'center',
+                                marginTop: 20,
+                                backgroundColor: Colors.white,
+                                width: '100%',
+                            }}
+                        >
+                            <PrepareLoginComponent
+                                onPress={onLogin}
+                                setEmail={setEmail}
+                            />
+                        </View> :
+                        <LoginComponent
+                            email={email}
+                            listGroup={listGroup}
+                        />
+                    }
+
+                </View>
+            </ImageBackground>
+        </View>
+    );
+};
 
 export default LoginScreen;
+
+const styles = StyleSheet.create({
+    container: {
+        height: '100%',
+        width: '100%',
+    },
+    imageBackground: {
+        flex: 1,
+        width: '100%',
+        height: '50%',
+    },
+
+});

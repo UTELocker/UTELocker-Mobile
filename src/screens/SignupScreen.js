@@ -1,7 +1,7 @@
 import AuthContent from '../components/Auth/AuthContent';
 
 function SignupScreen({navigation}) {
-  return <AuthContent navigation={navigation}/>;
+  return <></>;
 }
 
 export default SignupScreen;

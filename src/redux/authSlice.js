@@ -1,12 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as SecureStore from 'expo-secure-store';
 
-const getToken = async () => {
-    return await SecureStore.getItemAsync('token');
-}
-
-const initialState = {
-    isLogin: getToken() ? true : false,
+const initialState =  {
+    isLogin: false,
 };
 
 export const authSlice = createSlice({
@@ -14,10 +10,12 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setIsLogin: (state, action) => {
-        const setToken = async () => {
-            await SecureStore.setItemAsync('token', action.payload);
+        if (action.payload !== null) {
+            const setToken = async () => {
+                await SecureStore.setItemAsync('token', action.payload);
+            }
+            setToken();
         }
-        setToken();
         state.isLogin = true;
     },
     logout: (state) => {

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ImageBackground, StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import CardQuickInformation from "./CardQuickInformation";
+import { ImageBackground, StyleSheet, View, Text } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import Notification from "../ui/Notification";
+import CardWallet from "./CardWallet";
+import Scanner from "./Scaner";
 
-const HeaderHome = ({data}) => {
+const HeaderHome = () => {
     const [ nameSiteGroup, setNameSiteGroup ] = useState('');
     useEffect(() => {
         const getNameSiteGroup = async () => {
@@ -25,6 +26,13 @@ const HeaderHome = ({data}) => {
             >
                 <View
                     style={styles.header}>
+                    <View
+                        style={{
+                            marginRight: 10,
+                        }}
+                    >
+                        <Scanner />
+                    </View>
                     <Notification />
                 </View>
                 <View
@@ -52,35 +60,12 @@ const HeaderHome = ({data}) => {
                         {nameSiteGroup}
                     </Text>
                 </View>
-                <View
-                    style={styles.cardInformation}
-                >
-                    <Text
-                        style={{
-                            fontSize: 16,
-                            color: 'white',
-                            fontWeight: 'bold',
-                            marginLeft: 20,
-                        }}
-                    >
-                        Quick information
-                    </Text>
-                    <FlatList
-                        data={data}
-                        contentContainerStyle={{
-                            marginTop: 10,
-                        }}
-                        renderItem={({ item, index }) => 
-                            <CardQuickInformation
-                                item={item}
-                                index={index}
-                            />
-                        }
-                        keyExtractor={(item) => item.id}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                    />
-                </View>
+                <CardWallet wallet={
+                    {
+                        balance: 100000,
+                        balanceDeals: 100000,
+                    }
+                }/>
             </ImageBackground>
         </View>
     );
@@ -91,7 +76,7 @@ export default HeaderHome;
 const styles = StyleSheet.create({
     rootContainer: {
         width: '100%',
-        height: 220,
+        height: 260,
         marginBottom: 70,
     },
     imageBackground: {
@@ -104,9 +89,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'flex-end',
         paddingHorizontal: 10 * 2,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
     },
-    cardInformation: {
-        position: 'absolute',
-        bottom: "-30%",
-    }
 });

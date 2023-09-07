@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Colors } from "../../constants/styles";
 import { Ionicons } from "@expo/vector-icons";
 
-const CardQuickInformation = ({item, index}) => {
+const CardQuickInformation = ({item}) => {
     const navigation = useNavigation();
     return (
         <View

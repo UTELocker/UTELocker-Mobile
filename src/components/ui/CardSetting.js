@@ -22,7 +22,13 @@ const CardSetting = ({ data }) => {
                             }
                         >
                             <TouchableOpacity
-                                onPress={() => navigation.navigate(item.nameTab)}
+                                onPress={() => {
+                                    if (item.onPress) {
+                                        item.onPress();
+                                    } else {
+                                        navigation.navigate(item.nameTab);
+                                    }
+                                }}
                                 style={styles.cardContainer}
                             >
                                 <View

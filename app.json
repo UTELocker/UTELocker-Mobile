@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "UteBooking",
-    "slug": "UteBooking",
+    "slug": "utelocker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,16 +16,30 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "usesNonExemptEncryption": false
+      "usesNonExemptEncryption": false,
+      "bundleIdentifier": "com.utelocker.utelocker"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.utelocker.utelocker"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ba0baa70-867b-4f41-80a9-781d696d2db6"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/bd5b5595-a831-42eb-b03d-be929ea9f594"
+    },
+    "owner": "utelocker"
   }
 }

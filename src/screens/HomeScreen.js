@@ -6,6 +6,7 @@ import CardQuickInformation from '../components/Home/CardQuickInformation';
 import HeaderHome from '../components/Home/HeaderHome';
 import { Colors } from '../constants/styles';
 import * as SecureStore from 'expo-secure-store';
+import Scanner from '../components/Home/Scaner';
 
 function HomeScreen() {
     const [ orderedLockers , setOrderedLockers ] = useState([
@@ -109,7 +110,23 @@ function HomeScreen() {
 
   return (
     <View style={styles.rootContainer}>
-        <HeaderHome data={dashboardData}/>
+        <HeaderHome />
+        <FlatList
+            data={dashboardData}
+            contentContainerStyle={{
+                height: 250,
+                marginLeft: 10,
+            }}
+            renderItem={({ item, index }) => 
+                <CardQuickInformation
+                    item={item}
+                    index={index}
+                />
+            }
+            keyExtractor={(item) => item.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+        />
         <FlatList
             data={orderedLockers}
             renderItem={({ item }) => <CardBookInHome book={item} />}
@@ -118,7 +135,8 @@ function HomeScreen() {
             style={{
                 width: '100%',
                 paddingHorizontal: 20,
-                marginTop: 10
+                marginTop: 10,
+                height: '100%',
             }}
         />
     </View>

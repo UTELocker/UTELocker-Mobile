@@ -16,11 +16,10 @@ function Navigation() {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchUser = async () => {
-      const token = await SecureStore.getItemAsync('token');
+      console.log('fetchUser');
       const res = await userDetail();
       if (res.message !== 'Unauthenticated.') {
         dispatch(setLogin({
-            token: token,
             email: res.data.email,
             name: res.data.name,
             phone: res.data.phone,
@@ -32,14 +31,13 @@ function Navigation() {
     fetchUser();
   }, []);
 
-  // if (isLoading) {
-  //   return <SplashScreen />;
-  // }
+  if (isLoading) {
+    return <SplashScreen />;
+  }
 
   return (
     <NavigationContainer>
-      {/* {isLogin ? <AuthenticatedTab /> : <AuthTab />} */}
-      <AuthenticatedTab />
+      {isLogin ? <AuthenticatedTab /> : <AuthTab />}
     </NavigationContainer>
   );
 }

@@ -2,9 +2,7 @@ import { getMethod, postMethod } from "./axios";
 
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-const getListLockers = async () => {
-    // delay 1s
-    await sleep(1000);
+const getListLockers =  () => {
     return [
         {
             id: '1',

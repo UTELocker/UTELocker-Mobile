@@ -10,7 +10,7 @@ function SettingsStack() {
             headerShown: false
           }}
         >
-            <Stack.Screen name="Settings" component={SettingScreen} />
+            <Stack.Screen name="SettingsApp" component={SettingScreen} />
         </Stack.Navigator>
     );
 }

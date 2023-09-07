@@ -94,19 +94,6 @@ function HomeScreen() {
             color: Colors.green
         },
     ]);
-    
-    useEffect(() => {
-      const setNames = async () => {
-        await SecureStore.setItemAsync('nameSiteGroup', 'Site Group 1');
-      }
-      setNames();
-
-      const getNames = async () => {
-        const name =  await SecureStore.getItemAsync('nameSiteGroup');
-        console.log(name);
-      }
-      getNames();
-    }, []);
 
   return (
     <View style={styles.rootContainer}>

@@ -17,7 +17,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setLogin: (state, action) => {
-        if (action.payload.accessToken !== null) {
+        if (action.payload.accessToken !== undefined ) {
             const setToken = async () => {
                 await SecureStore.setItemAsync('token', action.payload.accessToken);
             }

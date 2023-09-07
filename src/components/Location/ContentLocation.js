@@ -3,7 +3,7 @@ import { View } from "react-native"
 import { useState } from "react";
 import { useEffect } from "react";
 import * as Location from 'expo-location';
-import { getDistance, getPreciseDistance } from 'geolib';
+import { getPreciseDistance } from 'geolib';
 import { getListLockers } from "../../api/locationApi";
 import SearchLocation from "./SearchLocation";
 import ListLocation from "./ListLocation";

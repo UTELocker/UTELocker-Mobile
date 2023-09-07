@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ImageBackground, Animated, Alert, TouchableOpacity } from "react-native";
 import { Colors } from "../constants/styles";
 import PrepareLoginComponent from "../components/Auth/PrepareLoginComponent";
 import LoginComponent from "../components/Auth/LoginComponent";
-import { ListGroup } from "../api/authAPi";
+import { ListGroup, userDetail } from "../api/authAPi";
 
 const LoginScreen = () => {
     const [ email, setEmail ] = useState('');
@@ -30,7 +30,6 @@ const LoginScreen = () => {
                         value: item.id,
                     }]);
                 });
-                console.log('listGroup', listGroup);
                 setStep(1);
             } else {
                 Alert.alert('Error', res.message);

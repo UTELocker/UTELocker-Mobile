@@ -8,8 +8,8 @@ import DropdownComponent from "./DropdownComponent";
 import { Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { login } from "../../api/authAPi";
-import { setIsLogin } from "../../redux/authSlice";
 import LoadingOverlay from "../ui/LoadingOverlay";
+import { setLogin } from "../../redux/authSlice";
 
 const LoginComponent = ({
     email,
@@ -24,9 +24,8 @@ const LoginComponent = ({
         const { email, password, group } = credentials;
         setIsLoadingOverlayVisible(true);
         const res = await login(email, password, group);
-        console.log('res', res);
         if (res.status === 'success') {
-            dispatch(setIsLogin(res.data.token));
+            dispatch(setLogin(res.data));
             setIsLoadingOverlayVisible(false);
         } else {
             Alert.alert('Login failed', res.message);

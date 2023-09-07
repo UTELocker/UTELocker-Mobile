@@ -9,9 +9,16 @@ const login = async (email, password, group) => {
     return await postMethod("/auth/login", data);
 };
 
-const ListGroup = async (email) => {
-    console.log('email', email);
-    return await getMethod("/auth/list_client" + "?email=" + email );
+const logout = async () => {
+    return await getMethod("/auth/logout");
 };
 
-export { login, ListGroup };
+const ListGroup = async (email) => {
+    return await getMethod("/auth/list-client" + "?email=" + email );
+};
+
+const userDetail = async () => {
+    return await getMethod("/user");
+};
+
+export { login, ListGroup, userDetail, logout };

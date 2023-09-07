@@ -2,6 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as SecureStore from 'expo-secure-store';
 
 const initialState =  {
+    user: {
+        token: null,
+        email: null,
+        name: null,
+        phone: null,
+        address: null,
+    },
     isLogin: false,
 };
 
@@ -9,25 +16,39 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setIsLogin: (state, action) => {
-        if (action.payload !== null) {
+    setLogin: (state, action) => {
+        if (action.payload.accessToken !== null) {
             const setToken = async () => {
-                await SecureStore.setItemAsync('token', action.payload);
+                await SecureStore.setItemAsync('token', action.payload.accessToken);
             }
             setToken();
         }
+        state.user = {
+            token: action.payload.accessToken,
+            email: action.payload.email ?? '',
+            name: action.payload.name ?? '',
+            phone: action.payload.phone ?? '',
+            address: action.payload.address ?? '',
+        };
         state.isLogin = true;
     },
-    logout: (state) => {
+    setLogout: (state) => {
         const deleteToken = async () => {
             await SecureStore.deleteItemAsync('token');
         }
         deleteToken();
+        state.user = {
+            token: null,
+            email: null,
+            name: null,
+            phone: null,
+            address: null,
+        };
         state.isLogin = false;
     }
   },
 });
 
-export const { setIsLogin, logout } = authSlice.actions;
+export const { setLogin, setLogout } = authSlice.actions;
 
 export default authSlice.reducer;

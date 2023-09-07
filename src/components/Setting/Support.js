@@ -1,5 +1,3 @@
-import React from "react";
-import { Colors } from "../../constants/styles";
 import { Octicons } from '@expo/vector-icons';
 import CardSetting from "../ui/CardSetting";
 import { View, StyleSheet, Text } from "react-native";

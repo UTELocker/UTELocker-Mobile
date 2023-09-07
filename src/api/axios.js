@@ -1,15 +1,24 @@
 import axios from "axios";
-const baseURL = "https://e903-2402-800-639f-e235-68b3-7e79-b73b-b34f.ngrok-free.app/api";
+import * as SecureStore from 'expo-secure-store';
+const baseURL = "https://916d-58-187-87-61.ngrok-free.app/api";
 
-const axiosInstance = axios.create({ 
-    baseURL: baseURL,
-    headers: {
+const setAxiosInstance = async () => {
+    const token = await SecureStore.getItemAsync('token');
+    const header = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+    };
+    if (token !== null) {
+        header['Authorization'] = 'Bearer ' + token;
     }
-});
+    return axios.create({
+        baseURL: baseURL,
+        headers: header,
+    });
+}
 
 const getMethod = async (url) => {
+    const axiosInstance = await setAxiosInstance();
     try {
         const response = await axiosInstance.get(url);
         return response.data;
@@ -19,12 +28,13 @@ const getMethod = async (url) => {
 };
 
 const postMethod = async (url, data) => {
+    const axiosInstance = await setAxiosInstance();
     try {
         const response = await axiosInstance.post(url, data);
         return response.data;
     } catch (error) {
         return error.response.data;
     }
-}
+};
 
 export { getMethod, postMethod };

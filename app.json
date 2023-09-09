@@ -17,7 +17,10 @@
     "ios": {
       "supportsTablet": true,
       "usesNonExemptEncryption": false,
-      "bundleIdentifier": "com.utelocker.utelocker"
+      "bundleIdentifier": "com.utelocker.utelocker",
+      "entitlements": {
+        "com.apple.developer.networking.wifi-info": true
+      }
     },
     "android": {
       "adaptiveIcon": {

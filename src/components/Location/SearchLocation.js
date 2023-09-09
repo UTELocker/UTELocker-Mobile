@@ -1,11 +1,11 @@
 import { Entypo } from '@expo/vector-icons';
 import { Colors } from "../../constants/styles";
-import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Keyboard, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 const SearchLocation = ({
     setTypeLocationSearch,
     typeLocationSearch,
+    setLocationFilter,
 }) => {
     const ButtonEnd = () => {
         switch (typeLocationSearch) {
@@ -60,6 +60,7 @@ const SearchLocation = ({
                             width: '100%',
                         }}
                         onPress={() => {
+                            Keyboard.dismiss();
                             const type = typeLocationSearch.split('-')[0];
                             setTypeLocationSearch(type);
                         }}
@@ -106,7 +107,7 @@ const SearchLocation = ({
                             setTypeLocationSearch(type);
                         }
                     }}
-
+                    onChangeText={(text) => setLocationFilter(text)}
                 />
                 <Entypo 
                     style={{

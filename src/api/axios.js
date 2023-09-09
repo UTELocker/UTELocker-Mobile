@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
-const baseURL = "https://1fa5-171-248-120-231.ngrok-free.app/api";
+import {BASE_URL} from "@env";
 
 const setAxiosInstance = async () => {
     const token = await SecureStore.getItemAsync('token');
@@ -12,7 +12,7 @@ const setAxiosInstance = async () => {
         header['Authorization'] = 'Bearer ' + token;
     }
     return axios.create({
-        baseURL: baseURL,
+        baseURL: BASE_URL,
         headers: header,
     });
 }

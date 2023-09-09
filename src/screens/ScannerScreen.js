@@ -70,13 +70,14 @@ const ScannerScreen = () => {
             </View>
             <View
                 style={{
-                    height: '100%',
+                    height: '80%',
                     width: '100%',
                 }}
             >
                 <BarCodeScanner
                     onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                    style={StyleSheet.absoluteFillObject}
+                    style={[StyleSheet.absoluteFillObject, styles.cameraContainer]}
+                    barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
                 />
             </View>
             {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
@@ -92,4 +93,9 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'center',
     },
-  });
+    cameraContainer: {
+        height: '100%',
+        width: '100%'
+    },
+
+});

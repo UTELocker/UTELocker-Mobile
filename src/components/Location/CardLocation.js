@@ -40,14 +40,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         borderRadius: 10,
         marginBottom: 10,
-        elevation: 5,
-        shadowColor: Colors.black,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 10,
         padding: 10,
     },
     image: {

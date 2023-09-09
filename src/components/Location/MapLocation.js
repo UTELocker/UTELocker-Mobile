@@ -4,6 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 
 const MapLocation = ({
     currentLocation,
+    locations
 }) => {
 
     return (
@@ -27,13 +28,23 @@ const MapLocation = ({
                     longitudeDelta: 0.0421,
                 }}
             >
-                <Marker
-                    coordinate={{
-                        latitude: 10.865214818755575,
-                        longitude: 106.75934323179112,
-                    }}
-                    icon={require('../../../assets/images/icon_locker.png')}
-                />
+                {
+                    currentLocation !== null ? (
+                        locations.map((element, index) => (
+                            <Marker
+                                key={index}
+                                coordinate={{
+                                    latitude: element.latitude,
+                                    longitude: element.longitude,
+                                }}
+                                title={element.name}
+                                description={element.address}
+                            />
+                        ))
+                    ) : (
+                        <></>
+                    )
+                }
             </MapView>
         </View>
     )

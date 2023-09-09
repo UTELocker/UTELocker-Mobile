@@ -16,7 +16,8 @@ const ContentLocation = () => {
     const [ listLocker, setListLocker ] = useState({
         closest: [],
         other: [],
-    }) 
+    })
+    const [ locationFilter, setLocationFilter ] = useState('')
 
     useEffect(() => {
         const permissionConfig = async () => {
@@ -30,7 +31,6 @@ const ContentLocation = () => {
             const listLockers = getListLockers();
             let closest = [];
             let other = [];
-            console.log('listLockers', listLockers);
             listLockers.forEach(element => {
                 distance = getPreciseDistance(
                     { latitude: location?.coords.latitude, longitude: location?.coords.longitude },
@@ -60,9 +60,15 @@ const ContentLocation = () => {
             case 'list':
                 return <ListLocation listLocker={listLocker} />
             case 'map':
-                return <MapLocation currentLocation={currentLocation} />
+                return <MapLocation 
+                    currentLocation={currentLocation}
+                    locations={listLocker.closest.concat(listLocker.other)}
+                />
             default:
-                return <ListLocationSearch listLocker={listLocker} />
+                return <ListLocationSearch 
+                        listLocker={listLocker}
+                        locationFilter={locationFilter}
+                    />
         }
     }
 
@@ -76,6 +82,7 @@ const ContentLocation = () => {
             <SearchLocation
                 typeLocationSearch={typeLocationSearch}
                 setTypeLocationSearch={setTypeLocationSearch}
+                setLocationFilter={setLocationFilter}
             />
             {
                 currentLocation === null ? (

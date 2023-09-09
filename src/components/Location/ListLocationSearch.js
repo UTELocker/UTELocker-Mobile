@@ -1,10 +1,21 @@
 import { FlatList, Text, View } from 'react-native';
 import CardLocation from './CardLocation';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const ListLocationSearch = ({
     listLocker,
+    locationFilter,
 }) => {
-    const listLocation = listLocker.closest.concat(listLocker.other);
+    const [ listLocation, setListLocation ] = useState(listLocker.closest.concat(listLocker.other));
+    useEffect(() => {
+        const listLocationFilter = listLocation.filter(element => {
+            if (element.name.toLowerCase().includes(locationFilter.toLowerCase()) || element.address.toLowerCase().includes(locationFilter.toLowerCase())) {
+                return true;
+            }
+        });
+        setListLocation(listLocationFilter);
+    }, [locationFilter]);
     return (
             <View
                 style={{

@@ -21,9 +21,9 @@ const getMethod = async (url) => {
     const axiosInstance = await setAxiosInstance();
     try {
         const response = await axiosInstance.get(url);
-        return response.data;
+        return response;
     } catch (error) {
-        return error.response.data;
+        return error.response;
     }
 };
 
@@ -31,9 +31,9 @@ const postMethod = async (url, data) => {
     const axiosInstance = await setAxiosInstance();
     try {
         const response = await axiosInstance.post(url, data);
-        return response.data;
+        return response;
     } catch (error) {
-        return error.response.data;
+        return error.response;
     }
 };
 

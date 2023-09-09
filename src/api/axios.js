@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
-const baseURL = "https://1fa5-171-248-120-231.ngrok-free.app/api";
+const baseURL = "https://utelocker.svute.com/api";
 
 const setAxiosInstance = async () => {
     const token = await SecureStore.getItemAsync('token');

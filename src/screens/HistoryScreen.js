@@ -1,10 +1,17 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
+import NavigationTop from "../components/History/NavigationTop";
+import { useNavigation } from "@react-navigation/native";
 
 const HistoryScreen = () => {
+    const navigator = useNavigation();
     return (
-        <View>
-            <Text>Hisgory</Text>
+        <View
+            style={{
+                flex:1,
+            }}
+        >
+            <NavigationTop />
         </View>
     )
 }

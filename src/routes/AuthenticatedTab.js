@@ -7,6 +7,7 @@ import SettingsStack from './SettingsStack';
 import LocationScreen from '../screens/LocationScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import BookStack from './BookStack';
+import HistoryStack from './HistoryStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -117,7 +118,7 @@ function AuthenticatedTab() {
             />
             <Tab.Screen
                 name="History"
-                component={HistoryScreen}
+                component={HistoryStack}
             />
             <Tab.Screen
                 name="Settings"

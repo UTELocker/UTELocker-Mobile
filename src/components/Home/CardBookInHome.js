@@ -25,20 +25,16 @@ const CardBookInHome = ({ book }) => {
                 >
                     <View
                         style={{
-                            flex: 3,
-                            justifyContent: 'center',
+                            flex: 4,
+                            justifyContent: 'flex-start',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            alignContent: 'center',
                         }}
                     >
                         <Text style={styles.containerPassword}>
                             Key: <Text style={styles.password}>{book.key}</Text>
                         </Text>
-                    </View>
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                        }}
-                    >
                         <Pressable 
                             onPress={() => alert('Copy password')}
                         >

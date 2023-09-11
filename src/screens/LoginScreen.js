@@ -4,6 +4,7 @@ import { Colors } from "../constants/styles";
 import PrepareLoginComponent from "../components/Auth/PrepareLoginComponent";
 import LoginComponent from "../components/Auth/LoginComponent";
 import { ListGroup, userDetail } from "../api/authAPi";
+import STATUS_CODE from "../constants/statusCode";
 
 const LoginScreen = () => {
     const [ email, setEmail ] = useState('');
@@ -20,9 +21,8 @@ const LoginScreen = () => {
         }
         const fetchGroup = async () => {
             const res = await ListGroup(email);
-            if (res.status === 'success') {
-                const data = res.data;
-                console.log('data', data);
+            if (res.status === STATUS_CODE.OK) {
+                const data = res.data.data;
                 setListGroup([]);
                 data.map((item) => {
                     setListGroup((prev) => [...prev, {
@@ -32,7 +32,7 @@ const LoginScreen = () => {
                 });
                 setStep(1);
             } else {
-                Alert.alert('Error', res.message);
+                Alert.alert('Error', res.data.message);
             }
         };
         fetchGroup();

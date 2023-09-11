@@ -37,7 +37,7 @@ const ScannerScreen = () => {
     }
 
     return (
-        <View style={styles.containerScanner}>
+        <View style={styles.cameraContainer}>
             <View
                 style={{
                     flexDirection: 'row',
@@ -69,14 +69,11 @@ const ScannerScreen = () => {
                 </Text>
             </View>
             <View
-                style={{
-                    height: '80%',
-                    width: '100%',
-                }}
+                style={styles.container}
             >
                 <BarCodeScanner
                     onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                    style={[StyleSheet.absoluteFillObject, styles.cameraContainer]}
+                    style={StyleSheet.absoluteFillObject}
                     barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
                 />
             </View>

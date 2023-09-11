@@ -1,11 +1,13 @@
 import { Entypo } from '@expo/vector-icons';
 import { Colors } from "../../constants/styles";
 import { Keyboard, Text, TextInput, TouchableOpacity, View } from "react-native";
+import SearchBar from '../ui/SearchBar';
 
 const SearchLocation = ({
     setTypeLocationSearch,
     typeLocationSearch,
     setLocationFilter,
+    locationFilter,
 }) => {
     const ButtonEnd = () => {
         switch (typeLocationSearch) {
@@ -81,44 +83,16 @@ const SearchLocation = ({
                 paddingBottom: 10,
             }}
         >
-            <View
-                style={{
-                    flex: 4,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'row',
-                    borderRadius: 30,
-                    backgroundColor: Colors.white,
-                    marginHorizontal: 10,                            
+            <SearchBar
+                onChange={setLocationFilter}
+                onFocus={() => {
+                    if (typeLocationSearch.indexOf('-search') === -1) {
+                        const type = typeLocationSearch + '-search';
+                        setTypeLocationSearch(type);
+                    }
                 }}
-            >
-                <TextInput
-                    style={{
-                        flex: 6,
-                        width: 300,
-                        height: 50,
-                        paddingLeft: 20,
-                        fontSize: 18,
-                    }}
-                    placeholder="Search Location"
-                    onFocus={() => {
-                        if (typeLocationSearch.indexOf('-search') === -1) {
-                            const type = typeLocationSearch + '-search';
-                            setTypeLocationSearch(type);
-                        }
-                    }}
-                    onChangeText={(text) => setLocationFilter(text)}
-                />
-                <Entypo 
-                    style={{
-                        flex: 1,
-                        alignContent: 'flex-end',
-                    }} 
-                    name="magnifying-glass" 
-                    size={24} 
-                    color="black" 
-                />
-            </View>
+                value={locationFilter}
+            />
             <View
                 style={{
                     flex: 1,
@@ -136,3 +110,4 @@ const SearchLocation = ({
 }
 
 export default SearchLocation;
+

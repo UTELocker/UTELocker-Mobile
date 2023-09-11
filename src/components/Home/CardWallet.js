@@ -36,7 +36,7 @@ const CardWallet = ({ wallet }) => {
                         borderRightColor: '#E1E1E1',
                     }}
                 >
-                    <Text style={styles.title}>Wallet</Text>
+                    <Text style={[styles.title, {color: Colors.primary}]}>Balance</Text>
                     <View
                         style={{
                             flexDirection: 'row',
@@ -56,7 +56,7 @@ const CardWallet = ({ wallet }) => {
                             secureTextEntry={balanceVisibility}
                             editable={false}
                         >
-                                {balance} đ
+                                {balance}đ
                         </TextInput>
                     </View>
                 </View>
@@ -66,24 +66,14 @@ const CardWallet = ({ wallet }) => {
                         marginLeft: 10,
                     }}
                 >
-                    <Text style={styles.title}>Money Deals</Text>
+                    <Text style={styles.title}>Promotion</Text>
                     <View
                         style={{
                             flexDirection: 'row',
                             alignItems: 'center',
                         }}
                     >
-                        <Text style={styles.content}>{balanceDeals} đ</Text>
-                        <Pressable
-                            onPress={() => {
-                                Alert.alert('Money Deals');
-                            }}
-                            style={{
-                                marginLeft: 5,
-                            }}
-                        >
-                            <MaterialIcons name="arrow-forward-ios" size={24} color={Colors.gray} />
-                        </Pressable>
+                        <Text style={styles.content}>{balanceDeals}đ</Text>
                     </View>
                 </View>
             </View>
@@ -105,7 +95,7 @@ const CardWallet = ({ wallet }) => {
                         alignItems: 'center',
                     }}  
                 >
-                    <MaterialIcons name="attach-money" size={35} color={Colors.blue} />
+                    <MaterialIcons name="attach-money" size={30} color={Colors.blue} />
                     <Text style={{
                         fontSize: 16,
                         color: 'gray',
@@ -120,7 +110,7 @@ const CardWallet = ({ wallet }) => {
                         alignItems: 'center',
                     }}  
                 >
-                    <FontAwesome5 name="money-bill-wave" size={35} color={Colors.blue} />
+                    <FontAwesome5 name="money-bill-wave" size={30} color={Colors.blue} />
                     <Text style={{
                         fontSize: 16,
                         color: 'gray',
@@ -144,7 +134,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         width: '90%',  
-        height: 150,
+        height: 180,
         elevation: 5,
         shadowColor: Colors.gray,
         shadowOffset: {
@@ -155,11 +145,12 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
     },
     title: {
-        fontSize: 20,
-        fontWeight: 'bold',
+        fontSize: 25,
+        fontWeight: '800',
+        color: 'gray'
     },
     content: {
-        fontSize: 16,
+        fontSize: 20,
         color: 'gray',
     }
 });

@@ -1,7 +1,8 @@
 import { View, StyleSheet, Image, Text } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 
-const CardLocation = ({ location}) => {
+const CardLocation = ({ location, isCloset = false}) => {
+    if (isCloset) console.log('isCloset');
     return (
         <View
             style={styles.container}

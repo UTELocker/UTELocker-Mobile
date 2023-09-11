@@ -6,7 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { useDispatch } from "react-redux";
 import { setLogout } from "../../redux/authSlice";
 import { logout } from "../../api/authAPi";
-
+import STATUS_CODE from "../../constants/statusCode";
 const Account = () => {
     const dispatch = useDispatch();
     const data = [
@@ -30,7 +30,7 @@ const Account = () => {
             onPress: async () => {
                 const res = await logout();
                 console.log(res);
-                if (res.status === 'success') {
+                if (res.status === STATUS_CODE.OK) {
                     dispatch(setLogout());
                 } else {
                     Alert.alert('Error', 'Logout failed');

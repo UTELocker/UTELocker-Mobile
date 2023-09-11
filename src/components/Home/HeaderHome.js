@@ -76,7 +76,7 @@ export default HeaderHome;
 const styles = StyleSheet.create({
     rootContainer: {
         width: '100%',
-        height: 260,
+        height: 280,
         marginBottom: 70,
     },
     imageBackground: {

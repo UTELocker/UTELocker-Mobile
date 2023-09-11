@@ -83,6 +83,7 @@ const ContentLocation = () => {
                 typeLocationSearch={typeLocationSearch}
                 setTypeLocationSearch={setTypeLocationSearch}
                 setLocationFilter={setLocationFilter}
+                locationFilter={locationFilter}
             />
             {
                 currentLocation === null ? (

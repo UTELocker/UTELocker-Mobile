@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
-import HeaderLocation from "../components/Location/HeaderLocation";
 import ContentLocation from "../components/Location/ContentLocation";
+import Header from "../components/ui/Header";
 
 const LocationScreen = () => {
     return (
@@ -12,7 +12,13 @@ const LocationScreen = () => {
                 backgroundColor: '#F2F2F2',
             }}
         >
-            <HeaderLocation />
+            <Header
+                title="Location"
+                buttons={{
+                    isBack: false,
+                    isNotification: true,
+                }}
+            />
             <ContentLocation />
         </View>
     )

@@ -17,14 +17,23 @@ const ListLocation = ({
                 fontSize: 20,
                 fontWeight: 'bold',
                 marginBottom: 10,
-            }}>Closest</Text>
+            }}>Near By</Text>
             {
                 listLocker.closest.length > 0 ? (
-                    <FlatList
-                        data={listLocker.closest}
-                        renderItem={({ item }) => <CardLocation location={item} />}
-                        keyExtractor={item => item.id}
-                    />
+                    <View
+                        style={{
+                            flex: 1,
+                        }}
+                    >
+                        <FlatList
+                            data={listLocker.closest}
+                            renderItem={({ item }) => <CardLocation location={item} isCloset={true}/>}
+                            keyExtractor={item => item.id}
+                            contentContainerStyle={{
+                                marginBottom: 10,
+                            }}
+                        />
+                    </View>
                 ) : (
                     <Text
                         style={{

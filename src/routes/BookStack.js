@@ -1,8 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as SecureStore from 'expo-secure-store';
-import { useEffect } from 'react';
 import SelectTypeBookScreen from '../screens/SelectTypeBookScreen';
-import BookLockerScreen from '../screens/BookLockerScreen';
+import ManualBookingLockerScreen from '../screens/ManualBookingLockerScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,8 +11,8 @@ function BookStack() {
             headerShown: false
           }}
         >
-            <Stack.Screen name="SelectTypeBook" component={SelectTypeBookScreen} />
-            <Stack.Screen name="BookLocker" component={BookLockerScreen} />
+            {/* <Stack.Screen name="SelectTypeBook" component={SelectTypeBookScreen} /> */}
+            <Stack.Screen name="ManualBooking" component={ManualBookingLockerScreen} />
         </Stack.Navigator>
     );
 }

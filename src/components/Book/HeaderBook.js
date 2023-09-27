@@ -7,23 +7,30 @@ const HeaderBook = ({ title, isBack = true }) => {
     const navigation = useNavigation();
     return (
         <View
-            style={styles.container}
+            style={{
+                width: '100%',
+                height: 100
+            }}
         >
-            {
-                isBack && (
-                    <TouchableOpacity
-                        style={styles.buttonBack}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <MaterialIcons name="keyboard-arrow-left" size={30} color="white" />
-                    </TouchableOpacity>
-                )
-            }
-            <Text
-                style={styles.title}
+            <View
+                style={styles.container}
             >
-                {title}
-            </Text>
+                {
+                    isBack && (
+                        <TouchableOpacity
+                            style={styles.buttonBack}
+                            onPress={() => navigation.goBack()}
+                        >
+                            <MaterialIcons name="keyboard-arrow-left" size={30} color="white" />
+                        </TouchableOpacity>
+                    )
+                }
+                <Text
+                    style={styles.title}
+                >
+                    {title}
+                </Text>
+            </View>
         </View>
     )
 }
@@ -33,7 +40,7 @@ export default HeaderBook
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: '10%',
+        height: 100,
         justifyContent: 'center',
         alignItems: 'center',
         paddingTop: 40,
@@ -47,6 +54,6 @@ const styles = StyleSheet.create({
     buttonBack: {
         position: 'absolute',
         left: 20,
-        top: 50,
+        top: 55,
     }
 })

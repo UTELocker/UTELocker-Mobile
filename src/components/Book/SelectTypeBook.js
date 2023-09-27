@@ -1,7 +1,9 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native"
 import { Colors } from "../../constants/styles"
+import { useNavigation } from "@react-navigation/native"
 
 const SelectTypeBook = () => {
+    const navigation = useNavigation();
     return (
         <View
             style={styles.container}
@@ -28,6 +30,7 @@ const SelectTypeBook = () => {
                         backgroundColor: Colors.grayDark,
                     }
                 ]}
+                onPress={() => navigation.navigate('ManualBooking')}
             >
                 <Text
                     style={styles.text}

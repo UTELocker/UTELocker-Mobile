@@ -4,14 +4,8 @@ import DynamicHeader from "../components/Book/DynamicHeader";
 import { useState } from "react";
 
 const ManualBookingLockerScreen = () => {
-  const [dateStart, setDateStart] = useState({
-    date: '2021-10-10',
-    time: '10:00',
-  });
-  const [dateEnd, setDateEnd] = useState({
-    date: '2021-10-10',
-    time: '10:00',
-  });
+  const [dateStart, setDateStart] = useState(null);
+  const [dateEnd, setDateEnd] = useState(null);
   return (
       <View
           style={styles.container}

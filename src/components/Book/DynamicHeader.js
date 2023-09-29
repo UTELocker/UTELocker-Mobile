@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, Animated, ScrollView, Alert, TouchableOpacity, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Animated, ScrollView, Alert, TouchableOpacity, Pressable, RefreshControl } from 'react-native';
 import { Colors } from '../../constants/styles';
 import { WINDOW_HEIGHT } from '../../utils/dimensionScreen';
-import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import CalendarSelectDate from './CalendarSelectDate';
-import { useRef, useState } from 'react';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { useCallback, useRef, useState } from 'react';
+import DateTimePickerModal from './DateTimePickerModal';
+import ListLocker from './ListLocker';
 
 const DynamicHeader = ({
   dateStart,
@@ -14,7 +13,14 @@ const DynamicHeader = ({
   setDateEnd,
 }) => {
 
-  const [isShowLowerHeader, setIsShowLowerHeader] = useState(false);
+  const [isShowLowerHeader, setIsShowLowerHeader] = useState(true);
+  const [ modal, setModal ] = useState({
+    title: '',
+    showModal: false,
+    date: null,
+    setDate: null,
+  });
+  const [refreshing, setRefreshing] = useState(false);
 
   const animatedValue = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef(null);
@@ -219,6 +225,51 @@ const DynamicHeader = ({
     )
   };
 
+  const clickDatePickers = ({
+    date,
+    setDate,
+    title
+  }) => {
+    scrollViewRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    })
+    setModal({
+      title: title,
+      showModal: true,
+      date: date,
+      setDate: setDate,
+    })
+  }
+
+  const findLockers = () => {
+    if (dateStart === null || dateEnd === null) {
+      Alert.alert('Please select date');
+      return;
+    }
+    
+    const dateStartCompare = new Date(dateStart.date + ' ' + dateStart.time);
+    const dateEndCompare = new Date(dateEnd.date + ' ' + dateEnd.time);
+
+    if (dateStartCompare.getTime() == dateEndCompare.getTime()) {
+      Alert.alert('Date Start and Date End must be different');
+      return;
+    }
+
+    if (dateStartCompare > dateEndCompare) {
+      Alert.alert('Date Start must be less than Date End');
+      return;
+    }
+
+    scrollViewRef.current?.scrollTo({
+      y: 250,
+      animated: true,
+    })
+  }
+
+  const onRefresh = () => {
+    setRefreshing(true);
+  };
 
   return (
     <View 
@@ -248,9 +299,29 @@ const DynamicHeader = ({
           Search Locker
         </Text>
         <Animated.View style={[styles.upperHeader,cardUpperHeaderAnimation,]}>
-          <CardDateSmall date={dateStart} />
+          <TouchableOpacity
+            onPress={() => {
+              clickDatePickers ({
+                title: 'Select Date Start',
+                date: dateStart,
+                setDate: setDateStart,
+              })
+            }}
+          >
+              <CardDateSmall date={dateStart} />
+          </TouchableOpacity>
           <AntDesign name="doubleright" size={25} color={Colors.gray} />
-          <CardDateSmall date={dateEnd} />
+          <TouchableOpacity
+            onPress={() => {
+              clickDatePickers ({
+                title: 'Select Date End',
+                date: dateStart,
+                setDate: setDateStart,
+              })
+            }}
+          >
+            <CardDateSmall date={dateEnd} />
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               Alert.alert('Select Date');
@@ -276,7 +347,11 @@ const DynamicHeader = ({
             >
               <TouchableOpacity
                 onPress={() => {
-                  Alert.alert('Select Date Start');
+                  clickDatePickers ({
+                    title: 'Select Date Start',
+                    date: dateStart,
+                    setDate: setDateStart,
+                  })
                 }}
               >
                 <CardDate date={dateStart} />
@@ -292,7 +367,11 @@ const DynamicHeader = ({
             >
               <TouchableOpacity
                 onPress={() => {
-                  Alert.alert('Select Date End');
+                  clickDatePickers ({
+                    title: 'Select Date End',
+                    date: dateEnd,
+                    setDate: setDateEnd,
+                  })
                 }}
               >
                 <CardDate date={dateEnd} />
@@ -316,7 +395,7 @@ const DynamicHeader = ({
           </Animated.View >
           <AnimatedTouchableOpacity
             onPress={() => {
-              Alert.alert('Find date');
+              findLockers();
             }}
             style={[
               styles.findLockerButton,
@@ -372,17 +451,46 @@ const DynamicHeader = ({
               animated: true,
           })
         }}
+
+        scrollEnabled={false}
       >
         <View style={styles.paddingForHeader} />
         <View
           style={styles.scrollViewContent}
         >
-          <Text style={styles.scrollText}>
-            Scroll Me
-          </Text>
-          <CalendarSelectDate />
+          {
+            refreshing && <View style={styles.refresh}></View>
+          }
+          {
+            !isShowLowerHeader && (
+              <ScrollView
+                scrollEnabled={true}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}                  
+                  />
+                }
+              >
+                <ListLocker
+                  dateStart={dateStart}
+                  dateEnd={dateEnd}
+                  isFind={!isShowLowerHeader}
+                  refreshing={refreshing}
+                  setRefreshing={setRefreshing}
+                />
+              </ScrollView>
+            )
+          }
         </View>
       </ScrollView>
+      <DateTimePickerModal
+        date={modal.date}
+        setDate={modal.setDate}
+        showModal={modal.showModal}
+        setModal={setModal}
+        title={modal.title}
+      />
     </View>
   );
 };
@@ -470,5 +578,11 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
-    
+    refresh: {
+      backgroundColor: 'rgba(52, 52, 52, 0)',
+      zIndex: 2,
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
+  }
 });

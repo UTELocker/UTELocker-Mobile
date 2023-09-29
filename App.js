@@ -13,7 +13,7 @@ import NetInfo from "@react-native-community/netinfo";
 import ModalError from './src/components/ui/ModalError';
 
 function Navigation() {
-  const [ isLoading, setIsLoading ] = useState(true);
+  const [ isLoading, setIsLoading ] = useState(false);
   const [isConnected, setIsConnected] = useState(true);
   const [modalVisible, setModalVisible] = useState(false)
   const isLogin = useSelector((state) => state.auth.isLogin);
@@ -37,28 +37,30 @@ function Navigation() {
     }
   }, [isConnected]);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      console.log('fetch user');
-      const res = await userDetail();
-      switch (res.status) {
-        case STATUS_CODE.OK:
-          dispatch(setLogin({
-            email: res.data.email,
-            name: res.data.name,
-            phone: res.data.phone,
-            address: res.data.address,
-          }));
-          break;
-        default:
-          break;
-      }
-    };
-    if (isConnected) {
-      fetchUser();
-    }
-    setIsLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     console.log('fetch user');
+  //     const res = await userDetail();
+  //     switch (res.status) {
+  //       case STATUS_CODE.OK:
+  //         dispatch(setLogin({
+  //           email: res.data.email,
+  //           name: res.data.name,
+  //           phone: res.data.phone,
+  //           address: res.data.address,
+  //         }));
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //     setIsLoading(false);
+  //   };
+  //   if (isConnected) {
+  //     fetchUser();
+  //   } else {
+  //     setIsLoading(false);
+  //   }
+  // }, []);
 
   if (isLoading) {
     return <SplashScreen />;
@@ -66,7 +68,8 @@ function Navigation() {
 
   return (
     <NavigationContainer>
-      {isLogin ? <AuthenticatedTab /> : <AuthTab />}
+      {/* {isLogin ? <AuthenticatedTab /> : <AuthTab />} */}
+      <AuthenticatedTab />
       <ModalError 
         title='No Internet Connection'
         titleButton='OK'

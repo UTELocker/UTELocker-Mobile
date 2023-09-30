@@ -298,9 +298,18 @@ const FormBooking = ({
                                         );
                                         return;
                                     }
-                                    navigator.navigate('SuccessBooking', {
-                                        data: DATA_SUCCESS,
+                                    navigator.reset({
+                                        index: 0,
+                                        routes: [
+                                            { 
+                                                name: 'SuccessBooking',
+                                                params: {
+                                                    data: DATA_SUCCESS,
+                                                } 
+                                            }
+                                        ],
                                     });
+                                    
                                 }
                             }
                             ]

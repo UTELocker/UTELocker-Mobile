@@ -18,7 +18,10 @@ function BookStack() {
             <Stack.Screen name="ManualBooking" component={ManualBookingLockerScreen} />
             <Stack.Screen name="FormBooking" component={FormBookingScreen} />
             <Stack.Screen name="SelectBooking" component={SelectBookingScreen} />
-            <Stack.Screen name="SuccessBooking" component={SuccessBookingScreen} />
+            <Stack.Screen 
+                name="SuccessBooking"
+                component={SuccessBookingScreen}
+            />
         </Stack.Navigator>
     );
 }

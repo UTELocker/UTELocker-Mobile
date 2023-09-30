@@ -1,13 +1,27 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import Header from '../../components/ui/Header';
 import CardBookSuccess from '../../components/Book/CardBookSuccess';
-import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Colors } from '../../constants/styles';
+import { useCallback } from 'react';
 
 const SuccessBookingScreen = ({ route }) => {
     const { data } = route.params;
     const navigation = useNavigation();
+    
+    useFocusEffect(
+        useCallback(() => {
+          return () => {
+            navigation.reset({
+                index: 0,
+                routes: [
+                    { name: 'ManualBooking' }
+                ],
+            });
+          };
+        }, [])
+    );
+ 
     return (
         <View
             style={{

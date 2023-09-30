@@ -4,10 +4,10 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeStack from './HomeStack';
 import { Colors } from '../constants/styles';
 import SettingsStack from './SettingsStack';
-import LocationScreen from '../screens/LocationScreen';
-import HistoryScreen from '../screens/HistoryScreen';
+import HistoryScreen from '../screens/History/HistoryScreen';
 import BookStack from './BookStack';
 import HistoryStack from './HistoryStack';
+import LocationScreen from '../screens/Location/LocationScreen';
 
 const Tab = createBottomTabNavigator();
 

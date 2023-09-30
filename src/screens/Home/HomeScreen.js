@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import CardBookInHome from '../components/Home/CardBookInHome';
-import CardQuickInformation from '../components/Home/CardQuickInformation';
-import HeaderHome from '../components/Home/HeaderHome';
-import { Colors } from '../constants/styles';
+import CardBookInHome from '../../components/Home/CardBookInHome';
+import CardQuickInformation from '../../components/Home/CardQuickInformation';
+import HeaderHome from '../../components/Home/HeaderHome';
+import { Colors } from '../../constants/styles';
 import * as SecureStore from 'expo-secure-store';
-import Scanner from '../components/Home/Scaner';
+import Scanner from '../../components/Home/Scaner';
 
 function HomeScreen() {
     const [ orderedLockers , setOrderedLockers ] = useState([

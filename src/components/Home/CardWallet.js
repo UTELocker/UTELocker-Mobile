@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { TouchableOpacity } from "react-native";
 
 const CardWallet = ({ wallet }) => {
     const { balance, balanceDeals } = wallet;
@@ -88,12 +89,13 @@ const CardWallet = ({ wallet }) => {
                     paddingTop: 10,
                 }}
             >
-                <View
+                <TouchableOpacity
                     style={{
                         flex: 1,
                         justifyContent: 'center',
                         alignItems: 'center',
-                    }}  
+                    }}
+                    onPress={() => Alert.alert('Top Up')}
                 >
                     <MaterialIcons name="attach-money" size={30} color={Colors.blue} />
                     <Text style={{
@@ -102,7 +104,7 @@ const CardWallet = ({ wallet }) => {
                     }}>
                         Top Up
                     </Text>
-                </View>
+                </TouchableOpacity>
                 <View
                     style={{
                         flex: 1,

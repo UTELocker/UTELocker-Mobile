@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
-import ContentLocation from "../components/Location/ContentLocation";
-import Header from "../components/ui/Header";
+import ContentLocation from "../../components/Location/ContentLocation";
+import Header from "../../components/ui/Header";
 
 const LocationScreen = () => {
     return (

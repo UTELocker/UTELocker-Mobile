@@ -1,10 +1,10 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import Utilities from "../components/Setting/Utilities";
-import Notification from "../components/ui/Notification";
-import { Colors } from "../constants/styles";
-import Support from "../components/Setting/Support";
-import Account from "../components/Setting/Account";
+import Utilities from "../../components/Setting/Utilities";
+import Notification from "../../components/ui/Notification";
+import { Colors } from "../../constants/styles";
+import Support from "../../components/Setting/Support";
+import Account from "../../components/Setting/Account";
 
 const SettingScreen = () => {
     return (

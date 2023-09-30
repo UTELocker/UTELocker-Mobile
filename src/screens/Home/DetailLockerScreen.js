@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
-import { Colors } from "../constants/styles";
+import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons';
-import InputForm from "../components/ui/InputForm";
+import InputForm from "../../components/ui/InputForm";
 
 const DetailLockerScreen = ({route}) => {
     const navigation = useNavigation();

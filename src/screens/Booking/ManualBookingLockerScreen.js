@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native"
-import HeaderBook from "../../src/components/Book/HeaderBook"
-import DynamicHeader from "../components/Book/DynamicHeader";
+import HeaderBook from "../../components/Book/HeaderBook"
+import DynamicHeader from "../../components/Book/DynamicHeader";
 import { useState } from "react";
 
 const ManualBookingLockerScreen = () => {

@@ -21,6 +21,7 @@ const LoginScreen = () => {
         }
         const fetchGroup = async () => {
             const res = await ListGroup(email);
+            console.log(res);
             if (res.status === STATUS_CODE.OK) {
                 const data = res.data.data;
                 setListGroup([]);
@@ -43,7 +44,7 @@ const LoginScreen = () => {
             style={styles.container}
         >
             <ImageBackground
-                source={require('../../assets/locker_login.png')}
+                source={require('../../../assets/locker_login.png')}
                 resizeMode="cover"
                 style={styles.imageBackground}
             >

@@ -1,8 +1,8 @@
-import LoginScreen from '../screens/LoginScreen';
-import SignupScreen from '../screens/SignupScreen';
+import LoginScreen from '../screens/Auth/LoginScreen';
+import SignupScreen from '../screens/Auth/SignupScreen';
 import { Colors } from '../constants/styles';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AuthenticatedTab from './AuthenticatedTab';
+
 const Stack = createNativeStackNavigator();
 
 function AuthTab() {

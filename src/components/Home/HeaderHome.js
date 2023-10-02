@@ -41,21 +41,12 @@ const HeaderHome = () => {
                     }}
                 >
                     <Text
-                        style={{
-                            fontSize: 30,
-                            color: 'white',
-                            fontWeight: 'bold',
-                            marginTop: 5,
-                        }}
+                        style={styles.titleScreen}
                     >
                         Welcome to locker
                     </Text>
                     <Text
-                        style={{
-                            fontSize: 20,
-                            color: 'white',
-                            marginTop: 5,
-                        }}
+                        style={styles.title}
                     >
                         {nameSiteGroup}
                     </Text>
@@ -92,4 +83,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
+    titleScreen: {
+        fontSize: 30,
+        color: 'white',
+        fontWeight: 'bold',
+        marginTop: 5,
+    },
+    title: {
+        fontSize: 20,
+        color: 'white',
+        marginTop: 5,
+    }
 });

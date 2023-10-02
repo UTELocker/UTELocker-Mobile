@@ -30,3 +30,48 @@ export const Colors = {
     lightGray2: '#E9E9E9',
     lightBlue: '#e7f5ff',
   }
+
+export const FONT = {
+  NORMAL_16_BOLD_WHITE: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: Colors.white,
+  },
+  NORMAL_16_BOLD_BLACK: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: Colors.black,
+  },
+  NORMAL_16_BOLD_PRIMARY: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: Colors.primary,
+  },
+  NORMAL_20_BOLD_WHITE: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.white,
+  },
+  NORMAL_20_BOLD_BLACK: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.black,
+  },
+  NORMAL_20_BOLD_PRIMARY: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.primary,
+  },
+  NORMAL_16_WHITE: {
+    fontSize: 16,
+    color: Colors.white,
+  },
+  NORMAL_16_BLACK: {
+    fontSize: 16,
+    color: Colors.black,
+  },
+  NORMAL_16_PRIMARY: {
+    fontSize: 16,
+    color: Colors.primary,
+  },
+}

@@ -1,6 +1,5 @@
-import { Text, View, TextInput, Pressable } from "react-native"
-import { Entypo } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import { Text, View, TextInput, Pressable, StyleSheet } from "react-native"
+import { Entypo, AntDesign } from '@expo/vector-icons';
 import STATUS_LOCKER from "../../constants/statusBooking";
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
@@ -23,28 +22,18 @@ const CardTransfer = ({ transfer, balanceVisibility }) => {
     const navigation = useNavigation();
     return (
         <Pressable
-            style={{
-                width: '100%',
-                height: 120,
-                backgroundColor: '#fff',
-                borderRadius: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingHorizontal: 10,
-                marginBottom: 10,
-            }}
-            onPress={() => navigation.navigate('DetailHistory', { history: transfer, type: 'transfer' })}
+            style={styles.containerCard}
+            onPress={() => 
+                navigation.navigate(
+                    'DetailHistory', 
+                    { 
+                        history: transfer, 
+                        type: 'transfer' 
+                    }
+                )}
         >
             <View
-                style={{
-                    height: '62%',
-                    width: '20%',
-                    borderWidth: 1,
-                    borderRadius: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
+                style={styles.containerIconCard}
             >
                 <Entypo 
                     name="wallet" 
@@ -62,13 +51,7 @@ const CardTransfer = ({ transfer, balanceVisibility }) => {
                 </View>
             </View>
             <View
-                style={{
-                    height: '75%',
-                    width: '80%',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    paddingStart: 10,
-                }}
+                style={styles.containerContentCard}
             >
                 <Text
                     style={{
@@ -79,10 +62,7 @@ const CardTransfer = ({ transfer, balanceVisibility }) => {
                     {type == 'deposit' ? 'Top up' : 'Withdraw'}
                 </Text>
                 <Text
-                    style={{
-                        fontSize: 16,
-                        color: Colors.gray,
-                    }}
+                    style={styles.textCard}
                 >
                     {time}
                 </Text>
@@ -96,27 +76,36 @@ const CardTransfer = ({ transfer, balanceVisibility }) => {
                     <TextInput
                         placeholder="Balance"
                         placeholderTextColor={Colors.gray}
-                        style={{
-                            flex: 1,
-                            color: Colors.gray,
-                            fontSize: 16,
-                        }}
-                        value={balanceVisibility ? 'Balance: ' +  balance.toString() + 'đ' : 'Balance:****'}
+                        style={[
+                            styles.textCard,
+                            {
+                                flex: 1,
+                            }
+                        ]}
+                        value={
+                            balanceVisibility ? 
+                            'Balance: ' +  balance.toString() + 'đ' : 
+                            'Balance: ****'
+                        }
                         editable={false}
                     />
                     <Text
-                        style={{
-                            flex: 1,
-                            fontSize: 16,
-                            color: Colors.dark,
-                            fontWeight: 'bold',
-                            textAlign: 'right',
-                        }}
+                        style={[
+                            styles.textCard,
+                            {
+                                flex: 1,
+                                color: Colors.dark,
+                                fontWeight: 'bold',
+                                textAlign: 'right',
+                            }
+                        ]}
                     >
                         {type == 'deposit' ? '+' : '-'}{amount}đ
                     </Text>
                 </View>
-                <Text>
+                <Text
+                    style={styles.textCard}
+                >
                     Methods of payment: {method}
                 </Text>
             </View>
@@ -125,3 +114,36 @@ const CardTransfer = ({ transfer, balanceVisibility }) => {
 }
 
 export default CardTransfer
+
+const styles = StyleSheet.create({
+    containerCard: {
+        width: '100%',
+        height: 120,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        marginBottom: 10,
+    },
+    containerIconCard: {
+        height: '62%',
+        width: '20%',
+        borderWidth: 1,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    containerContentCard: {
+        height: '75%',
+        width: '80%',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        paddingStart: 10,
+    },
+    textCard: {
+        fontSize: 16,
+        color: Colors.gray,
+    }
+})

@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
 import { Colors } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -10,11 +9,7 @@ const Utilities = () => {
             style={styles.rootContainer}
         >
             <Text
-                style={{
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                    marginBottom: 10,
-                }}
+                style={styles.title}
             >
                 Utilities
             </Text>
@@ -25,30 +20,12 @@ const Utilities = () => {
                 }}
             >
                 <TouchableOpacity
-                    onPress={() => alert('History')}
-                    style={styles.cardContainer}
-                >
-                    <Ionicons name="document-text-outline" size={35} color={Colors.blue} />
-                    <Text
-                        style={{
-                            fontSize: 16,
-                            marginTop: 10,
-                        }}
-                    >
-                        History
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
                     onPress={() => alert('Rules')}
                     style={styles.cardContainer}
                 >
                     <MaterialIcons name="security" size={35} color={Colors.green} />
                     <Text
-                        style={{
-                            fontSize: 16,
-                            marginTop: 10,
-                        }}
+                        style={styles.textCard}
                     >
                         Rules
                     </Text>
@@ -77,5 +54,14 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         width: '48%',
     },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    textCard: {
+        fontSize: 16,
+        marginTop: 10,
+    }
 });
 

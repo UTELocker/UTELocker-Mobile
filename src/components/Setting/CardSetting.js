@@ -32,12 +32,7 @@ const CardSetting = ({ data }) => {
                                 style={styles.cardContainer}
                             >
                                 <View
-                                    style={{
-                                        flex : 10,
-                                        flexDirection: 'row',
-                                        justifyContent: 'flex-start',
-                                        alignItems: 'center',
-                                    }}
+                                    style={styles.containerLineText}
                                 >
                                     <View>
                                         {item.icon}
@@ -103,5 +98,11 @@ const styles = StyleSheet.create({
         borderBottomColor: 'white',
         borderBottomWidth: 0,
     },
+    containerLineText: {
+        flex : 10,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    }
 });
 

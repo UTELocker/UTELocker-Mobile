@@ -5,40 +5,20 @@ import Notification from "../../components/ui/Notification";
 import { Colors } from "../../constants/styles";
 import Support from "../../components/Setting/Support";
 import Account from "../../components/Setting/Account";
+import Header from "../../components/ui/Header";
 
 const SettingScreen = () => {
     return (
         <View
             style={styles.rootContainer}
         >
-            <View
-                style={styles.header}
-            >
-                <View
-                    style={{
-                        flex: 1,
-                        alignItems: 'flex-start',
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 'bold',
-                            color: 'white', 
-                        }}
-                    >
-                        Settings
-                    </Text>
-                </View>
-                <View
-                    style={{
-                        flex: 1,
-                        alignItems: 'flex-end',
-                    }}
-                >
-                    <Notification />
-                </View>
-            </View>
+            <Header
+                title="Setting"
+                buttons={{
+                    isBack: false,
+                    isNotification: true,
+                }}
+            />
             <Utilities />
             <Support />
             <Account />

@@ -24,13 +24,7 @@ const CardBookInHome = ({ book }) => {
                     }}
                 >
                     <View
-                        style={{
-                            flex: 4,
-                            justifyContent: 'flex-start',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            alignContent: 'center',
-                        }}
+                        style={styles.containerCode}
                     >
                         <Text style={styles.containerPassword}>
                             Key: <Text style={styles.password}>{book.key}</Text>
@@ -95,6 +89,13 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: Colors.red,
     },
+    containerCode: {
+        flex: 4,
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'center',
+    }
 });
 
 export default CardBookInHome;

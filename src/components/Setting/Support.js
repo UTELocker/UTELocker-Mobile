@@ -1,5 +1,5 @@
 import { Octicons } from '@expo/vector-icons';
-import CardSetting from "../ui/CardSetting";
+import CardSetting from "./CardSetting";
 import { View, StyleSheet, Text } from "react-native";
 
 const Support = () => {

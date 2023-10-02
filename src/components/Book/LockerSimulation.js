@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import { View, Text, ScrollView, TouchableOpacity, Alert, StyleSheet } from "react-native"
-import { TYPE_LOCKER } from "../../../constants/typeLocker"
-import STATUS_LOCKER from "../../../constants/statusBooking"
-import { Colors } from "../../../constants/styles"
+import { TYPE_LOCKER } from "../../constants/typeLocker"
+import STATUS_LOCKER from "../../constants/statusBooking"
+import { Colors } from "../../constants/styles"
 import { useState } from "react"
 import { useNavigation } from "@react-navigation/native"
 
@@ -164,11 +164,11 @@ const LockerSimulation = ({
     
     const handleRenderLocker = (data) => {
         const maxNumInRow = getNumHigherInRow(data);
-        const sumWidth = maxNumInRow * 100 + (maxNumInRow - 1) * 10 
+        const sumWidth = maxNumInRow * 20 + (maxNumInRow - 1) * 5 
     
         return data.map((item, index) => {
             const numInRow = item.length
-            const itemWidth = maxNumInRow > numInRow ? ((sumWidth / numInRow) - (numInRow - 1) * 10 ): 100
+            const itemWidth = maxNumInRow > numInRow ? ((sumWidth / numInRow) - (numInRow - 1) * 5 ): 20
     
             return (
                 <View
@@ -187,12 +187,12 @@ const LockerSimulation = ({
                                 key={index}
                                 style={{
                                     width: itemWidth,
-                                    height: 100,
+                                    height: 20,
                                     backgroundColor: getBackgroundColor(item.status),
                                     borderRadius: 10,
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    marginHorizontal: 5,
+                                    marginHorizontal: 2.5,
                                     opacity: item.isBooked ? 1 : 0.5,
                                 }}
                                 onPress={() => {
@@ -422,7 +422,7 @@ const LockerSimulation = ({
                             fontWeight: 'bold',
                         }}
                     >
-                        Book
+                        Next
                     </Text>
                 </TouchableOpacity>
             </View>

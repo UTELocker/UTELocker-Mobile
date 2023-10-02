@@ -1,4 +1,4 @@
-import LockerSimulation from "../../components/Book/lockerSimulation/LockerSimulation";
+import LockerSimulation from "../../components/Book/LockerSimulation";
 import Header from "../../components/ui/Header";
 
 const { Text } = require("react-native")

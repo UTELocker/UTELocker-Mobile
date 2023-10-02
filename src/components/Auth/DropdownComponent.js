@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -9,7 +9,8 @@ const DropdownComponent = ({
   list = [],
   setValue,
   value,
-  logo
+  logo,
+  border = true
 }) => {
   
   const renderItem = item => {
@@ -38,7 +39,12 @@ const DropdownComponent = ({
       }}
     >
       <Dropdown
-        style={styles.dropdown}
+        style={[
+          styles.dropdown,
+          {
+            borderWidth: border ? 1 : 0,
+          },
+        ]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}

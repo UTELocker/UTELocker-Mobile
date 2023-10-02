@@ -1,4 +1,4 @@
-import CardSetting from "../ui/CardSetting";
+import CardSetting from "./CardSetting";
 import { View, StyleSheet, Text, Alert } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';

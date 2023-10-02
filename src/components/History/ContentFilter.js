@@ -64,6 +64,7 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                         color="black"
                     />
                 }
+                border={false}
             />
 
             </View>
@@ -84,7 +85,9 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                             style={[
                                 styles.cardFilter,
                                 {
-                                    backgroundColor: item.value === typeTransfers ? Colors.primary : Colors.white,
+                                    backgroundColor: item.value === typeTransfers ?
+                                    Colors.primary :
+                                    Colors.white,
                                 }
                             ]}
                         >
@@ -110,7 +113,9 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                             style={[
                                 styles.cardFilter,
                                 {
-                                    backgroundColor: item.value === status ? Colors.primary : Colors.white,
+                                    backgroundColor: item.value === status ?
+                                        Colors.primary :
+                                        Colors.white,
                                 }
                             ]}
                         >
@@ -136,7 +141,9 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                             style={[
                                 styles.cardFilter,
                                 {
-                                    backgroundColor: item.value === method ? Colors.primary : Colors.white,
+                                    backgroundColor: item.value === method ?
+                                        Colors.primary :
+                                        Colors.white,
                                 }
                             ]}
                         >
@@ -146,16 +153,7 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                 }
             </View>
             <View
-                // set bottom bar sticky
-                style={{
-                    position: 'absolute',
-                    bottom: 20,
-                    left: 20,
-                    right: 20,
-                    justifyContent: 'flex-end',
-                    paddingBottom: 15,
-                    flexDirection: 'row',
-                }}
+                style={styles.containerButton}
             >
                 <Text
                     onPress={() => {
@@ -168,15 +166,12 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                         });
                         navigation.goBack();
                     }}
-                    style={{
-                        flex: 1,
-                        backgroundColor: Colors.primary,
-                        padding: 10,
-                        borderRadius: 5,
-                        textAlign: 'center',
-                        color: Colors.white,
-                        marginRight: 10,
-                    }}
+                    style={[
+                        styles.buttonTitle,
+                        {
+                            backgroundColor: Colors.primary,
+                        }
+                    ]}
                 >
                     Apply
                 </Text>
@@ -188,14 +183,12 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                         setStatus(FILTER_STATUS[0].value);
                         setMethod(FILTER_METHOD[0].value);
                     }}
-                    style={{
-                        flex: 1,
-                        backgroundColor: Colors.red,
-                        padding: 10,
-                        borderRadius: 5,
-                        textAlign: 'center',
-                        color: Colors.white,
-                    }}
+                    style={[
+                        styles.buttonTitle,
+                        {
+                            backgroundColor: Colors.red,
+                        }
+                    ]}
                 >
                     Clear all
                 </Text>
@@ -213,9 +206,25 @@ const styles = StyleSheet.create({
     },
     cardFilter: {
         backgroundColor: Colors.white,
-        borderWidth: 1,
         borderRadius: 5,
         padding: 10,
         margin: 5,
+    },
+    buttonTitle: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        textAlign: 'center',
+        color: Colors.white,
+        marginRight: 10,
+    },
+    containerButton: {
+        position: 'absolute',
+        bottom: 20,
+        left: 20,
+        right: 20,
+        justifyContent: 'flex-end',
+        paddingBottom: 15,
+        flexDirection: 'row',
     }
 })

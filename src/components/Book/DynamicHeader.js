@@ -57,7 +57,6 @@ const DynamicHeader = ({
       extrapolate: 'clamp',
     }),
   }
-
   const buttonAnimation = {
     transform: [
       {
@@ -88,7 +87,6 @@ const DynamicHeader = ({
       extrapolate: 'clamp',
     }),
   }
-
   const cardDateStartAnimation = {
     transform: [
       {
@@ -133,7 +131,6 @@ const DynamicHeader = ({
       },
     ],
   }
-  
   const iconReloadAnimation = {
     opacity: animatedValue.interpolate({
       inputRange: [0, 100, 220, 230],
@@ -171,7 +168,6 @@ const DynamicHeader = ({
       }
     ],
   }
-
   const iconSearchAnimation = {
     opacity: animatedValue.interpolate({
       inputRange: [0, 150],

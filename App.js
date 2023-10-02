@@ -37,30 +37,29 @@ function Navigation() {
     }
   }, [isConnected]);
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     console.log('fetch user');
-  //     const res = await userDetail();
-  //     switch (res.status) {
-  //       case STATUS_CODE.OK:
-  //         dispatch(setLogin({
-  //           email: res.data.email,
-  //           name: res.data.name,
-  //           phone: res.data.phone,
-  //           address: res.data.address,
-  //         }));
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //     setIsLoading(false);
-  //   };
-  //   if (isConnected) {
-  //     fetchUser();
-  //   } else {
-  //     setIsLoading(false);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await userDetail();
+      switch (res.status) {
+        case STATUS_CODE.OK:
+          dispatch(setLogin({
+            email: res.data.email,
+            name: res.data.name,
+            phone: res.data.phone,
+            address: res.data.address,
+          }));
+          break;
+        default:
+          break;
+      }
+      setIsLoading(false);
+    };
+    if (isConnected) {
+      fetchUser();
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
 
   if (isLoading) {
     return <SplashScreen />;
@@ -68,8 +67,7 @@ function Navigation() {
 
   return (
     <NavigationContainer>
-      {/* {isLogin ? <AuthenticatedTab /> : <AuthTab />} */}
-      <AuthenticatedTab />
+      {isLogin ? <AuthenticatedTab /> : <AuthTab />}
       <ModalError 
         title='No Internet Connection'
         titleButton='OK'

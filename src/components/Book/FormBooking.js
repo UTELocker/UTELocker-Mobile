@@ -1,8 +1,9 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native"
 import { Colors } from "../../constants/styles"
-import { TouchableOpacity } from "react-native";
-import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import ModalPlolicy from "../ui/ModalPolicy";
+import { useState } from "react";
+import * as SecureStore from 'expo-secure-store';
 
 const FormBooking = ({
     locker,
@@ -11,6 +12,8 @@ const FormBooking = ({
 }) => {
 
     const navigator = useNavigation();
+
+    const [visible, setVisible] = useState(false);
 
     const PRICE = 100000;
 
@@ -40,6 +43,20 @@ const FormBooking = ({
         },
     ]
 
+    const booking = () => {
+        navigator.reset({
+            index: 0,
+            routes: [
+                { 
+                    name: 'SuccessBooking',
+                    params: {
+                        data: DATA_SUCCESS,
+                    } 
+                }
+            ],
+        });
+    }
+
     return (
         <View
             style={{
@@ -49,28 +66,15 @@ const FormBooking = ({
             }}
         >
             <View
-                style={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 20,
-                    backgroundColor: Colors.white,
-                    borderRadius: 10,
-                }}
+                style={styles.card}
             >
                 <Text
-                    style={{
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                    }}
+                    style={styles.title}
                 >
                     Information Locker
                 </Text>
                 <View
-                    style={{
-                        marginTop: 10,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                    }}
+                    style={styles.containerText}
                 >
                     <Text>
                         Locker address:
@@ -80,11 +84,7 @@ const FormBooking = ({
                     </Text>
                 </View>
                 <View
-                    style={{
-                        marginTop: 10,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                    }}
+                    style={styles.containerText}
                 >
                     <Text>
                         List cabinet booked:
@@ -126,16 +126,7 @@ const FormBooking = ({
                     style={styles.containerText}
                 >
                     <View
-                        style={{
-                            flex: 1,
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            borderRadius: 10,
-                            backgroundColor: Colors.primary500,
-                            padding:10,
-                            marginBottom: 10,
-                        }}
+                        style={styles.containerDateBooking}
                     >
                         <View
                             style={{
@@ -176,19 +167,10 @@ const FormBooking = ({
                     </View>
                 </View>
                 <View 
-                    style={{
-                        width: '90%',
-                        borderBottomColor: '#EBEBEB',
-                        borderBottomWidth: 1,
-                        alignSelf: 'center',
-                    }}
+                    style={styles.containerDate}
                 ></View>
                 <View
-                    style={{
-                        marginTop: 10,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                    }}
+                    style={styles.containerText}
                 >
                     <Text
                         style={{
@@ -208,29 +190,15 @@ const FormBooking = ({
             </View>
 
             <View
-                style={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 20,
-                    backgroundColor: Colors.white,
-                    borderRadius: 10,
-                    marginTop: 20,
-                }}
+                style={styles.card}
             >
                 <Text
-                    style={{
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                    }}
+                    style={styles.title}
                 >
                     Information Your Wallet
                 </Text>
                 <View
-                    style={{
-                        marginTop: 10,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                    }}
+                    style={styles.containerText}
                 >
                     <Text>
                         Ballance:
@@ -244,11 +212,7 @@ const FormBooking = ({
                     </Text>
                 </View>
                 <View
-                    style={{
-                        marginTop: 10,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                    }}
+                    style={styles.containerText}
                 >
                     <Text>
                         Promotion:
@@ -265,12 +229,7 @@ const FormBooking = ({
 
             <View>
                 <TouchableOpacity
-                    style={{
-                        marginTop: 20,
-                        backgroundColor: Colors.primary,
-                        padding: 10,
-                        borderRadius: 10,
-                    }}
+                    style={styles.button}
                     onPress={() => {
                         Alert.alert(
                             "Booking",
@@ -298,18 +257,15 @@ const FormBooking = ({
                                         );
                                         return;
                                     }
-                                    navigator.reset({
-                                        index: 0,
-                                        routes: [
-                                            { 
-                                                name: 'SuccessBooking',
-                                                params: {
-                                                    data: DATA_SUCCESS,
-                                                } 
-                                            }
-                                        ],
-                                    });
-                                    
+                                    const handleConfirm = async () => {
+                                        const result = await SecureStore.getItemAsync('booking');
+                                        if (result === 'true') {
+                                            booking();
+                                        } else {
+                                            setVisible(true);
+                                        }
+                                    }
+                                    handleConfirm();
                                 }
                             }
                             ]
@@ -317,16 +273,27 @@ const FormBooking = ({
                     }}
                 >
                     <Text
-                        style={{
-                            color: Colors.white,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                        }}
+                        style={styles.titleButton}
                     >
                         Booking
                     </Text>
                 </TouchableOpacity>
             </View>
+            <ModalPlolicy
+                title={'Policy'}
+                content={
+                    "Please read and confirm the policy before booking.     \n1. The booking time is 60 minutes.    \n2. If the time is over, you will be charged an additional fee.    \n3. If you cancel the booking, you will be charged a cancellation fee.     \n4. If you have any questions, please contact us."
+                }
+                visible={visible}
+                setVisible={setVisible}
+                onClose={() => {
+                    navigator.navigate('Home');
+                }}
+                onConfirm={() => {
+                    booking();
+                }}
+                code={'booking'}
+            />
         </View>
     )
 }
@@ -339,4 +306,47 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
+    titleButton: {
+        color: Colors.white,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    button: {
+        backgroundColor: Colors.primary,
+        padding: 10,
+        borderRadius: 10,
+    },
+    containerText: {
+        marginTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    title: {
+        color: Colors.black,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    card: {
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: Colors.white,
+        borderRadius: 10,
+        marginBottom: 20,
+    },
+    containerDate: {
+        width: '90%',
+        borderBottomColor: '#EBEBEB',
+        borderBottomWidth: 1,
+        alignSelf: 'center',
+    },
+    containerDateBooking: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderRadius: 10,
+        backgroundColor: Colors.primary500,
+        padding:10,
+        marginBottom: 10,
+    }
 })

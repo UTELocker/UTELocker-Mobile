@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeStack from './HomeStack';
 import { Colors } from '../constants/styles';
 import SettingsStack from './SettingsStack';
-import HistoryScreen from '../screens/History/HistoryScreen';
 import BookStack from './BookStack';
 import HistoryStack from './HistoryStack';
 import LocationScreen from '../screens/Location/LocationScreen';
@@ -115,6 +114,11 @@ function AuthenticatedTab() {
             <Tab.Screen
                 name="Add"
                 component={BookStack}
+                options={{
+                    tabBarStyle: {
+                        display: "none",
+                    },
+                }}
             />
             <Tab.Screen
                 name="History"

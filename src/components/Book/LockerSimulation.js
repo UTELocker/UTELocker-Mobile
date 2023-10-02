@@ -1,10 +1,18 @@
-import { useEffect } from "react"
-import { View, Text, ScrollView, TouchableOpacity, Alert, StyleSheet } from "react-native"
+import { useEffect, useState } from "react"
+import { 
+    View, 
+    Text, 
+    ScrollView, 
+    TouchableOpacity, 
+    Alert, 
+    StyleSheet, 
+    Dimensions 
+} from "react-native"
 import { TYPE_LOCKER } from "../../constants/typeLocker"
 import STATUS_LOCKER from "../../constants/statusBooking"
 import { Colors } from "../../constants/styles"
-import { useState } from "react"
 import { useNavigation } from "@react-navigation/native"
+
 
 const LockerSimulation = ({
     locker,
@@ -76,18 +84,6 @@ const LockerSimulation = ({
                     status: STATUS_LOCKER.UNAVAILABLE,
                     code: 'Empty',
                 },
-                {
-                    id: 10,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.AVAILABLE,
-                    code: 'A2',
-                },
-                {
-                    id: 11,
-                    type: TYPE_LOCKER.EMPTY,
-                    status: STATUS_LOCKER.UNAVAILABLE,
-                    code: 'Empty',
-                },
             ],
             [
                 {
@@ -96,7 +92,80 @@ const LockerSimulation = ({
                     status: STATUS_LOCKER.BOOKED,
                     code: 'A3',
                 },
-            ]
+            ],
+            [
+                {
+                    id: 13,
+                    type: TYPE_LOCKER.SLOT,
+                    status: STATUS_LOCKER.BOOKED,
+                    code: 'A3',
+                },
+            ],
+            [
+                {
+                    id: 14,
+                    type: TYPE_LOCKER.SLOT,
+                    status: STATUS_LOCKER.BOOKED,
+                    code: 'A3',
+                },
+            ],
+            [
+                {
+                    id: 15,
+                    type: TYPE_LOCKER.SLOT,
+                    status: STATUS_LOCKER.BOOKED,
+                    code: 'A3',
+                },
+            ],
+            [
+                {
+                    id: 16,
+                    type: TYPE_LOCKER.SLOT,
+                    status: STATUS_LOCKER.BOOKED,
+                    code: 'A3',
+                },
+            ],
+            [
+                {
+                    id: 17,
+                    type: TYPE_LOCKER.SLOT,
+                    status: STATUS_LOCKER.BOOKED,
+                    code: 'A3',
+                },
+            ],
+            [
+                {
+                    id: 18,
+                    type: TYPE_LOCKER.SLOT,
+                    status: STATUS_LOCKER.BOOKED,
+                    code: 'A3',
+                },
+            ],
+            [
+                {
+                    id: 19,
+                    type: TYPE_LOCKER.SLOT,
+                    status: STATUS_LOCKER.BOOKED,
+                    code: 'A3',
+                },
+            ],
+            [
+                {
+                    id: 20,
+                    type: TYPE_LOCKER.SLOT,
+                    status: STATUS_LOCKER.BOOKED,
+                    code: 'A3',
+                },
+            ],
+            [
+                {
+                    id: 21,
+                    type: TYPE_LOCKER.SLOT,
+                    status: STATUS_LOCKER.BOOKED,
+                    code: 'A21',
+                },
+            ],
+
         ]
         DATA.forEach((item) => {
             item.forEach((item) => {
@@ -164,12 +233,15 @@ const LockerSimulation = ({
     
     const handleRenderLocker = (data) => {
         const maxNumInRow = getNumHigherInRow(data);
-        const sumWidth = maxNumInRow * 20 + (maxNumInRow - 1) * 5 
-    
+        const windowWidth = Dimensions.get('window').width;
+        const widthItem = (windowWidth - 40 - (maxNumInRow - 1) * 10) / maxNumInRow;
+        const sumWidth = maxNumInRow * widthItem + (maxNumInRow - 3) * 10;
+
         return data.map((item, index) => {
-            const numInRow = item.length
-            const itemWidth = maxNumInRow > numInRow ? ((sumWidth / numInRow) - (numInRow - 1) * 5 ): 20
-    
+            const numInRow = item.length;
+            const itemWidth = maxNumInRow > numInRow ? ((sumWidth / numInRow) - (numInRow - 3) * 10 ): widthItem;
+            const sumWidthItem = numInRow * itemWidth + (numInRow - 3) * 10;
+
             return (
                 <View
                     key={index}
@@ -187,12 +259,12 @@ const LockerSimulation = ({
                                 key={index}
                                 style={{
                                     width: itemWidth,
-                                    height: 20,
+                                    height: widthItem + 10,
                                     backgroundColor: getBackgroundColor(item.status),
                                     borderRadius: 10,
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    marginHorizontal: 2.5,
+                                    marginHorizontal: 5,
                                     opacity: item.isBooked ? 1 : 0.5,
                                 }}
                                 onPress={() => {
@@ -203,7 +275,14 @@ const LockerSimulation = ({
 
                                 disabled={item.status !== STATUS_LOCKER.AVAILABLE}
                             >
-                                <Text>{item.code}</Text>
+                                <Text
+                                    style={{
+                                        fontSize: 14,
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    {item.code}
+                                </Text>
                             </TouchableOpacity>
                         )
                     })}
@@ -237,7 +316,7 @@ const LockerSimulation = ({
     }
 
     return (
-        <ScrollView
+        <View
             style={{
                 flex: 1,
                 backgroundColor: '#fff',
@@ -245,7 +324,6 @@ const LockerSimulation = ({
             }}
         >
             <ScrollView
-                horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 style={{
                     marginBottom: 20,
@@ -261,172 +339,188 @@ const LockerSimulation = ({
                         data && handleRenderLocker(data)
                     }
                 </View>
+                <View
+                    style={{
+                        paddingTop: 250,
+                    }}
+                ></View>
             </ScrollView>
             <View
                 style={{
-                    flex: 1,
-                    paddingHorizontal: 20,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    position: 'absolute',
+                    bottom: 20,
+                    left: 0,
+                    right: 0,
+                    backgroundColor: '#fff',
+                    paddingTop: 20,
+                    height: 250,
                 }}
             >
                 <View
                     style={{
+                        flex: 1,
+                        paddingHorizontal: 20,
                         flexDirection: 'row',
-                        alignItems: 'center',
-                        marginRight: 20,
+                        justifyContent: 'space-between',
                     }}
                 >
                     <View
                         style={{
-                            width: 20,
-                            height: 20,
-                            backgroundColor: Colors.green,
-                            borderRadius: 10,
-                            marginRight: 5,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginRight: 20,
                         }}
-                    />
-                    <Text>Available</Text>
-                </View>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginRight: 20,
-                    }}
-                >
+                    >
+                        <View
+                            style={{
+                                width: 20,
+                                height: 20,
+                                backgroundColor: Colors.green,
+                                borderRadius: 10,
+                                marginRight: 5,
+                            }}
+                        />
+                        <Text>Available</Text>
+                    </View>
                     <View
                         style={{
-                            width: 20,
-                            height: 20,
-                            backgroundColor: Colors.orange,
-                            borderRadius: 10,
-                            marginRight: 5,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginRight: 20,
                         }}
-                    />
-                    <Text>Booked</Text>
-                </View>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginRight: 20,
-                    }}
-                >
+                    >
+                        <View
+                            style={{
+                                width: 20,
+                                height: 20,
+                                backgroundColor: Colors.orange,
+                                borderRadius: 10,
+                                marginRight: 5,
+                            }}
+                        />
+                        <Text>Booked</Text>
+                    </View>
                     <View
                         style={{
-                            width: 20,
-                            height: 20,
-                            backgroundColor: '#ddd',
-                            borderRadius: 10,
-                            marginRight: 5,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginRight: 20,
                         }}
-                    />
-                    <Text>
-                        Unavailable
-                    </Text>
+                    >
+                        <View
+                            style={{
+                                width: 20,
+                                height: 20,
+                                backgroundColor: '#ddd',
+                                borderRadius: 10,
+                                marginRight: 5,
+                            }}
+                        />
+                        <Text>
+                            Unavailable
+                        </Text>
+                    </View>
                 </View>
-            </View>
-            <View
-                style={{
-                    flex: 3,
-                    margin: 20,
-                    paddingHorizontal:10,
-                    paddingVertical: 20,
-                    backgroundColor: Colors.grayDark,
-                    borderRadius: 10,
-                }}
-            >
                 <View
                     style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
-                    }}
-                >
-                    <Text
-                        style={styles.textInfoTitle}
-                    >
-                        Cabinets booked:
-                    </Text>
-                    <Text
-                        style={styles.textInfoValue}
-                    >
-                        {data && getSumBooked(data)}
-                    </Text>
-                </View>
-
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
-                    }}
-                >
-                    <Text
-                        style={styles.textInfoTitle}
-                    >
-                        Price:
-                    </Text>
-                    <Text
-                        style={styles.textInfoValue}
-                    >
-                        {(getSumBooked(data) * PRICE).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}đ
-                    </Text>
-                </View>
-            </View>
-
-            <View
-                style={{
-                    flex: 1,
-                    paddingHorizontal: 20,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 20,
-                }}
-            >
-                <TouchableOpacity
-                    style={{
-                        width: '100%',
-                        height: 50,
-                        backgroundColor: Colors.primary,
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        flex: 3,
+                        margin: 20,
+                        paddingHorizontal:10,
+                        paddingTop: 20,
+                        backgroundColor: Colors.grayDark,
                         borderRadius: 10,
                     }}
-                    onPress={() => {
-                        const listCabinetBooked = getCabinetBooked(data)
-                        if (listCabinetBooked.length === 0) {
-                            Alert.alert(
-                                'Warning',
-                                `You must select at least 1 cabinet`,
-                                [
-                                    {
-                                        text: 'OK',
-                                        onPress: () => {}
-                                    }
-                                ],
-                                { cancelable: false }
-                            )
-                            return
-                        }
-                        navigation.navigate('FormBooking', {
-                            locker: locker,
-                            listCabinetBooked: listCabinetBooked,
-                            date: date,
-                        })
-                    }}
                 >
-                    <Text
+                    <View
                         style={{
-                            color: '#fff',
-                            fontSize: 16,
-                            fontWeight: 'bold',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between'
                         }}
                     >
-                        Next
-                    </Text>
-                </TouchableOpacity>
+                        <Text
+                            style={styles.textInfoTitle}
+                        >
+                            Cabinets booked:
+                        </Text>
+                        <Text
+                            style={styles.textInfoValue}
+                        >
+                            {data && getSumBooked(data)}
+                        </Text>
+                    </View>
+
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between'
+                        }}
+                    >
+                        <Text
+                            style={styles.textInfoTitle}
+                        >
+                            Price:
+                        </Text>
+                        <Text
+                            style={styles.textInfoValue}
+                        >
+                            {(getSumBooked(data) * PRICE).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}đ
+                        </Text>
+                    </View>
+                </View>
+                <View
+                    style={{
+                        flex: 1,
+                        paddingHorizontal: 20,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 20,
+                    }}
+                >
+                    <TouchableOpacity
+                        style={{
+                            width: '100%',
+                            height: 50,
+                            backgroundColor: Colors.primary,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 10,
+                        }}
+                        onPress={() => {
+                            const listCabinetBooked = getCabinetBooked(data)
+                            if (listCabinetBooked.length === 0) {
+                                Alert.alert(
+                                    'Warning',
+                                    `You must select at least 1 cabinet`,
+                                    [
+                                        {
+                                            text: 'OK',
+                                            onPress: () => {}
+                                        }
+                                    ],
+                                    { cancelable: false }
+                                )
+                                return
+                            }
+                            navigation.navigate('FormBooking', {
+                                locker: locker,
+                                listCabinetBooked: listCabinetBooked,
+                                date: date,
+                            })
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: '#fff',
+                                fontSize: 16,
+                                fontWeight: 'bold',
+                            }}
+                        >
+                            Next
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </ScrollView>
+        </View>
     )
 }
 

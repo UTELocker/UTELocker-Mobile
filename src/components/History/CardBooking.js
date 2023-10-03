@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import STATUS_LOCKER from "../../constants/statusBooking";
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
+import DateBooked from "../ui/DateBooked";
 
 function IconStatus({ status }) {
     switch (status) {
@@ -86,68 +87,9 @@ const CardBooking = ({ booking }) => {
                 >
                     {address}
                 </Text>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                        backgroundColor: Colors.lightGray,
-                        padding:10
-                    }}
-                >
-                    <View
-                        style={{
-                            flex:1,
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text>
-                            {time.start.date}
-                        </Text>
-                        <Text>
-                            {time.start.time}
-                        </Text>
-                    </View>
-                    <Text
-                        style={{
-                            flex:1,
-                            fontSize: 20,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                        }}
-                    >
-                        -
-                    </Text>
-                    <View
-                        style={{
-                            flex:1,
-                            alignItems: 'center',
-                        }}
-                    >
-                        {
-                            time.end.date !== '' ? (
-                                <>
-                                    <Text>
-                                        {time.end.date}
-                                    </Text>
-                                    <Text>
-                                        {time.end.time}
-                                    </Text>
-                                </>
-                            ) : (
-                                <Text
-                                    style={{
-                                        fontSize: 16,
-                                        color: Colors.gray,
-                                    }}
-                                >
-                                    Not yet
-                                </Text>
-                            )
-                        }
-                    </View>
-                </View>
+                <DateBooked
+                    date={time}
+                />
                 <Text
                     style={{
                         fontSize: 16,

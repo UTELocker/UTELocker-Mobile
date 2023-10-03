@@ -1,7 +1,5 @@
-import { Alert, FlatList, StyleSheet, Text, } from "react-native"
-import { View } from "react-native"
-import { useState } from "react";
-import { useEffect } from "react";
+import { Alert, FlatList, StyleSheet, Text, View} from "react-native"
+import { useState, useEffect } from "react";
 import * as Location from 'expo-location';
 import { getPreciseDistance } from 'geolib';
 import { getListLockers } from "../../api/locationApi";

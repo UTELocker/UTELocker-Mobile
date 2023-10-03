@@ -2,8 +2,10 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Colors } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
 const Utilities = () => {
+    const navigation = useNavigation();
     return (
         <View
             style={styles.rootContainer}
@@ -20,7 +22,9 @@ const Utilities = () => {
                 }}
             >
                 <TouchableOpacity
-                    onPress={() => alert('Rules')}
+                    onPress={() => {
+                        navigation.navigate('SettingsRule');
+                    }}
                     style={styles.cardContainer}
                 >
                     <MaterialIcons name="security" size={35} color={Colors.green} />

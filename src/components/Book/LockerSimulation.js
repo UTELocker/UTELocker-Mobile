@@ -240,7 +240,6 @@ const LockerSimulation = ({
         return data.map((item, index) => {
             const numInRow = item.length;
             const itemWidth = maxNumInRow > numInRow ? ((sumWidth / numInRow) - (numInRow - 3) * 10 ): widthItem;
-            const sumWidthItem = numInRow * itemWidth + (numInRow - 3) * 10;
 
             return (
                 <View
@@ -427,7 +426,7 @@ const LockerSimulation = ({
                         margin: 20,
                         paddingHorizontal:10,
                         paddingTop: 20,
-                        backgroundColor: Colors.grayDark,
+                        // backgroundColor: Colors.grayDark,
                         borderRadius: 10,
                     }}
                 >
@@ -438,9 +437,14 @@ const LockerSimulation = ({
                         }}
                     >
                         <Text
-                            style={styles.textInfoTitle}
+                            style={[
+                                styles.textInfoTitle,
+                                {
+                                    marginBottom: 10,
+                                }
+                            ]}
                         >
-                            Cabinets booked:
+                            Selected lockers
                         </Text>
                         <Text
                             style={styles.textInfoValue}
@@ -458,7 +462,7 @@ const LockerSimulation = ({
                         <Text
                             style={styles.textInfoTitle}
                         >
-                            Price:
+                            Total price
                         </Text>
                         <Text
                             style={styles.textInfoValue}
@@ -529,11 +533,11 @@ export default LockerSimulation
 const styles = StyleSheet.create({
     textInfoTitle: {
         fontSize: 20,
-        fontWeight: 'bold',
-        color: Colors.white,
+        color: Colors.dark,
     },
     textInfoValue: {
         fontSize: 20,
-        color: Colors.white,
+        fontWeight: 'bold',
+        color: Colors.orange,
     },
 })

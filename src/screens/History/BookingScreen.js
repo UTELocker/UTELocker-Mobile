@@ -162,37 +162,40 @@ const BookingScreen = ({
 
     return (
         <View style={styles.container}>
-        <ScrollView
-            showsVerticalScrollIndicator={false}
-        >
-            {
-                isEmptyAllBooking() ? data.map((item, index) => (
-                    <View
-                        key={index}
-                    >
-                        {
-                            item.bookings.length > 0 && (
-                                <CardTime time={item.date} />
-                            )
-                        }
-                        {item.bookings.map((booking, index) => (
-                            <CardBooking booking={booking} key={index} />
-                        ))}
-                    </View>
-                )) : (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: 500,
-                        }}
-                    >
-                        <Text>No data</Text>
-                    </View>
-                )
-            }
-        </ScrollView>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
+                {
+                    isEmptyAllBooking() ? data.map((item, index) => (
+                        <View
+                            key={index}
+                            style={{
+                                marginTop: index === 0 ? 20 : 0,
+                            }}
+                        >
+                            {
+                                item.bookings.length > 0 && (
+                                    <CardTime time={item.date} />
+                                )
+                            }
+                            {item.bookings.map((booking, index) => (
+                                <CardBooking booking={booking} key={index} />
+                            ))}
+                        </View>
+                    )) : (
+                        <View
+                            style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: 500,
+                            }}
+                        >
+                            <Text>No data</Text>
+                        </View>
+                    )
+                }
+            </ScrollView>
         </View>
     );
 };

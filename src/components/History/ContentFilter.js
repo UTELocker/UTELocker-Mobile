@@ -36,7 +36,12 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                             style={[
                                 styles.cardFilter,
                                 {
-                                    backgroundColor: item.value === moth ? Colors.primary : Colors.white,
+                                    backgroundColor: item.value === moth ?
+                                    Colors.gray :
+                                    Colors.white,
+                                    color: item.value === moth ?
+                                    Colors.white :
+                                    Colors.dark
                                 }
                             ]}
                         >
@@ -86,8 +91,11 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                                 styles.cardFilter,
                                 {
                                     backgroundColor: item.value === typeTransfers ?
-                                    Colors.primary :
+                                    Colors.gray :
                                     Colors.white,
+                                    color: item.value === typeTransfers ?
+                                    Colors.white :
+                                    Colors.dark
                                 }
                             ]}
                         >
@@ -114,8 +122,11 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                                 styles.cardFilter,
                                 {
                                     backgroundColor: item.value === status ?
-                                        Colors.primary :
-                                        Colors.white,
+                                    Colors.gray :
+                                    Colors.white,
+                                    color: item.value === status ?
+                                    Colors.white :
+                                    Colors.dark
                                 }
                             ]}
                         >
@@ -142,8 +153,11 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                                 styles.cardFilter,
                                 {
                                     backgroundColor: item.value === method ?
-                                        Colors.primary :
-                                        Colors.white,
+                                    Colors.gray :
+                                    Colors.white,
+                                    color: item.value === method ?
+                                    Colors.white :
+                                    Colors.dark
                                 }
                             ]}
                         >

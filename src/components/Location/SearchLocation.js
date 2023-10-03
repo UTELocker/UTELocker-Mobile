@@ -81,6 +81,7 @@ const SearchLocation = ({
                 backgroundColor: Colors.primary,
                 flexDirection: 'row',
                 paddingBottom: 10,
+                paddingHorizontal: 10,
             }}
         >
             <SearchBar

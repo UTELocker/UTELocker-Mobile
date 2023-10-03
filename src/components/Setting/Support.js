@@ -8,7 +8,7 @@ const Support = () => {
             id: '1',
             title: 'Contact for comments',
             icon: <Octicons name="comment" size={24} color="black" />,
-            nameTab: 'Contact',
+            nameTab: 'SettingsContact',
         },
     ];
 

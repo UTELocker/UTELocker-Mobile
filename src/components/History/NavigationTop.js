@@ -52,39 +52,19 @@ export default NavigationTop = () => {
                 listLocation={listLocation}
             />
             <Tab.Navigator
-                initialRouteName="Feed"
                 tabBarOptions={{
-                    activeTintColor: Colors.white,
-                    labelStyle: {
-                        textTransform: "uppercase",
-                    },
-                    inactiveTintColor: Colors.dark,
+                    activeTintColor: Colors.primary,
+                    inactiveTintColor: Colors.gray,
                     indicatorStyle: {
-                        height: null,
-                        top: '10%',
-                        bottom: '10%',
-                        width: '45%',
-                        left: '2.5%',
-                        borderRadius: 100,
                         backgroundColor: Colors.primary,
                     },
+                    labelStyle: {
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                    },
                     style: {
-                        alignSelf: "center",
-                        width: '80%',
-                        borderRadius: 100,
-                        borderColor: "blue",
-                        backgroundColor: "white",
-                        marginBottom: 20,
+                        backgroundColor: 'white',
                     },
-                    tabStyle: {
-                        borderRadius: 100,
-                    },
-                }}
-                screenListeners={{
-                    blur: () => {
-                        setContentSearch('');
-                        Keyboard.dismiss();
-                    }
                 }}
             >
             <Tab.Screen

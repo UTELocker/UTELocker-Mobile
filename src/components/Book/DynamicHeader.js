@@ -306,7 +306,7 @@ const DynamicHeader = ({
           >
               <CardDateSmall date={dateStart} />
           </TouchableOpacity>
-          <AntDesign name="doubleright" size={25} color={Colors.gray} />
+          <AntDesign name="doubleright" size={25} color={Colors.white} />
           <TouchableOpacity
             onPress={() => {
               clickDatePickers ({
@@ -383,7 +383,12 @@ const DynamicHeader = ({
           >
             <TouchableOpacity
                 onPress={() => {
-                  Alert.alert('Reset Date');
+                  setDateEnd(null);
+                  setDateStart(null);
+                  scrollViewRef.current?.scrollTo({
+                    y: 0,
+                    animated: true,
+                  })
                 }}
             >
               <Ionicons name="reload-circle" size={30} color={Colors.white} />

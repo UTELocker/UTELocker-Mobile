@@ -9,11 +9,9 @@ const CardBookInHome = ({ book }) => {
     const navigation = useNavigation();
     return (
         <TouchableOpacity
-            style={styles.container}
+            style={styles.cardContainer}
             onPress={() => navigation.navigate("DetailLocker", {
-                code: book.code,
-                key: book.key,
-                timeOut: book.timeOut,
+                data: book,
             })}
         >
             <View style={styles.content}>
@@ -56,14 +54,12 @@ const CardBookInHome = ({ book }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
+    cardContainer: {
         width: '100%',
-        height: 120,
-        backgroundColor: Colors.primary100,
+        backgroundColor: Colors.white,
         borderRadius: 10,
         marginBottom: 10,
         padding: 10,
-        flex:1,
         justifyContent: 'center',
     },
     password: {

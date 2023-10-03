@@ -1,44 +1,10 @@
 import { Alert, Linking, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Colors } from "../../constants/styles";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import STATUS_LOCKER from "../../constants/statusBooking";
-import MapView, { Marker } from 'react-native-maps';
-
+import MapShowLocation from "../ui/MapShowLocation";
+import { handleStatus, stylesStatus } from "../../utils/status";
+import DateBooked from "../ui/DateBooked";
 const CardDetailBooking = ({ history }) => {
-    console.log(history);
-    const stylesStatus = (status) => {
-        switch (status) {
-            case STATUS_LOCKER.FINISHED:
-                return {
-                    backgroundColor: 'green',
-                }
-            case STATUS_LOCKER.CANCEL:
-                return {
-                    backgroundColor: 'orange',
-                }
-            case STATUS_LOCKER.PENDING:
-                return {
-                    backgroundColor: 'yellow',
-                }
-            default:
-                return {
-                    backgroundColor: 'red',
-                }
-        }
-    }
-
-    const handleStatus = (status) => {
-        switch (status) {
-            case STATUS_LOCKER.FINISHED:
-                return 'Finished';
-            case STATUS_LOCKER.CANCEL:
-                return 'Cancel';
-            case STATUS_LOCKER.PENDING:
-                return 'Pending';
-            default:
-                return 'Error';
-        }
-    }
 
     return (
         <View
@@ -100,70 +66,9 @@ const CardDetailBooking = ({ history }) => {
                     <View
                         style={styles.containerText}
                     >
-                        <View
-                            style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                borderRadius: 10,
-                                backgroundColor: Colors.primary500,
-                                padding:10,
-                                marginBottom: 10,
-                            }}
-                        >
-                            <View
-                                style={{
-                                    flex:1,
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <Text>
-                                    {history.time.start.date}
-                                </Text>
-                                <Text>
-                                    {history.time.start.time}
-                                </Text>
-                            </View>
-                            <Text
-                                style={{
-                                    flex:1,
-                                    fontSize: 20,
-                                    fontWeight: 'bold',
-                                    textAlign: 'center',
-                                }}
-                            >
-                                -
-                            </Text>
-                            <View
-                                style={{
-                                    flex:1,
-                                    alignItems: 'center',
-                                }}
-                            >
-                                {
-                                    history.time.end.date !== '' ? (
-                                        <>
-                                            <Text>
-                                                {history.time.end.date}
-                                            </Text>
-                                            <Text>
-                                                {history.time.end.time}
-                                            </Text>
-                                        </>
-                                    ) : (
-                                        <Text
-                                            style={{
-                                                fontSize: 16,
-                                                color: Colors.gray,
-                                            }}
-                                        >
-                                            Not yet
-                                        </Text>
-                                    )
-                                }
-                            </View>
-                        </View>
+                        <DateBooked
+                            date={history.time}
+                        />
                     </View>
 
                     <View
@@ -242,29 +147,9 @@ const CardDetailBooking = ({ history }) => {
             <View
                 style={styles.cardMap}
             >
-                <MapView 
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                    }}
-                    showsUserLocation={false}
-                    followsUserLocation={false}
-                    initialRegion={{
-                        latitude: history.location.latitude,
-                        longitude: history.location.longitude,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}
-                >
-                    <Marker
-                        coordinate={{
-                            latitude: history.location.latitude,
-                            longitude: history.location.longitude,
-                        }}
-                        title={history.locker}
-                        description={history.address}
-                    />
-                </MapView>
+                <MapShowLocation
+                    location={history.location}
+                />
             </View>
         </View>        
     )

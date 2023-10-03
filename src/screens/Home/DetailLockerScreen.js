@@ -1,27 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
 import { Feather, AntDesign } from '@expo/vector-icons';
 import Header from "../../components/ui/Header";
+import DateBooked from "../../components/ui/DateBooked";
+import MapShowLocation from "../../components/ui/MapShowLocation";
+import { Linking } from "react-native";
 
 const DetailLockerScreen = ({route}) => {
-    const navigation = useNavigation();
-    const { code, key, timeOut } = route.params;
-    const [locker, setLocker] = useState({
-        code: '',
-        key: '',
-        timeOut: '',
-    });
 
-    useEffect(() => {
-        setLocker({
-            code: code,
-            key: key,
-            timeOut: timeOut,
-            timesOpen: 20,
-        })
-    }, [])
+    const { 
+        data,
+    } = route.params;
+
+    const DATA = [
+        {
+            title: 'Address',
+            content: data.address,
+        },
+    ]
+
+    const DATA_BOOKED = [
+        {
+            title: 'Code',
+            content: data.code,
+        },
+        {
+            title: 'Date booked',
+            content: data.dateBooked,
+        },
+        {
+            title: 'Date Request',
+            content: data.dateRequest,
+        },
+        {
+            title: 'Payment',
+            content: data.methodPayment,
+        },
+        {
+            title: 'Total Price',
+            content: data.totalPrice,
+        },
+    ]
+
+    const openGGMap = (location) => {
+        const lat = location.latitude;
+        const lng = location.longitude;
+        const scheme = Platform.select({ ios: 'maps://0,0?q=', android: 'geo:0,0?q=' });
+        const latLng = `${lat},${lng}`;
+        const label = 'Locker';
+        const url = Platform.select({
+            ios: `${scheme}${label}@${latLng}`,
+            android: `${scheme}${latLng}(${label})`
+        });
+        Linking.openURL(url);
+    }
 
     return (
         <View
@@ -30,13 +64,15 @@ const DetailLockerScreen = ({route}) => {
             }}
         >
             <Header
-                title="Detail Locker"
+                title="Booking Summary"
                 buttons={{
                     isBack: true,
                 }}
             />
 
-            <View style={styles.content}>
+            <ScrollView 
+                contentContainerStyle={styles.content}
+            >
                 <View
                     style={{
                         alignItems: 'center',
@@ -45,7 +81,9 @@ const DetailLockerScreen = ({route}) => {
                     <View
                         style={styles.containerKey}
                     >
-                        <Text style={styles.key}>{locker.key}</Text>
+                        <Text style={styles.key}>{
+                            data.key.split('').join(' ')
+                        }</Text>
                     </View>
                 </View>
                 <View
@@ -65,24 +103,124 @@ const DetailLockerScreen = ({route}) => {
                     <TouchableOpacity style={styles.buttonUntil}>
                         <AntDesign style={styles.iconRandom} name="delete" size={30} color={Colors.red} />                      
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonUntil}>
+                        <AntDesign name="warning" size={30} color="yellow" />   
+                    </TouchableOpacity>
                 </View>
                 <View
                     style={styles.containerForm}
                 >
-                    <View style={styles.containerText}>
-                        <Text style={styles.titleForm}>Code:</Text>
-                        <Text style={styles.input}>{locker.code}</Text>
+                    <Text
+                        style={{
+                            marginBottom: 10,
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                            color: Colors.dark,
+                        }}
+                    >
+                        Locker's detail
+                    </Text>
+                    {
+                        DATA_BOOKED.map((item, index) => {
+                            if (item.content?.end !== undefined) {
+                                return (
+                                    <View
+                                        key={index}
+                                        style={{
+                                                flexDirection: 'column',
+                                                marginBottom: 10,
+                                            }}
+                                    >
+                                        <Text style={[
+                                            styles.titleForm,
+                                            {
+                                                flex: 1,
+                                                marginBottom: 10,
+                                            }
+                                        ]}>{item.title}</Text>
+                                        <View>
+                                            <DateBooked
+                                                date={item.content}
+                                            />
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            return (
+                                <View
+                                    key={index}
+                                    style={styles.containerText}
+                                >
+                                    <Text style={styles.titleForm}>{item.title}</Text>
+                                    <Text style={styles.input}>{item.content}</Text>
+                                </View>
+                            )
+                        })
+                    }
+                </View>
+                <View
+                    style={styles.containerForm}
+                >
+                    <Text
+                        style={{
+                            marginBottom: 10,
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                            color: Colors.dark,
+                        }}
+                    >
+                        Locker's location
+                    </Text>
+                    {
+                        DATA.map((item, index) => (
+                            <View
+                                key={index}
+                                style={styles.containerText}
+                            >
+                                <Text style={styles.titleForm}>{item.title}</Text>
+                                <Text style={styles.input}>{item.content}</Text>
+                            </View>
+                        ))
+                    }
+                    <View>
+                    <View
+                        style={{
+                            width: '100%',
+                            height: 200,
+                            marginBottom: 20,
+                        }}
+                    >
+                        <MapShowLocation
+                            location={data.location}
+                        />
                     </View>
-                    <View style={styles.containerText}>
-                        <Text style={styles.titleForm}>Time out:</Text>
-                        <Text style={styles.input}>{locker.timeOut}</Text>
-                    </View>
-                    <View style={styles.containerText}>
-                        <Text style={styles.titleForm}>Times open:</Text>
-                        <Text style={styles.input}>{locker.timesOpen}</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            openGGMap(data.location)
+                        }}
+                        style={{
+                            paddingHorizontal: 20,
+                            backgroundColor: Colors.primary,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: 20,
+                            paddingVertical: 10,
+                            borderRadius: 10
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: Colors.white,
+                                fontWeight: 'bold',
+                                fontSize: 20
+                            }}
+                        >
+                            Direction
+                        </Text>
+                    </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </View>
     )
 }
@@ -91,14 +229,15 @@ export default DetailLockerScreen;
 
 const styles = StyleSheet.create({
     content: {
-        padding: 10,
+        flexGrow: 1,
+        paddingHorizontal: 20,
         color: Colors.gray,
-        paddingTop: 20,
+        paddingVertical: 30,
     },
     containerKey: {
-        width: '90%',
+        width: '100%',
         padding: 20,
-        borderRadius: 20,
+        borderRadius: 10,
         elevation: 5,
         backgroundColor: Colors.white,
         alignItems: 'center',
@@ -111,7 +250,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
     },
     key: {
-        fontSize: 30,
+        fontSize: 40,
         fontWeight: 'bold',
         color: Colors.blue,
     },
@@ -140,7 +279,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: Colors.white,
         marginTop: 20,
-        marginHorizontal: 10,
         elevation: 5,
         shadowColor: Colors.dark,
         shadowOffset: {
@@ -153,7 +291,7 @@ const styles = StyleSheet.create({
     titleForm: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: Colors.dark,
+        color: Colors.primary500,
         flex: 4,
     },
     input: {
@@ -167,12 +305,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
-        borderBottomColor: Colors.dark
     },
     containerButton: {
         paddingTop: 20,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-
+        justifyContent: 'space-around',
     }
 })

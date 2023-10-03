@@ -78,7 +78,7 @@ const CardLocker = ({ locker, date }) => {
                         color: Colors.gray,
                     }}
                 >
-                    Number of available lockers: {availableNumber}
+                    Available lockers: {availableNumber}
                 </Text>
             </View>
         </Pressable>

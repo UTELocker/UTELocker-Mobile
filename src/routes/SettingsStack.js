@@ -1,5 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SettingScreen from '../screens/Setting/SettingScreen';
+import RuleScreen from '../screens/Setting/RuleScreen';
+import ContactScreen from '../screens/Setting/ContactScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -11,6 +13,8 @@ function SettingsStack() {
           }}
         >
             <Stack.Screen name="SettingsApp" component={SettingScreen} />
+            <Stack.Screen name="SettingsRule" component={RuleScreen} />
+            <Stack.Screen name="SettingsContact" component={ContactScreen} />
         </Stack.Navigator>
     );
 }

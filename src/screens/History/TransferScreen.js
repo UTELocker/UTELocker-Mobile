@@ -72,6 +72,9 @@ const HistoryTransferScreen = ({
                 data.map((item, index) => (
                     <View
                         key={index}
+                        style={{
+                            marginTop: index === 0 ? 20 : 0,
+                        }}
                     >
                         {item.transfers?.length > 0 ? <CardTime time={item.date} /> : null}
                         {item.transfers.map((transfer, index) => (

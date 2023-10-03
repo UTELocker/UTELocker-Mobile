@@ -227,7 +227,7 @@ const FormBooking = ({
                 </View>
             </View>
 
-            <View>
+
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
@@ -278,7 +278,6 @@ const FormBooking = ({
                         Booking
                     </Text>
                 </TouchableOpacity>
-            </View>
             <ModalPlolicy
                 title={'Policy'}
                 content={
@@ -310,11 +309,20 @@ const styles = StyleSheet.create({
         color: Colors.white,
         fontWeight: 'bold',
         textAlign: 'center',
+        fontSize: 20,
     },
     button: {
         backgroundColor: Colors.primary,
         padding: 10,
         borderRadius: 10,
+        position: 'absolute',
+        bottom: 20,
+        left: 0,
+        right: 0,
+        marginHorizontal: 20,
+        height: 50,
+        flex: 1,
+        justifyContent: 'center',
     },
     containerText: {
         marginTop: 10,

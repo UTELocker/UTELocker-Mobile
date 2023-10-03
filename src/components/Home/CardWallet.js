@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native";
+import { formatNumber } from "../../utils/formatNumber";
 
 const CardWallet = ({ wallet }) => {
     const { balance, balanceDeals } = wallet;
@@ -57,7 +58,7 @@ const CardWallet = ({ wallet }) => {
                             secureTextEntry={balanceVisibility}
                             editable={false}
                         >
-                                {balance}đ
+                                {formatNumber(balance)}đ
                         </TextInput>
                     </View>
                 </View>
@@ -74,7 +75,7 @@ const CardWallet = ({ wallet }) => {
                             alignItems: 'center',
                         }}
                     >
-                        <Text style={styles.content}>{balanceDeals}đ</Text>
+                        <Text style={styles.content}>{formatNumber(balance)}đ</Text>
                     </View>
                 </View>
             </View>
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         width: '90%',  
-        height: 180,
+        height: 140,
         elevation: 5,
         shadowColor: Colors.gray,
         shadowOffset: {
@@ -147,12 +148,11 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
     },
     title: {
-        fontSize: 25,
-        fontWeight: '800',
+        fontSize: 18,
         color: 'gray'
     },
     content: {
-        fontSize: 20,
+        fontSize: 18,
         color: 'gray',
     }
 });

@@ -8,6 +8,7 @@ import { WINDOW_HEIGHT } from "../../utils/dimensionScreen";
 import { useSelector } from "react-redux";
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import CardBookInHome from "./CardBookInHome";
+import FeatureWallet from "./FeatureWallet";
 
 
 const ContentHome = () => {
@@ -283,36 +284,9 @@ const ContentHome = () => {
                         iconWalletUpperHeaderAnimation,
                     ]}
                 >
-                    <TouchableOpacity
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                        onPress={() => Alert.alert('Top Up')}
-                    >
-                        <MaterialIcons name="attach-money" size={30} color={Colors.white} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                        onPress={() => Alert.alert('Top Up')}
-                    >
-                        <FontAwesome5 name="money-bill-wave" size={30} color={Colors.white} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                        onPress={() => Alert.alert('Top Up')}
-                    >
-                        <MaterialIcons name="attach-money" size={30} color={Colors.white} />
-                    </TouchableOpacity>
+                    <FeatureWallet
+                        isShowTitle={false}
+                    />
                 </Animated.View>
                 <View
                     style={{

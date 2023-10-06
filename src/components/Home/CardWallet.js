@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable, TextInput, Alert } from "react-native";
+import { Text, View, StyleSheet, Pressable, TextInput, Alert, Image } from "react-native";
 import { Colors } from "../../constants/styles";
 import { useState } from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native";
 import { formatNumber } from "../../utils/formatNumber";
+import FeatureWallet from "./FeatureWallet";
 
 const CardWallet = ({ wallet }) => {
     const { balance, balanceDeals } = wallet;
@@ -29,6 +30,10 @@ const CardWallet = ({ wallet }) => {
                     flex: 1,
                     flexDirection: 'row',
                     width: '100%',
+                    borderBottomWidth: 1,
+                    borderBottomColor: '#E1E1E1',
+                    marginBottom: 10,
+                    paddingBottom: 10,
                 }}
             >
                 <View
@@ -79,49 +84,7 @@ const CardWallet = ({ wallet }) => {
                     </View>
                 </View>
             </View>
-            <View
-                style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    width: '100%',
-                    borderTopWidth: 1,
-                    borderTopColor: '#E1E1E1',
-                    marginTop: 10,
-                    paddingTop: 10,
-                }}
-            >
-                <TouchableOpacity
-                    style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                    onPress={() => Alert.alert('Top Up')}
-                >
-                    <MaterialIcons name="attach-money" size={30} color={Colors.blue} />
-                    <Text style={{
-                        fontSize: 16,
-                        color: 'gray',
-                    }}>
-                        Top Up
-                    </Text>
-                </TouchableOpacity>
-                <View
-                    style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}  
-                >
-                    <FontAwesome5 name="money-bill-wave" size={30} color={Colors.blue} />
-                    <Text style={{
-                        fontSize: 16,
-                        color: 'gray',
-                    }}>
-                        WithDraw
-                    </Text>
-                </View>
-            </View>
+            <FeatureWallet />
         </View>
     );
 };

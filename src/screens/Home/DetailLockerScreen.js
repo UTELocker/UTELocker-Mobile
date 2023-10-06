@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } from "react-native";
 import { Colors } from "../../constants/styles";
-import { useNavigation } from "@react-navigation/native";
-import { Feather, AntDesign } from '@expo/vector-icons';
+import { Feather, AntDesign, FontAwesome } from '@expo/vector-icons';
 import Header from "../../components/ui/Header";
 import DateBooked from "../../components/ui/DateBooked";
 import MapShowLocation from "../../components/ui/MapShowLocation";
-import { Linking } from "react-native";
+import Button from "../../components/ui/Button";
 
 const DetailLockerScreen = ({route}) => {
 
@@ -194,30 +193,19 @@ const DetailLockerScreen = ({route}) => {
                             location={data.location}
                         />
                     </View>
-                    <TouchableOpacity
-                        onPress={() => {
-                            openGGMap(data.location)
+                    <Button
+                        title="Direction"
+                        onPress={() => openGGMap(data.location)}
+                        styleButton={{
+                            backgroundColor: Colors.blue,
                         }}
-                        style={{
-                            paddingHorizontal: 20,
-                            backgroundColor: Colors.primary,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginBottom: 20,
-                            paddingVertical: 10,
-                            borderRadius: 10
+                        styleText={{
+                            color: Colors.white,
                         }}
-                    >
-                        <Text
-                            style={{
-                                color: Colors.white,
-                                fontWeight: 'bold',
-                                fontSize: 20
-                            }}
-                        >
-                            Direction
-                        </Text>
-                    </TouchableOpacity>
+                        icon={
+                            <FontAwesome name="map-marker" size={24} color="white" />
+                        }
+                    />
                     </View>
                 </View>
             </ScrollView>

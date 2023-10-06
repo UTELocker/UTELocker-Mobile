@@ -2,8 +2,16 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native"
 import { Colors } from "../../constants/styles"
 import { useNavigation } from "@react-navigation/native";
 import ModalPlolicy from "../ui/ModalPolicy";
-import { useState } from "react";
+import { useState, useCallback, useRef } from "react";
 import * as SecureStore from 'expo-secure-store';
+import Button from "../ui/Button";
+import DateBooked from "../ui/DateBooked";
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+  } from '@gorhom/bottom-sheet';
+  import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import ContentPolicy from "./ContentPolicy";
 
 const FormBooking = ({
     locker,
@@ -13,7 +21,14 @@ const FormBooking = ({
 
     const navigator = useNavigation();
 
-    const [visible, setVisible] = useState(false);
+
+    const bottomSheetModalRef = useRef(null);
+
+    const snapPoints = ['75%'];
+  
+    const handlePresentModalPress = useCallback(() => {
+      bottomSheetModalRef.current?.present();
+    }, []);
 
     const PRICE = 100000;
 
@@ -57,243 +72,218 @@ const FormBooking = ({
         });
     }
 
+    const handleBooking = () => {
+        Alert.alert(
+            "Booking",
+            "Are you sure?",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "OK", onPress: () => {
+                    const sumWallet = DATA_WALLET.filter(item => item.title === 'Ballance')[0].value + 
+                                DATA_WALLET.filter(item => item.title === 'Promotion')[0].value;
+                    if (sumWallet < (listCabinetBooked.length * PRICE)) {
+                        Alert.alert(
+                            "Booking",
+                            "Your ballance is not enough!",
+                            [
+                                {
+                                    text: "OK",
+                                    onPress: () => console.log("Cancel Pressed"),
+                                    style: "cancel"
+                                },
+                            ]
+                        );
+                        return;
+                    }
+                    const handleConfirm = async () => {
+                        const result = await SecureStore.getItemAsync('booking');
+                        handlePresentModalPress();
+                        // if (result === 'true') {
+                        //     booking();
+                        // } else {
+                        //     handlePresentModalPress();
+                        // }
+                    }
+                    handleConfirm();
+                }
+            }
+            ]
+        );
+    }
     return (
-        <View
-            style={{
-                flex: 1,
-                backgroundColor: '#EFEFEF',
-                padding: 20,
-            }}
-        >
-            <View
-                style={styles.card}
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <BottomSheetModalProvider>
+            <View style={{
+                    flex: 1,
+                }}
             >
-                <Text
-                    style={styles.title}
-                >
-                    Information Locker
-                </Text>
-                <View
-                    style={styles.containerText}
-                >
-                    <Text>
-                        Locker address:
-                    </Text>
-                    <Text>
-                        {locker.address}
-                    </Text>
-                </View>
-                <View
-                    style={styles.containerText}
-                >
-                    <Text>
-                        List cabinet booked:
-                    </Text>
-                    <Text>
-                        {listCabinetBooked.length}
-                    </Text>
-                </View>
                 <View
                     style={{
-                        marginTop: 10,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
+                        flex: 1,
+                        backgroundColor: '#EFEFEF',
+                        padding: 20,
                     }}
-                >
-                    <Text>
-                        List cabinet address:
-                    </Text>
-                    <Text>
-                        {listCabinetBooked.map((item, index) => {
-                            return (
-                                <Text
-                                    key={index}
-                                >
-                                     {item.code}{index < listCabinetBooked.length - 1 ? ', ' : ''}
-                                </Text>
-                            )
-                        })}
-                    </Text>
-                </View>
-                <Text
-                    style={{
-                        marginTop: 10,
-                    }}
-                >
-                    Date:
-                </Text>
-                <View
-                    style={styles.containerText}
                 >
                     <View
-                        style={styles.containerDateBooking}
+                        style={styles.card}
                     >
+                        <Text
+                            style={styles.title}
+                        >
+                            Information Locker
+                        </Text>
+                        <View
+                            style={styles.containerText}
+                        >
+                            <Text>
+                                Locker address:
+                            </Text>
+                            <Text>
+                                {locker.address}
+                            </Text>
+                        </View>
+                        <View
+                            style={styles.containerText}
+                        >
+                            <Text>
+                                List cabinet booked:
+                            </Text>
+                            <Text>
+                                {listCabinetBooked.length}
+                            </Text>
+                        </View>
                         <View
                             style={{
-                                flex:1,
-                                alignItems: 'center',
+                                marginTop: 10,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
                             }}
                         >
                             <Text>
-                                {date.start.date}
+                                List cabinet address:
                             </Text>
                             <Text>
-                                {date.start.time}
+                                {listCabinetBooked.map((item, index) => {
+                                    return (
+                                        <Text
+                                            key={index}
+                                        >
+                                            {item.code}{index < listCabinetBooked.length - 1 ? ', ' : ''}
+                                        </Text>
+                                    )
+                                })}
                             </Text>
                         </View>
                         <Text
                             style={{
-                                flex:1,
-                                fontSize: 20,
-                                fontWeight: 'bold',
-                                textAlign: 'center',
+                                marginVertical: 10,
                             }}
                         >
-                            -
+                            Date:
                         </Text>
+                        <DateBooked
+                            date={date}
+                        />
+                        <View 
+                            style={styles.containerDate}
+                        ></View>
                         <View
-                            style={{
-                                flex:1,
-                                alignItems: 'center',
-                            }}
+                            style={styles.containerText}
                         >
-                            <Text>
-                                {date.end.date}
+                            <Text
+                                style={{
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                Sum price:
                             </Text>
-                            <Text>
-                                {date.end.time}
+                            <Text
+                                style={{
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                {(listCabinetBooked.length * PRICE).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}đ
                             </Text>
                         </View>
                     </View>
-                </View>
-                <View 
-                    style={styles.containerDate}
-                ></View>
-                <View
-                    style={styles.containerText}
-                >
-                    <Text
-                        style={{
-                            fontWeight: 'bold',
-                        }}
+
+                    <View
+                        style={styles.card}
                     >
-                        Sum price:
-                    </Text>
-                    <Text
-                        style={{
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        {(listCabinetBooked.length * PRICE).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}đ
-                    </Text>
-                </View>
-            </View>
-
-            <View
-                style={styles.card}
-            >
-                <Text
-                    style={styles.title}
-                >
-                    Information Your Wallet
-                </Text>
-                <View
-                    style={styles.containerText}
-                >
-                    <Text>
-                        Ballance:
-                    </Text>
-                    <Text>
-                        {
-                            (DATA_WALLET.filter(item => item.title === 'Ballance')[0].value)
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        }đ
-                    </Text>
-                </View>
-                <View
-                    style={styles.containerText}
-                >
-                    <Text>
-                        Promotion:
-                    </Text>
-                    <Text>
-                        {
-                            (DATA_WALLET.filter(item => item.title === 'Promotion')[0].value)
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        }đ
-                    </Text>
-                </View>
-            </View>
-
-
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        Alert.alert(
-                            "Booking",
-                            "Are you sure?",
-                            [
+                        <Text
+                            style={styles.title}
+                        >
+                            Information Your Wallet
+                        </Text>
+                        <View
+                            style={styles.containerText}
+                        >
+                            <Text>
+                                Ballance:
+                            </Text>
+                            <Text>
                                 {
-                                    text: "Cancel",
-                                    onPress: () => console.log("Cancel Pressed"),
-                                    style: "cancel"
-                                },
-                                { text: "OK", onPress: () => {
-                                    const sumWallet = DATA_WALLET.filter(item => item.title === 'Ballance')[0].value + 
-                                                DATA_WALLET.filter(item => item.title === 'Promotion')[0].value;
-                                    if (sumWallet < (listCabinetBooked.length * PRICE)) {
-                                        Alert.alert(
-                                            "Booking",
-                                            "Your ballance is not enough!",
-                                            [
-                                                {
-                                                    text: "OK",
-                                                    onPress: () => console.log("Cancel Pressed"),
-                                                    style: "cancel"
-                                                },
-                                            ]
-                                        );
-                                        return;
-                                    }
-                                    const handleConfirm = async () => {
-                                        const result = await SecureStore.getItemAsync('booking');
-                                        if (result === 'true') {
-                                            booking();
-                                        } else {
-                                            setVisible(true);
-                                        }
-                                    }
-                                    handleConfirm();
-                                }
-                            }
-                            ]
-                        );
-                    }}
-                >
-                    <Text
-                        style={styles.titleButton}
+                                    (DATA_WALLET.filter(item => item.title === 'Ballance')[0].value)
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                }đ
+                            </Text>
+                        </View>
+                        <View
+                            style={styles.containerText}
+                        >
+                        <Text>
+                            Promotion:
+                        </Text>
+                        <Text>
+                            {
+                                (DATA_WALLET.filter(item => item.title === 'Promotion')[0].value)
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            }đ
+                        </Text>
+                    </View>
+                </View>
+
+
+                <Button
+                    title={'Booking'}
+                    onPress={handleBooking}
+                    styleButton={styles.button}
+                />
+            
+                </View>
+                    <BottomSheetModal
+                        ref={bottomSheetModalRef}
+                        index={0}
+                        snapPoints={snapPoints}
                     >
-                        Booking
-                    </Text>
-                </TouchableOpacity>
-            <ModalPlolicy
-                title={'Policy'}
-                content={
-                    "Please read and confirm the policy before booking.     \n1. The booking time is 60 minutes.    \n2. If the time is over, you will be charged an additional fee.    \n3. If you cancel the booking, you will be charged a cancellation fee.     \n4. If you have any questions, please contact us."
-                }
-                visible={visible}
-                setVisible={setVisible}
-                onClose={() => {
-                    navigator.navigate('Home');
-                }}
-                onConfirm={() => {
-                    booking();
-                }}
-                code={'booking'}
-            />
-        </View>
+                    <View style={{
+                        flex: 1,
+                        backgroundColor: 'red',
+                    }}>
+                        <ContentPolicy
+                            title={'Policy'}
+                            content={
+                                "Please read and confirm the policy before booking.     \n1. The booking time is 60 minutes.    \n2. If the time is over, you will be charged an additional fee.    \n3. If you cancel the booking, you will be charged a cancellation fee.     \n4. If you have any questions, please contact us."
+                            }
+                            onClose={() => {
+                                navigator.navigate('Home');
+                            }}
+                            onConfirm={() => {
+                                booking();
+                            }}
+                            code={'booking'}
+                        />
+                    </View>
+                    </BottomSheetModal>
+                </View>
+            </BottomSheetModalProvider>
+        </GestureHandlerRootView>
     )
 }
 

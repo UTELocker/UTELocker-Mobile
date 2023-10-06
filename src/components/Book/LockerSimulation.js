@@ -12,6 +12,7 @@ import { TYPE_LOCKER } from "../../constants/typeLocker"
 import STATUS_LOCKER from "../../constants/statusBooking"
 import { Colors } from "../../constants/styles"
 import { useNavigation } from "@react-navigation/native"
+import Button from "../ui/Button"
 
 
 const LockerSimulation = ({
@@ -216,6 +217,29 @@ const LockerSimulation = ({
             }
         })
         return max
+    }
+
+    const handleNextStep = () => {
+        const listCabinetBooked = getCabinetBooked(data)
+        if (listCabinetBooked.length === 0) {
+            Alert.alert(
+                'Warning',
+                `You must select at least 1 cabinet`,
+                [
+                    {
+                        text: 'OK',
+                        onPress: () => {}
+                    }
+                ],
+                { cancelable: false }
+            )
+            return
+        }
+        navigation.navigate('FormBooking', {
+            locker: locker,
+            listCabinetBooked: listCabinetBooked,
+            date: date,
+        })
     }
     
     const getBackgroundColor = (status) => {
@@ -471,58 +495,16 @@ const LockerSimulation = ({
                         </Text>
                     </View>
                 </View>
-                <View
-                    style={{
+                
+                <Button
+                    title="Next step"
+                    onPress={handleNextStep}
+                    styleButton={{
+                        backgroundColor: Colors.primary,
+                        marginHorizontal: 20,
                         flex: 1,
-                        paddingHorizontal: 20,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: 20,
                     }}
-                >
-                    <TouchableOpacity
-                        style={{
-                            width: '100%',
-                            height: 50,
-                            backgroundColor: Colors.primary,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 10,
-                        }}
-                        onPress={() => {
-                            const listCabinetBooked = getCabinetBooked(data)
-                            if (listCabinetBooked.length === 0) {
-                                Alert.alert(
-                                    'Warning',
-                                    `You must select at least 1 cabinet`,
-                                    [
-                                        {
-                                            text: 'OK',
-                                            onPress: () => {}
-                                        }
-                                    ],
-                                    { cancelable: false }
-                                )
-                                return
-                            }
-                            navigation.navigate('FormBooking', {
-                                locker: locker,
-                                listCabinetBooked: listCabinetBooked,
-                                date: date,
-                            })
-                        }}
-                    >
-                        <Text
-                            style={{
-                                color: '#fff',
-                                fontSize: 16,
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            Next
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                />
             </View>
         </View>
     )

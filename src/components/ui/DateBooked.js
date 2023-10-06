@@ -26,11 +26,20 @@ const DateBooked = ({date}) => {
                         alignItems: 'center',
                     }}
                 >
-                    <Text>
-                        {date.start.date}
-                    </Text>
-                    <Text>
+                    <Text
+                        style={{
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                        }}
+                    >
                         {date.start.time}
+                    </Text>
+                    <Text
+                        style={{
+                            color: Colors.gray,
+                        }}
+                    >
+                        {date.start.date}
                     </Text>
                 </View>
                 <Text
@@ -52,11 +61,20 @@ const DateBooked = ({date}) => {
                     {
                         date.end.date !== '' ? (
                             <>
-                                <Text>
-                                    {date.end.date}
-                                </Text>
-                                <Text>
+                                <Text
+                                    style={{
+                                        fontSize: 16,
+                                        fontWeight: 'bold',
+                                    }}
+                                >
                                     {date.end.time}
+                                </Text>
+                                <Text
+                                    style={{
+                                        color: Colors.gray,
+                                    }}
+                                >
+                                    {date.end.date}
                                 </Text>
                             </>
                         ) : (

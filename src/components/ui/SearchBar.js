@@ -2,14 +2,19 @@ import { StyleSheet, View, TextInput } from "react-native"
 import { Entypo } from '@expo/vector-icons';
 import { Colors } from "../../constants/styles";
 
-const SearchBar = ({ onChange, value = '', onFocus = () => {} }) => {
+const SearchBar = ({ 
+    onChange, 
+    value = '', 
+    onFocus = () => {},
+    placeholder = 'Search',
+}) => {
     return (
         <View
             style={styles.container}
         >
             <TextInput
                 style={styles.input}
-                placeholder="Search Location"
+                placeholder={placeholder}
                 onFocus={() => onFocus()}
                 onChangeText={(text) => onChange(text)}
                 value={value}

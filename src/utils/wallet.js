@@ -1,4 +1,6 @@
-import { METHOD_TRANSFER, TYPE_TRANSFER } from "../constants/wallet";
+import { Colors } from "../constants/styles";
+import { METHOD_TRANSFER, STATUS_TRANSFER, TYPE_TRANSFER } from "../constants/wallet";
+import { AntDesign } from '@expo/vector-icons';
 
 export const handleIconPayment = (type) => {
     switch (type) {
@@ -21,6 +23,8 @@ export const handleTransferType = (type) => {
             return 'Withdraw';
         case TYPE_TRANSFER.TOP_UP:
             return 'Top up';
+        case TYPE_TRANSFER.ALL_TYPE:
+            return 'All Transaction';
         default:
             return 'Payment';
     }
@@ -38,5 +42,58 @@ export const handleBy = (by) => {
             return 'Momo';
         default:
             return 'UTE Pay';
+    }
+}
+
+export const getLabelStatus = (status) => {
+    switch (status) {
+        case STATUS_TRANSFER.SUCCESS:
+            return 'Success';
+        case STATUS_TRANSFER.ERROR:
+            return 'Error';
+        case STATUS_TRANSFER.PENDING:
+            return 'Pending';
+        case STATUS_TRANSFER.REFUND:
+            return 'Refund';
+        case STATUS_TRANSFER.CANCEL:
+            return 'Cancel';
+        case STATUS_TRANSFER.ALL_STATUS:
+            return 'All Status';
+        default:
+            return 'Success';
+    }
+}
+
+export const getColorStatus = (status) => {
+    switch (status) {
+        case STATUS_TRANSFER.SUCCESS:
+            return Colors.green;
+        case STATUS_TRANSFER.ERROR:
+            return Colors.red;
+        case STATUS_TRANSFER.PENDING:
+            return Colors.orange;
+        case STATUS_TRANSFER.REFUND:
+            return Colors.dark;
+        case STATUS_TRANSFER.CANCEL:
+            return Colors.yellow;
+        default:
+            return Colors.red;
+    }
+}
+
+export const handleIconStatus = (status) => {
+    switch (status) {
+        case STATUS_TRANSFER.SUCCESS:
+            return <AntDesign name="checkcircle" size={20} color={getColorStatus(status)} />;
+        case STATUS_TRANSFER.ERROR:
+            return <AntDesign name="exclamationcircle" size={20} color={getColorStatus(status)} />;
+        case STATUS_TRANSFER.PENDING:
+            return <AntDesign name="clockcircle" size={20} color={getColorStatus(status)} />;
+        case STATUS_TRANSFER.REFUND:
+            return <AntDesign name="swap" size={20} color={getColorStatus(status)} />;
+        case STATUS_TRANSFER.CANCEL:
+            return <AntDesign name="closecircle" size={20} color={getColorStatus(status)} />;
+        default:
+            return <AntDesign name="exclamationcircle" size={20} color={getColorStatus(status)} />;
     }
 }

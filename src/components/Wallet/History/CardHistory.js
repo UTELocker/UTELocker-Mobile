@@ -1,18 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { Colors } from '../../constants/styles';
-import { handleBy, handleIconPayment, handleTransferType } from '../../utils/wallet';
-import { TYPE_TRANSFER } from '../../constants/wallet';
+import { Colors } from '../../../constants/styles';
+import { handleBy, handleIconPayment, handleIconStatus, handleTransferType } from '../../../utils/wallet';
+import { TYPE_TRANSFER } from '../../../constants/wallet';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const CardHistory = ({ item }) => {
+    const navigation = useNavigation();
     return (
-        <View
+        <TouchableOpacity
             style={{
                 padding: 20,
                 borderRadius: 10,
                 borderBottomColor: Colors.lightGray2,
                 borderBottomWidth: 5,
                 flexDirection: 'row',
+            }}
+            onPress={() => {
+                navigation.navigate('DetailHistory', {
+                    item
+                })
             }}
         >
             <View
@@ -40,6 +48,23 @@ const CardHistory = ({ item }) => {
                             resizeMode: 'contain',
                         }}
                     />
+                </View>
+                <View
+                    style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0,
+                        width: 20,
+                        height: 20,
+                        borderRadius: 10,
+                        backgroundColor: Colors.white,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    {
+                        handleIconStatus(item.status)
+                    }
                 </View>
             </View>
             <View
@@ -70,14 +95,14 @@ const CardHistory = ({ item }) => {
                         }}
                     >{
                         item.method === TYPE_TRANSFER.TOP_UP
-                            ? `+$${item.amount}`
-                            : `-$${item.amount}`
+                            ? `+${item.amount}đ`
+                            : `-${item.amount}đ`
                     }</Text>
                 </View>
                 <Text>{handleBy(item.by)}</Text>
                 <Text>{item.date}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

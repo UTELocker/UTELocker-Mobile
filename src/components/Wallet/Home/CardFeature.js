@@ -2,15 +2,17 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
 import { Colors } from "../../../constants/styles";
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const CardFeature = () => {
+    const navigation = useNavigation();
     return (
         <View
             style={styles.card}
         >
             <TouchableOpacity
                 style={styles.containerButton}
-                onPress={() => Alert.alert('Top Up')}
+                onPress={() => navigation.navigate('TopUp')}
             >
                 <MaterialIcons name="attach-money" size={30} color={Colors.primary}/>
                 <Text style={styles.title}>
@@ -19,7 +21,7 @@ const CardFeature = () => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.containerButton}  
-                onPress={() => Alert.alert('Top Up')}
+                onPress={() => navigation.navigate('Transfer')}
             >
                 <Image
                     source={require('../../../../assets/icons/wallet/icon_transfer.png')}
@@ -36,7 +38,9 @@ const CardFeature = () => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.containerButton}  
-                onPress={() => Alert.alert('Top Up')}
+                onPress={() => {
+                    navigation.navigate('Withdraw');
+                }}
             >
                 <Image
                     source={require('../../../../assets/icons/wallet/icon_withdraw.png')}

@@ -12,10 +12,10 @@ const ModalNoti = ({
     const dispatch = useDispatch();
 
     const handleClick = () => {
-
+        onClose();
     }
     return (
-        <Modal visible={show} animationType="slide" transparent={true}>
+        <Modal visible={show} animationType="none" transparent={true}>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Text style={styles.modalTitle}>{title}</Text>
@@ -65,6 +65,13 @@ const styles = StyleSheet.create({
         width: '80%',
         padding: 10,
         backgroundColor: Colors.primary,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textStyle: {
+        color: Colors.white,
+        fontWeight: "bold",
+        textAlign: "center"
     }
 });
 

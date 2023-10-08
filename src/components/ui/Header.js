@@ -1,16 +1,23 @@
 import React from 'react'
 import { Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/styles';    
 import { useNavigation } from '@react-navigation/native';
 import Notification from '../ui/Notification'
 import { AntDesign } from '@expo/vector-icons';
 
-const Header = ({ title, buttons }) => {
+const Header = ({ 
+    title,
+    buttons,
+    styleHeader = {},
+    styleTitle = {},
+}) => {
     const navigation = useNavigation();
     return (
         <View
-            style={styles.header}
+            style={[
+                styles.header,
+                styleHeader
+            ]}
         >
             <View
                 style={{
@@ -39,7 +46,10 @@ const Header = ({ title, buttons }) => {
                     ) : null
                 }
                 <Text
-                    style={styles.title}
+                    style={[
+                        styles.title,
+                        styleTitle
+                    ]}
                 >
                     {title}
                 </Text>
@@ -70,8 +80,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.primary,
         paddingHorizontal: 20,
+        backgroundColor: Colors.primary,
     },
     title: {
         flex: 1,

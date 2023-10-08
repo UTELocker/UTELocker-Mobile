@@ -12,7 +12,7 @@ const FeatureWallet = ({isShowTitle = true}) => {
         >
             <TouchableOpacity
                 style={styles.containerButton}
-                onPress={() => Alert.alert('Top Up')}
+                onPress={() => navigation.navigate('TopUp')}
             >
                 <MaterialIcons name="attach-money" size={30} color={
                     isShowTitle ? Colors.primary : Colors.white
@@ -27,7 +27,7 @@ const FeatureWallet = ({isShowTitle = true}) => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.containerButton}  
-                onPress={() => Alert.alert('Top Up')}
+                onPress={() => navigation.navigate('Withdraw')}
             >
                 <Image
                     source={

@@ -37,7 +37,18 @@ const ContentPolicy = ({
                     onValueChange={setCheckedConfirm}
                     color={isCheckedConfirm ? '#4630EB' : undefined}
                     />
-                    <Text style={styles.paragraph}>Confirm</Text>
+                    <Text style={styles.paragraph}>
+                        I agree with the terms and conditions
+                    </Text>
+                </View>
+                <View style={styles.section}>
+                    <Checkbox
+                    style={styles.checkbox}
+                    value={isCheckedHidden}
+                    onValueChange={setCheckedHidden}
+                    color={isCheckedHidden ? '#4630EB' : undefined}
+                    />
+                    <Text style={styles.paragraph}>Don't show again</Text>
                 </View>
                 <View
                     style={{
@@ -77,15 +88,6 @@ const ContentPolicy = ({
                     >
                         <Text style={styles.titleButton}>Next</Text>
                     </TouchableOpacity>
-                </View>
-                <View style={styles.section}>
-                    <Checkbox
-                    style={styles.checkbox}
-                    value={isCheckedHidden}
-                    onValueChange={setCheckedHidden}
-                    color={isCheckedHidden ? '#4630EB' : undefined}
-                    />
-                    <Text style={styles.paragraph}>Don't show again</Text>
                 </View>
             </View>
         </View>

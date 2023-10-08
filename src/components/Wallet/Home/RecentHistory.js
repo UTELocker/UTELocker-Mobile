@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Colors } from '../../../constants/styles';
 import { METHOD_TRANSFER, STATUS_TRANSFER, TYPE_TRANSFER } from '../../../constants/wallet';
-import { handleBy, handleIconPayment, handleTransferType } from '../../../utils/wallet';
-import CardHistory from '../CardHistory';
+import CardHistory from '../History/CardHistory';
+import { useNavigation } from '@react-navigation/native';
 
 const RecentHistory = () => {
+    const navigation = useNavigation();
     const DATA = [
         {
             id: '1',
@@ -14,6 +15,9 @@ const RecentHistory = () => {
             date: '2021-07-01',
             method: TYPE_TRANSFER.PAYMENT,
             by: METHOD_TRANSFER.UTE_PAY,
+            from: 'Nguyen Van A',
+            to: 'UTE Lockers',
+            tradingCode: '123456789',
         },
         {
             id: '2',
@@ -22,6 +26,9 @@ const RecentHistory = () => {
             date: '2021-07-01',
             method: TYPE_TRANSFER.WITHDRAW,
             by: METHOD_TRANSFER.ZALO_PAY,
+            from: 'UTE Pay',
+            to: 'Nguyen Van A',
+            tradingCode: '123456789',
         },
         {
             id: '3',
@@ -30,6 +37,9 @@ const RecentHistory = () => {
             date: '2021-07-01',
             method: TYPE_TRANSFER.TRANSFER,
             by: METHOD_TRANSFER.UTE_PAY,
+            from: 'Nguyen Van A',
+            to: 'Nguyen Van B',
+            tradingCode: '123456789',
         },
         {
             id: '4',
@@ -38,6 +48,9 @@ const RecentHistory = () => {
             date: '2021-07-01',
             method: TYPE_TRANSFER.TOP_UP,
             by: METHOD_TRANSFER.BANK_TRANSFER,
+            from: 'Nguyen Van A',
+            to: 'UTE Pay',
+            tradingCode: '123456789',
         },
         {
             id: '5',
@@ -46,6 +59,9 @@ const RecentHistory = () => {
             date: '2021-07-01',
             method: TYPE_TRANSFER.TOP_UP,
             by: METHOD_TRANSFER.MOMO,
+            from: 'Nguyen Van A',
+            to: 'UTE Pay',
+            tradingCode: '123456789',
         },
         {
             id: '6',
@@ -54,6 +70,9 @@ const RecentHistory = () => {
             date: '2021-07-01',
             method: TYPE_TRANSFER.TOP_UP,
             by: METHOD_TRANSFER.MOMO,
+            from: 'Nguyen Van A',
+            to: 'UTE Pay',
+            tradingCode: '123456789',
         },
         {
             id: '7',
@@ -62,6 +81,9 @@ const RecentHistory = () => {
             date: '2021-07-01',
             method: TYPE_TRANSFER.WITHDRAW,
             by: METHOD_TRANSFER.BANK_TRANSFER,
+            from: 'Nguyen Van A',
+            to: 'UTE Pay',
+            tradingCode: '123456789',
         },
     ]
 
@@ -100,6 +122,9 @@ const RecentHistory = () => {
                         style={{
                             textAlign: 'center',
                             marginTop: 10,
+                        }}
+                        onPress={() => {
+                            navigation.navigate('History');
                         }}
                     >
                         Show more

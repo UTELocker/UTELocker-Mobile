@@ -1,7 +1,10 @@
 export const STATUS_TRANSFER = {
+    ALL_STATUS: 5,
     SUCCESS: 0,
     ERROR: 1,
     PENDING: 2,
+    REFUND: 3,
+    CANCEL: 4,
 };
 
 export const TYPE_TRANSFER = {
@@ -9,6 +12,7 @@ export const TYPE_TRANSFER = {
     TRANSFER: 1,
     WITHDRAW: 2,
     PAYMENT: 3,
+    ALL_TYPE: 4,
 };
 
 export const METHOD_TRANSFER = {

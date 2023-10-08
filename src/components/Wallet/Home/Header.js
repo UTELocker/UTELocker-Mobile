@@ -35,7 +35,7 @@ const Header = () => {
             <View
                 style={{ flexDirection: 'row', alignItems: 'center'}}
             >
-                <Text style={styles.balance}>$10.0</Text>
+                <Text style={styles.balance}>1,000,000đ</Text>
                 <TouchableOpacity
                     onPress={() => {
                         setIsShowMore(!isShowMore);
@@ -60,11 +60,11 @@ const Header = () => {
             >
                 <View>
                     <Text style={styles.title}>Balance</Text>
-                    <Text style={styles.balance}>$10.0</Text>
+                    <Text style={styles.balance}>1,000,000đ</Text>
                 </View>
                 <View>
                     <Text style={styles.title}>Promotion</Text>
-                    <Text style={styles.balance}>$10.0</Text>
+                    <Text style={styles.balance}>0đ</Text>
                 </View>
             </View>
             <View

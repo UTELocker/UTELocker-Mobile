@@ -1,8 +1,10 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'; 
+import { useNavigation } from "@react-navigation/native";
 
 const Notification = () => {
+    const navigation = useNavigation();
     return (
         <View
             style={styles.shadowView}
@@ -10,7 +12,7 @@ const Notification = () => {
         >
             <TouchableOpacity
                 style={styles.buttonNotification}
-                onPress={() => alert('Notification')}
+                onPress={() => navigation.navigate('Notification')}
             >
                 <Ionicons name="notifications-outline" size={30} color="black" />
             </TouchableOpacity>

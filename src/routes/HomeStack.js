@@ -5,6 +5,7 @@ import HomeScreen from '../screens/Home/HomeScreen';
 import WalletTab from './Wallet/WalletTab';
 import WithDrawScreen from '../screens/UTEPay/FeaturePayment/WithDrawScreen';
 import TopUpScreen from '../screens/UTEPay/FeaturePayment/TopUpScreen';
+import NotificationScreen from '../screens/Notification/NotificationScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ function HomeStack() {
             />
             <Stack.Screen name="Withdraw" component={WithDrawScreen} />
             <Stack.Screen name="TopUp" component={TopUpScreen} />
+            <Stack.Screen name='Notification' component={NotificationScreen} />
         </Stack.Navigator>
     );
 }

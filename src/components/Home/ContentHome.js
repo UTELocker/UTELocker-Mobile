@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { ImageBackground, StyleSheet, View, Text, Animated, ScrollView, TouchableOpacity } from "react-native";
 import Notification from "../ui/Notification";
 import CardWallet from "./CardWallet";
@@ -6,7 +6,6 @@ import Scanner from "./Scaner";
 import { Colors } from "../../constants/styles";
 import { WINDOW_HEIGHT } from "../../utils/dimensionScreen";
 import { useSelector } from "react-redux";
-import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import CardBookInHome from "./CardBookInHome";
 import FeatureWallet from "./FeatureWallet";
 
@@ -267,7 +266,7 @@ const ContentHome = () => {
                         fontSize: 16,
                         color: Colors.white,
                     }}>
-                        {account.name}Ogata
+                        {account.name}
                     </Text>
                     </Animated.View>
 

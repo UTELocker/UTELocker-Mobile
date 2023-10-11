@@ -5,8 +5,7 @@ import {
     PusherChannel,
     PusherEvent,
   } from '@pusher/pusher-websocket-react-native';
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const NotificationScreen = () => {
 
@@ -44,6 +43,13 @@ const NotificationScreen = () => {
         <Text>
             Notification Screen
         </Text>
+        <View 
+            style={{
+                height: 120,
+                width: "100%",
+                backgroundColor: messages.length > 0 ? "green" : "red"
+            }}
+        />
         <Text>
             {
                 messages.map((message, index) => (

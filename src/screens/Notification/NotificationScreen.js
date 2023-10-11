@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 const NotificationScreen = () => {
 
     const [ messages, setMessages ] = useState([])
+    const [ pusherState, setPusherState ] = useState(0);
     useEffect(() => {
         const connectToPusher = async () => {
             const pusher = Pusher.getInstance();
@@ -27,17 +28,29 @@ const NotificationScreen = () => {
                 onEvent: () => {
                   console.log("Test event");
                   setMessages((messages) => [...messages, "Test event"]);
+                  setPusherState(1);
                 },
               });
             } catch (e) {
-              console.log(`ERROR: ${e}`);
-              setMessages((messages) => [...messages, `ERROR: ${e}`]);
+                console.log(`ERROR: ${e}`);
+                setMessages((messages) => [...messages, `ERROR: ${e}`]);
+                setPusherState(2);
             }
           };
       
           connectToPusher();
     }, [])
 
+    const handleState = (state) => {
+        switch (state) {
+            case 0:
+                return "grey"
+            case 1:
+                return "green"
+            case 2:
+                return "red"
+        }
+    }
     return (
     <View>
         <Text>
@@ -47,7 +60,7 @@ const NotificationScreen = () => {
             style={{
                 height: 120,
                 width: "100%",
-                backgroundColor: messages.length > 0 ? "green" : "red"
+                backgroundColor: handleState(pusherState)
             }}
         />
         <Text>

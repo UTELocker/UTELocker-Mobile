@@ -387,7 +387,6 @@ const ContentHome = () => {
                         ) : (
                             <View
                                 style={{
-                                    justifyContent: 'center',
                                     alignItems: 'center',
                                     paddingHorizontal: 20,
                                 }}

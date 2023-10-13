@@ -39,7 +39,7 @@ const CardBookInHome = ({ book }) => {
                             style={styles.containerCode}
                         >
                             <Text style={styles.containerPassword}>
-                                Key: <Text style={styles.password}>{book.key}</Text>
+                                Key: <Text style={styles.password}>{book.pin_code}</Text>
                             </Text>
                         </View>
                         <View
@@ -51,10 +51,15 @@ const CardBookInHome = ({ book }) => {
                         >
                         </View>
                     </View>
-                    <Text>
-                        { book.timeOut } remaining
-                    </Text>
-                    <Text>
+                    <View style={{flexDirection:"row"}}>
+                        <Text style={{ color: Colors.green, marginRight: 5 }}>
+                            { book.timeOut }
+                        </Text>
+                        <Text>
+                            remaining
+                        </Text>
+                    </View>
+                    <Text style={{ fontWeight: '300', color: Colors.gray}}>
                         { book.address }
                     </Text>
                 </View>
@@ -71,7 +76,7 @@ const CardBookInHome = ({ book }) => {
                     >
                         <MaterialIcons 
                             name="lock-outline" 
-                            size={60} 
+                            size={50} 
                             color="white" 
                         />
                     </View>
@@ -173,13 +178,12 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         borderRadius: 10,
         marginBottom: 10,
-        justifyContent: 'center',
         flexDirection: 'column',
         justifyContent: 'flex-start',
 
     },
     password: {
-        fontSize: 30,
+        fontSize: 28,
         color: Colors.blue,
     },
     containerPassword: {

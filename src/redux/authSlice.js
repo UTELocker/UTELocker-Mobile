@@ -4,10 +4,12 @@ import * as SecureStore from 'expo-secure-store';
 const initialState =  {
     user: {
         token: null,
+        id: null,
         email: null,
         name: null,
         phone: null,
         address: null,
+        clientId: null,
     },
     isLogin: false,
 };
@@ -29,6 +31,8 @@ export const authSlice = createSlice({
             name: action.payload.name ?? '',
             phone: action.payload.phone ?? '',
             address: action.payload.address ?? '',
+            clientId: action.payload.clientId ?? '',
+            id: action.payload.id ?? '',
         };
         state.isLogin = true;
     },

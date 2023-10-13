@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ImageBackground, StyleSheet, View, Text, Animated, ScrollView, TouchableOpacity } from "react-native";
 import Notification from "../ui/Notification";
 import CardWallet from "./CardWallet";
@@ -8,6 +8,8 @@ import { WINDOW_HEIGHT } from "../../utils/dimensionScreen";
 import { useSelector } from "react-redux";
 import CardBookInHome from "./CardBookInHome";
 import FeatureWallet from "./FeatureWallet";
+import { getAll } from "../../api/bookingApi";
+import STATUS_CODE from "../../constants/statusCode";
 
 
 const ContentHome = () => {
@@ -16,159 +18,23 @@ const ContentHome = () => {
     const lastOffsetY = useRef(0);
     const scrollDirection = useRef('');
     const [isShowLowerHeader, setIsShowLowerHeader] = useState(true);
+    const [ orderedLockers , setOrderedLockers ] = useState([]);
 
-    const [ orderedLockers , setOrderedLockers ] = useState([
-        {
-            code: 'A1',
-            key: '123456',
-            timeOut: '10h',
-            address: '123 Nguyen Luong Bang, Da Nang',
-            timesOpen: 20,
-            dateBooked: {
-                start: {
-                    date: '2021-09-20',
-                    time: '10:00',
-                },
-                end: {
-                    date: '2021-09-20',
-                    time: '12:00',
-                },
-            },
-            dateRequest: '2021-09-20 10:00',
-            methodPayment: 'Cash',
-            totalPrice: '100000',
-            location: {
-                latitude: 16.047079,
-                longitude: 108.206230,
-            },
-        },
-  
-        {
-            code: 'A2',
-            key: '123456',
-            timeOut: '10h',
-            address: '321 Dien Bien Phu, Da Nang',
-            timesOpen: 10,
-            dateBooked: {
-                start: {
-                    date: '2021-09-20',
-                    time: '10:00',
-                },
-                end: {
-                    date: '2021-09-20',
-                    time: '12:00',
-                },
-            },
-            dateRequest: '2021-09-20 10:00',
-            methodPayment: 'Momo',
-            totalPrice: '100000',
-            location: {
-                latitude: 16.047079,
-                longitude: 108.206230,
-            },
-        },
-  
-        {
-            code: 'A3',
-            key: '123456',
-            timeOut: '10h',
-            address: '123 Nguyen Luong Bang, Da Nang',
-            timesOpen: 20,
-            dateBooked: {
-                start: {
-                    date: '2021-09-20',
-                    time: '10:00',
-                },
-                end: {
-                    date: '2021-09-20',
-                    time: '12:00',
-                },
-            },
-            dateRequest: '2021-09-20 10:00',
-            methodPayment: 'Cash',
-            totalPrice: '100000',
-            location: {
-                latitude: 16.047079,
-                longitude: 108.206230,
-            },
-        },
-  
-        {
-            code: 'A4',
-            key: '123456',
-            timeOut: '10h',
-            address: '123 Nguyen Luong Bang, Da Nang',
-            timesOpen: 20,
-            dateBooked: {
-                start: {
-                    date: '2021-09-20',
-                    time: '10:00',
-                },
-                end: {
-                    date: '2021-09-20',
-                    time: '12:00',
-                },
-            },
-            dateRequest: '2021-09-20 10:00',
-            methodPayment: 'Cash',
-            totalPrice: '100000',
-            location: {
-                latitude: 16.047079,
-                longitude: 108.206230,
-            },
-        },
-  
-        {
-            code: 'A5',
-            key: '123456',
-            timeOut: '10h',
-            address: '123 Nguyen Luong Bang, Da Nang',
-            timesOpen: 20,
-            dateBooked: {
-                start: {
-                    date: '2021-09-20',
-                    time: '10:00',
-                },
-                end: {
-                    date: '2021-09-20',
-                    time: '12:00',
-                },
-            },
-            dateRequest: '2021-09-20 10:00',
-            methodPayment: 'Cash',
-            totalPrice: '100000',
-            location: {
-                latitude: 16.047079,
-                longitude: 108.206230,
-            },
-        },
-  
-        {
-            code: 'A6',
-            key: '123456',
-            timeOut: '10h',
-            address: '123 Nguyen Luong Bang, Da Nang',
-            timesOpen: 20,
-            dateBooked: {
-                start: {
-                    date: '2021-09-20',
-                    time: '10:00',
-                },
-                end: {
-                    date: '2021-09-20',
-                    time: '12:00',
-                },
-            },
-            dateRequest: '2021-09-20 10:00',
-            methodPayment: 'Cash',
-            totalPrice: '100000',
-            location: {
-                latitude: 16.047079,
-                longitude: 108.206230,
-            },
-        },
-  
-      ]);
+    useEffect(() => {
+        const resAllBookings = async () => {
+            console.log('resAllBookings');
+            const res = await getAll();
+            switch (res.status) {
+                case STATUS_CODE.OK:
+                    setOrderedLockers(res.data.data);
+                    break;
+                default:
+                    console.log('resAllBookings', res.status);
+                    break;
+            }
+        }
+        resAllBookings();
+    }, []);
 
     const account = useSelector(state => state.auth.user);
 
@@ -394,7 +260,7 @@ const ContentHome = () => {
                                 {
                                     orderedLockers.map((item, index) => {
                                         return (
-                                            <CardBookInHome book={item} key={item.code}/>
+                                            <CardBookInHome book={item} key={item.id}/>
                                         )
 
                                     })

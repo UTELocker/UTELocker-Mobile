@@ -13,6 +13,7 @@ const DetailLockerScreen = ({route}) => {
         data,
     } = route.params;
 
+    console.log(data);
     const DATA = [
         {
             title: 'Address',
@@ -35,7 +36,7 @@ const DetailLockerScreen = ({route}) => {
         },
         {
             title: 'Payment',
-            content: data.methodPayment,
+            content: 'UTE Pay',
         },
         {
             title: 'Total Price',
@@ -81,7 +82,7 @@ const DetailLockerScreen = ({route}) => {
                         style={styles.containerKey}
                     >
                         <Text style={styles.key}>{
-                            data.key.split('').join(' ')
+                            data.pin_code.split('').join(' ')
                         }</Text>
                     </View>
                 </View>

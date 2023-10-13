@@ -1,19 +1,27 @@
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { View } from 'react-native';
 
 const MapShowLocation = ({ location }) => {
+    const [waitingCheckPermission, setWaitingCheckPermission] = useState(true);
 
     useEffect(() => {
-        // const permissionConfig = async () => {
-        //     let { status } = await Location.requestForegroundPermissionsAsync();
-        //     if (status !== 'granted') {
-        //       Alert.alert('Permission to access location was denied');
-        //       return;
-        //     }
-        // }
-        // permissionConfig();
+        const permissionConfig = async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            console.log(status);
+            if (status !== 'granted') {
+              Alert.alert('Permission to access location was denied');
+              return;
+            }
+            setWaitingCheckPermission(false);
+        }
+        permissionConfig();
     }, []);
+
+    if (waitingCheckPermission) {
+        return <View />
+    }
 
     return (
         <MapView
@@ -23,17 +31,18 @@ const MapShowLocation = ({ location }) => {
             }}
             showsUserLocation={false}
             followsUserLocation={false}
-            initialRegion={{
-                latitude: location.latitude,
-                longitude: location.longitude,
+            region={{
+                latitude: parseFloat(location.latitude),
+                longitude: parseFloat(location.longitude),
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             }}
         >
             <Marker
+                id='1'
                 coordinate={{
-                    latitude: location.latitude,
-                    longitude: location.longitude,
+                    latitude: parseFloat(location.latitude),
+                    longitude: parseFloat(location.longitude),
                 }}
             />
         </MapView>

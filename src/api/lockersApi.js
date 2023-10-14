@@ -1,11 +1,11 @@
 import { getMethod, postMethod } from "./axios";
 
 const searchLockers = (searchParams) => {
-    return postMethod('/lockers/search', searchParams);
+    return postMethod('/search/lockers', searchParams);
 };
 
-const getModuleOfLocker = (lockerId) => {
-    return getMethod(`/lockers/${lockerId}/module`);
+const postModuleOfLocker = (lockerId, params) => {
+    return postMethod(`/lockers/${lockerId}/modules`, params);
 };
 
-export { searchLockers, getModuleOfLocker };
+export { searchLockers, postModuleOfLocker };

@@ -83,7 +83,6 @@ const ContentPolicy = ({
                                 saveStatusCode(code, isCheckedHidden);
                             }
                             onConfirm();
-                            setVisible(false);
                         }}
                     >
                         <Text style={styles.titleButton}>Next</Text>

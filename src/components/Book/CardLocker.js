@@ -8,7 +8,7 @@ import { Alert } from "react-native";
 
 
 const CardLocker = ({ locker, date }) => {
-    const { id, address, availableNumber } = locker;
+    const { id, address, locker_slots_count } = locker;
 
     const navigation = useNavigation();
     return (
@@ -78,7 +78,7 @@ const CardLocker = ({ locker, date }) => {
                         color: Colors.gray,
                     }}
                 >
-                    Available lockers: {availableNumber}
+                    Available lockers: {locker_slots_count}
                 </Text>
             </View>
         </Pressable>

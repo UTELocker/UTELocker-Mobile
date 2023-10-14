@@ -4,4 +4,8 @@ const getAll = () => {
     return getMethod('/bookings');
 };
 
-export { getAll };
+const createBooking = (params) => {
+    return postMethod('/bookings', params);
+}
+
+export { getAll, createBooking };

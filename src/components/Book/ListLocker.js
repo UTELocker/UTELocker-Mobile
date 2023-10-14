@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native"
 import CardLocker from "./CardLocker";
+import { searchLockers } from "../../api/lockersApi";
+import STATUS_CODE from "../../constants/statusCode";
 
 const ListLocker = ({
     dateStart,
@@ -12,18 +14,7 @@ const ListLocker = ({
     
     const [isLoad, setIsLoad] = useState(false);
 
-    const data = [
-        {
-            id: 1,
-            availableNumber: 10,
-            address: "123 Nguyen Luong Bang, Da Nang"
-        },
-        {
-            id: 2,
-            availableNumber: 10,
-            address: "KTX My Dinh, Ha Noi"
-        },
-    ];
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         if (isFind) {
@@ -31,15 +22,25 @@ const ListLocker = ({
                 setIsLoad(true);
             }, 500);
         }
-    }, [isFind])
 
-    useEffect(() => {
-        if (refreshing) {
-            setTimeout(() => {
-                setRefreshing(false);
-            }, 500);
+        const searchListLockers = async () => {
+            const res = await searchLockers({
+                start_date: dateStart,
+                end_date: dateEnd,
+            });
+            switch(res.status) {
+                case STATUS_CODE.OK:
+                    setData(res.data.data);
+                    setIsLoad(true);
+                    break;
+                default:
+                    setIsLoad(false);
+                    break;
+            }
         }
-    }, [refreshing])
+        searchListLockers();
+
+    }, [isFind, refreshing])
 
     if (!isLoad) 
         return <View
@@ -67,7 +68,7 @@ const ListLocker = ({
                 data.map((item, index) => {
                     return (
                         <CardLocker
-                            key={index}
+                            key={item.id}
                             locker={item}
                             date={{
                                 start: dateStart,

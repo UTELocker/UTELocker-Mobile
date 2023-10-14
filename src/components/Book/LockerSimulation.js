@@ -13,6 +13,8 @@ import STATUS_LOCKER from "../../constants/statusBooking"
 import { Colors } from "../../constants/styles"
 import { useNavigation } from "@react-navigation/native"
 import Button from "../ui/Button"
+import { postModuleOfLocker } from "../../api/lockersApi"
+import STATUS_CODE from "../../constants/statusCode"
 
 
 const LockerSimulation = ({
@@ -27,153 +29,32 @@ const LockerSimulation = ({
     const PRICE = 100000;
     const LIMIT = 2;
     useEffect(() => {
-        const DATA = [
-            [
-                {
-                    id: 1,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.AVAILABLE,
-                    code: 'A1',
-                },
-                {
-                    id: 2,
-                    type: TYPE_LOCKER.EMPTY,
-                    status: STATUS_LOCKER.UNAVAILABLE,
-                    code: 'Empty',
-                },
-                {
-                    id: 3,
-                    type: TYPE_LOCKER.CPU,
-                    status: STATUS_LOCKER.UNAVAILABLE,
-                    code: 'CPU',
-                },
-            ],
-            [
-                {
-                    id: 4,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.AVAILABLE,
-                    code: 'A2',
-                },
-                {
-                    id: 5,
-                    type: TYPE_LOCKER.EMPTY,
-                    status: STATUS_LOCKER.UNAVAILABLE,
-                    code: 'Empty',
-                },
-                {
-                    id: 6,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A2',
-                },
-                {
-                    id: 7,
-                    type: TYPE_LOCKER.EMPTY,
-                    status: STATUS_LOCKER.UNAVAILABLE,
-                    code: 'Empty',
-                },
-                {
-                    id: 8,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A2',
-                },
-                {
-                    id: 9,
-                    type: TYPE_LOCKER.EMPTY,
-                    status: STATUS_LOCKER.UNAVAILABLE,
-                    code: 'Empty',
-                },
-            ],
-            [
-                {
-                    id: 12,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A3',
-                },
-            ],
-            [
-                {
-                    id: 13,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A3',
-                },
-            ],
-            [
-                {
-                    id: 14,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A3',
-                },
-            ],
-            [
-                {
-                    id: 15,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A3',
-                },
-            ],
-            [
-                {
-                    id: 16,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A3',
-                },
-            ],
-            [
-                {
-                    id: 17,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A3',
-                },
-            ],
-            [
-                {
-                    id: 18,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A3',
-                },
-            ],
-            [
-                {
-                    id: 19,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A3',
-                },
-            ],
-            [
-                {
-                    id: 20,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A3',
-                },
-            ],
-            [
-                {
-                    id: 21,
-                    type: TYPE_LOCKER.SLOT,
-                    status: STATUS_LOCKER.BOOKED,
-                    code: 'A21',
-                },
-            ],
+        let numberCode = 1;
 
-        ]
-        DATA.forEach((item) => {
-            item.forEach((item) => {
-                item.isBooked = false
-            })
-        })
-        setData(DATA)
+        const getModules = async () => {
+            const params = {
+                start_date: date.end.date + ' ' + date.end.time,
+                end_date: date.start.date + ' ' + date.start.time,
+            }
+            const res = await postModuleOfLocker(locker.id, params);
+            switch (res.status) {
+                case STATUS_CODE.OK:
+                    const DATA = res.data.data.module;
+                    DATA.forEach((item) => {
+                        item.forEach((slot) => {
+                            if (slot.type === TYPE_LOCKER.SLOT) {
+                                slot.code = numberCode++;
+                            }
+                            slot.isBooked = false;
+                        })
+                    })
+                    setData(DATA)
+                    break;
+                default:
+                    break;
+            }
+        }
+        getModules();
     }, [])
 
     const handleClickCabinet = (data, lockerId) => {
@@ -248,10 +129,8 @@ const LockerSimulation = ({
                 return Colors.green
             case STATUS_LOCKER.BOOKED:
                 return Colors.orange
-            case STATUS_LOCKER.UNAVAILABLE:
-                return '#ddd'
             default:
-                return '#fff'
+                return '#ddd'
         }
     }
     
@@ -276,14 +155,14 @@ const LockerSimulation = ({
                     }}
                 >
                     {item.map((item, index) => {
-
+                        console.log(item.type, item.statusSlot)
                         return (
                             <TouchableOpacity
-                                key={index}
+                                key={item.id}
                                 style={{
                                     width: itemWidth,
                                     height: widthItem + 10,
-                                    backgroundColor: getBackgroundColor(item.status),
+                                    backgroundColor: getBackgroundColor(item.statusSlot),
                                     borderRadius: 10,
                                     justifyContent: 'center',
                                     alignItems: 'center',
@@ -291,12 +170,12 @@ const LockerSimulation = ({
                                     opacity: item.isBooked ? 1 : 0.5,
                                 }}
                                 onPress={() => {
-                                    if (item.status === STATUS_LOCKER.AVAILABLE) {
+                                    if (item.statusSlot === STATUS_LOCKER.AVAILABLE && item.type === TYPE_LOCKER.SLOT) {
                                         handleClickCabinet(data, item.id)
                                     }
                                 }}
 
-                                disabled={item.status !== STATUS_LOCKER.AVAILABLE}
+                                disabled={item.statusSlot !== STATUS_LOCKER.AVAILABLE}
                             >
                                 <Text
                                     style={{
@@ -304,7 +183,7 @@ const LockerSimulation = ({
                                         fontWeight: 'bold',
                                     }}
                                 >
-                                    {item.code}
+                                    {item.code ?? item.type}
                                 </Text>
                             </TouchableOpacity>
                         )

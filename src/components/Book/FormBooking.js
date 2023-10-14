@@ -12,13 +12,14 @@ import {
   } from '@gorhom/bottom-sheet';
   import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import ContentPolicy from "./ContentPolicy";
+import { createBooking } from "../../api/bookingApi";
+import STATUS_CODE from "../../constants/statusCode";
 
 const FormBooking = ({
     locker,
     listCabinetBooked,
     date
 }) => {
-
     const navigator = useNavigation();
 
 
@@ -32,21 +33,6 @@ const FormBooking = ({
 
     const PRICE = 100000;
 
-    const DATA_SUCCESS = [
-        {
-            id: 1,
-            code: 'A1',
-            key: '123456',
-            timeOut: 60,
-        },
-        {
-            id: 2,
-            code: 'A2',
-            key: '123456',
-            timeOut: 60,
-        },
-    ]
-
     const DATA_WALLET = [
         {
             title: 'Ballance',
@@ -59,17 +45,36 @@ const FormBooking = ({
     ]
 
     const booking = () => {
-        navigator.reset({
-            index: 0,
-            routes: [
-                { 
-                    name: 'SuccessBooking',
-                    params: {
-                        data: DATA_SUCCESS,
-                    } 
-                }
-            ],
-        });
+        const fetchData = async () => {
+            const res = await createBooking({
+                start_date: date.start.date + ' ' + date.start.time,
+                end_date: date.end.date + ' ' + date.end.time,
+                list_slots_id: listCabinetBooked.map(item => item.id),
+            });
+            switch (res.status) {
+                case STATUS_CODE.OK:
+                    const data = res.data.data.map(item => {
+                        const cabinet = listCabinetBooked.filter(cabinet => cabinet.id === item.locker_slot_id)[0];
+                        item.code = cabinet.code;
+                        return item;
+                    })
+                    navigator.reset({
+                        index: 0,
+                        routes: [
+                            { 
+                                name: 'SuccessBooking',
+                                params: {
+                                    data: data,
+                                } 
+                            }
+                        ],
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+        fetchData();
     }
 
     const handleBooking = () => {
@@ -101,12 +106,11 @@ const FormBooking = ({
                     }
                     const handleConfirm = async () => {
                         const result = await SecureStore.getItemAsync('booking');
-                        handlePresentModalPress();
-                        // if (result === 'true') {
-                        //     booking();
-                        // } else {
-                        //     handlePresentModalPress();
-                        // }
+                        if (result === 'true') {
+                            booking();
+                        } else {
+                            handlePresentModalPress();
+                        }
                     }
                     handleConfirm();
                 }

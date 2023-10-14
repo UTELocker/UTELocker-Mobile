@@ -33,7 +33,7 @@ const CardBookSuccess = ({ book }) => {
                         }}
                     >
                         <Text style={styles.containerPassword}>
-                            Key: <Text style={styles.password}>{book.key}</Text>
+                            Key: <Text style={styles.password}>{book.pin_code}</Text>
                         </Text>
                         <Pressable 
                             onPress={() => alert('Copy password')}

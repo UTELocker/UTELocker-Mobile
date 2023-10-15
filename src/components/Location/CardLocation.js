@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { View, StyleSheet, Image, Text } from "react-native"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 
 const CardLocation = ({ location, isCloset = false}) => {
-    if (isCloset) console.log('isCloset');
+    
+    const [ showAllDescription, setShowAllDescription ] = useState(false);
+
     return (
         <View
             style={styles.container}
@@ -19,11 +22,20 @@ const CardLocation = ({ location, isCloset = false}) => {
                     marginStart: 10,
                 }}
             >
-                <Text style={styles.name}>{location.name}</Text>
-                <Text >{location.address}</Text>
+                <Text style={styles.name}>{location.code}</Text>
+                <Text 
+                    onPress={() => {
+                        setShowAllDescription(true);
+                    }}
+                >
+                    {
+                        showAllDescription ? location.description : location.description.substring(0, 50) + '...'
+                    }
+                </Text>
                 <Text style={{
-                    color: location.status === 'Available' ? 'green' : 'red',
-                }}>{location.status}</Text>
+                    color: location.lockers.length === 0 ? 'red' : 'green',
+                }}>
+                    {location.lockers.length === 0 ? 'Not Available' : 'Available'}</Text>
                 <Text style={styles.distance}>{location.distance} km</Text>
             </View>
         </View>
@@ -34,10 +46,9 @@ export default CardLocation;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         flexDirection: 'row',
         width: '100%',
-        height: 120,
+        height: 150,
         backgroundColor: Colors.white,
         borderRadius: 10,
         marginBottom: 10,

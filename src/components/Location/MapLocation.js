@@ -34,8 +34,8 @@ const MapLocation = ({
                             <Marker
                                 key={index}
                                 coordinate={{
-                                    latitude: element.latitude,
-                                    longitude: element.longitude,
+                                    latitude: parseFloat(element.latitude),
+                                    longitude: parseFloat(element.longitude),
                                 }}
                                 title={element.name}
                                 description={element.address}

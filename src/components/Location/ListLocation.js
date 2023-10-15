@@ -1,11 +1,12 @@
+import { ScrollView } from "react-native";
 import CardLocation from "./CardLocation";
-import { FlatList, Text, View } from 'react-native';
+import {Text } from 'react-native';
 
 const ListLocation = ({ 
     listLocker,
  }) => {
     return (
-        <View
+        <ScrollView
             style={{
                 width: '100%',
                 height: '93%',
@@ -20,25 +21,14 @@ const ListLocation = ({
             }}>Near By</Text>
             {
                 listLocker.closest.length > 0 ? (
-                    <View
-                        style={{
-                            flex: 1,
-                        }}
-                    >
-                        <FlatList
-                            data={listLocker.closest}
-                            renderItem={({ item }) => <CardLocation location={item} isCloset={true}/>}
-                            keyExtractor={item => item.id}
-                            contentContainerStyle={{
-                                marginBottom: 10,
-                            }}
-                        />
-                    </View>
+                    listLocker.closest.map((element, index) => (
+                        <CardLocation key={element.id} location={element} />
+                    ))
                 ) : (
                     <Text
                         style={{
                             fontSize: 16,
-                            marginBottom: 10,
+                            marginTop: 10,
                         }}
                     >No data</Text>
                 )
@@ -50,16 +40,14 @@ const ListLocation = ({
             }}>Other</Text>
             {
                 listLocker.other.length > 0 ? (
-                    <FlatList
-                        data={listLocker.other}
-                        renderItem={({ item }) => <CardLocation location={item} />}
-                        keyExtractor={item => item.id}
-                    />
+                    listLocker.other.map((element, index) => (
+                        <CardLocation key={element.id} location={element} />
+                    ))
                 ) : (
                     <Text>No data</Text>
                 )
             }
-        </View>
+        </ScrollView>
     )
 }
 

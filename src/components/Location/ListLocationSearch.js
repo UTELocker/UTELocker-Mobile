@@ -10,7 +10,7 @@ const ListLocationSearch = ({
     const [ listLocation, setListLocation ] = useState(listLocker.closest.concat(listLocker.other));
     useEffect(() => {
         const listLocationFilter = listLocation.filter(element => {
-            if (element.name.toLowerCase().includes(locationFilter.toLowerCase()) || element.address.toLowerCase().includes(locationFilter.toLowerCase())) {
+            if (element.code.toLowerCase().includes(locationFilter.toLowerCase()) || element.description.toLowerCase().includes(locationFilter.toLowerCase())) {
                 return true;
             }
         });

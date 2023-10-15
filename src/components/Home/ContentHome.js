@@ -10,6 +10,8 @@ import CardBookInHome from "./CardBookInHome";
 import FeatureWallet from "./FeatureWallet";
 import { getAll } from "../../api/bookingApi";
 import STATUS_CODE from "../../constants/statusCode";
+import { ActivityIndicator } from "react-native";
+import { RefreshControl } from "react-native";
 
 
 const ContentHome = () => {
@@ -17,12 +19,12 @@ const ContentHome = () => {
     const scrollViewRef = useRef(null);
     const lastOffsetY = useRef(0);
     const scrollDirection = useRef('');
-    const [isShowLowerHeader, setIsShowLowerHeader] = useState(true);
+    const [ refresh, setRefresh ] = useState(true);
+    const [ isShowLowerHeader, setIsShowLowerHeader] = useState(true);
     const [ orderedLockers , setOrderedLockers ] = useState([]);
 
     useEffect(() => {
         const resAllBookings = async () => {
-            console.log('resAllBookings');
             const res = await getAll();
             switch (res.status) {
                 case STATUS_CODE.OK:
@@ -32,9 +34,12 @@ const ContentHome = () => {
                     console.log('resAllBookings', res.status);
                     break;
             }
+            setRefresh(false);
         }
-        resAllBookings();
-    }, []);
+        if (refresh) {
+            resAllBookings();
+        }
+    }, [refresh]);
 
     const account = useSelector(state => state.auth.user);
 
@@ -42,7 +47,7 @@ const ContentHome = () => {
         transform: [
             {
                 translateY: animatedValue.interpolate({
-                    inputRange: [0, 100],
+                    inputRange: [70, 100],
                     outputRange: [0, -100],
                     extrapolate: 'clamp',
                 })
@@ -71,6 +76,10 @@ const ContentHome = () => {
         })
     }
 
+    const onRefresh = React.useCallback(() => {
+        setRefresh(true);
+    }, []);
+
     return (
         <View
             style={styles.rootContainer}
@@ -80,7 +89,7 @@ const ContentHome = () => {
                 style={[
                     styles.header,
                     {
-                        zIndex: isShowLowerHeader ? 100 : 0,
+                        zIndex: isShowLowerHeader ? 0 : 0,
                     }
                 ]}
             >
@@ -183,16 +192,6 @@ const ContentHome = () => {
                         borderBottomLeftRadius: 20,
                     }}
                 ></View>
-                <Animated.View
-                    style={cardWalletAnimation}
-                >
-                    <CardWallet wallet={
-                        {
-                            balance: 100000,
-                            balanceDeals: 100000,
-                        }
-                    }/> 
-                </Animated.View>
             </View>
         </View>
 
@@ -229,8 +228,26 @@ const ContentHome = () => {
                     }
                 }}
                 showsVerticalScrollIndicator={false}
+
+                refreshControl={
+                    <RefreshControl 
+                        refreshing={refresh}
+                        onRefresh={onRefresh}
+                    />
+                }
             >
-                <View style={styles.paddingForHeader} />
+                <View style={styles.paddingForHeader} >
+                    <Animated.View
+                        style={cardWalletAnimation}
+                    >
+                        <CardWallet wallet={
+                            {
+                                balance: 100000,
+                                balanceDeals: 100000,
+                            }
+                        }/> 
+                    </Animated.View>
+                </View>
                 <View style={styles.scrollViewContent} >
                     {
                         orderedLockers.length === 0 ? (
@@ -241,14 +258,15 @@ const ContentHome = () => {
                                     alignItems: 'center',
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        fontSize: 16,
-                                        color: Colors.dark,
-                                    }}
-                                >
-                                    You don't have any order
-                                </Text>
+                                {
+                                    refresh ? (
+                                        null
+                                    ) : (
+                                        <Text>
+                                            No booking
+                                        </Text>
+                                    )
+                                }
                             </View>
                         ) : (
                             <View
@@ -260,7 +278,11 @@ const ContentHome = () => {
                                 {
                                     orderedLockers.map((item, index) => {
                                         return (
-                                            <CardBookInHome book={item} key={item.id}/>
+                                            <CardBookInHome 
+                                                book={item} 
+                                                key={item.id}
+                                                setRefresh={setRefresh}
+                                            />
                                         )
 
                                     })
@@ -317,6 +339,7 @@ const styles = StyleSheet.create({
     },
     paddingForHeader: {
         height: 160,
+        backgroundColor: 'rgba(52, 52, 52, 0)',
     },
     upperHeaderPlaceholder: {
         height: 100,

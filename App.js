@@ -13,10 +13,11 @@ import NetInfo from "@react-native-community/netinfo";
 import ModalError from './src/components/ui/ModalError';
 
 function Navigation() {
-  const [ isLoading, setIsLoading ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(true);
   const [isConnected, setIsConnected] = useState(true);
   const [modalVisible, setModalVisible] = useState(false)
   const isLogin = useSelector((state) => state.auth.isLogin);
+  // const isLogin = true;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +29,6 @@ function Navigation() {
       unsubscribe();
     };
   }, []);
-
   useEffect(() => {
     if (!isConnected) {
       setModalVisible(true);
@@ -40,13 +40,16 @@ function Navigation() {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await userDetail();
+
       switch (res.status) {
         case STATUS_CODE.OK:
           dispatch(setLogin({
-            email: res.data.email,
-            name: res.data.name,
-            phone: res.data.phone,
-            address: res.data.address,
+            id: res.data.data.id,
+            email: res.data.data.email,
+            name: res.data.data.name,
+            phone: res.data.data.phone,
+            address: res.data.data.address,
+            clientId: res.data.data.client_id,
           }));
           break;
         default:

@@ -7,6 +7,7 @@ import SearchLocation from "./SearchLocation";
 import ListLocation from "./ListLocation";
 import MapLocation from "./MapLocation";
 import ListLocationSearch from "./ListLocationSearch";
+import STATUS_CODE from "../../constants/statusCode";
 
 const ContentLocation = () => {
     const [ typeLocationSearch, setTypeLocationSearch ] = useState('list')
@@ -18,6 +19,7 @@ const ContentLocation = () => {
     const [ locationFilter, setLocationFilter ] = useState('')
 
     useEffect(() => {
+
         const permissionConfig = async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
@@ -26,28 +28,31 @@ const ContentLocation = () => {
             }
             let location = await Location.getCurrentPositionAsync({});
 
-            const listLockers = getListLockers();
-            let closest = [];
-            let other = [];
-            listLockers.forEach(element => {
-                distance = getPreciseDistance(
-                    { latitude: location?.coords.latitude, longitude: location?.coords.longitude },
-                    { latitude: element.latitude, longitude: element.longitude },
-                );
-                element.distance = distance/1000;
-                if (distance < 1000) {
-                    closest.push(element);
-                } else {
-                    other.push(element);
-                }
-            });
-            closest.sort((a, b) => a.distance - b.distance);
-            other.sort((a, b) => a.distance - b.distance);
-            setListLocker({
-                closest: closest,
-                other: other,
-            });
-            
+            const fetchLocations = await getListLockers();
+            if (fetchLocations.status == STATUS_CODE.OK) {
+                let closest = [];
+                let other = [];
+                const listLockers = fetchLocations.data.data;
+                console.log(listLockers);
+                listLockers.forEach(element => {
+                    distance = getPreciseDistance(
+                        { latitude: location?.coords.latitude, longitude: location?.coords.longitude },
+                        { latitude: element.latitude, longitude: element.longitude },
+                    );
+                    element.distance = distance/1000;
+                    if (distance < 1500) {
+                        closest.push(element);
+                    } else {
+                        other.push(element);
+                    }
+                });
+                closest.sort((a, b) => a.distance - b.distance);
+                other.sort((a, b) => a.distance - b.distance);
+                setListLocker({
+                    closest: closest,
+                    other: other,
+                });
+            }
             setCurrentLocation(location);
         }
         permissionConfig();

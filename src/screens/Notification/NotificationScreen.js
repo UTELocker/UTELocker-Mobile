@@ -6,27 +6,32 @@ import {
     PusherEvent,
   } from '@pusher/pusher-websocket-react-native';
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 
 const NotificationScreen = () => {
 
     const [ messages, setMessages ] = useState([])
     const [ pusherState, setPusherState ] = useState(0);
+    const account = useSelector(state => state.auth.user);
+
     useEffect(() => {
+        
         const connectToPusher = async () => {
             const pusher = Pusher.getInstance();
             try {
               if (pusher.connectionState !== "CONNECTED") {
                 await pusher?.init({
-                  apiKey: "4d00bbd9faf873abcbaf",
-                  cluster: "ap1",
+                    apiKey: "4d00bbd9faf873abcbaf",
+                    cluster: "ap1",
                 });
       
                 await pusher?.connect();
               }
               await pusher?.subscribe({
-                channelName: "notification",
-                onEvent: () => {
-                  console.log("Test event");
+                channelName: "notification.report." + account.clientId + "." + account.id,
+                onEvent: (event: PusherEvent) => {
+                  console.log("Received event: ", event);
                   setMessages((messages) => [...messages, "Test event"]);
                   setPusherState(1);
                 },
@@ -46,7 +51,7 @@ const NotificationScreen = () => {
             case 0:
                 return "grey"
             case 1:
-                return "green"
+                return "yellow"
             case 2:
                 return "red"
         }

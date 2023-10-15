@@ -6,9 +6,13 @@ import Header from "../../components/ui/Header";
 import DateBooked from "../../components/ui/DateBooked";
 import MapShowLocation from "../../components/ui/MapShowLocation";
 import Button from "../../components/ui/Button";
+import { cancelBooking } from "../../api/bookingApi";
+import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const DetailLockerScreen = ({route}) => {
 
+    const navigation = useNavigation();
     const { 
         data,
     } = route.params;
@@ -57,6 +61,54 @@ const DetailLockerScreen = ({route}) => {
         Linking.openURL(url);
     }
 
+    const handleCancelBooking = (id) => {
+        Alert.alert(
+            "Cancel booking",
+            "Are you sure you want to cancel this booking?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "OK",
+                    onPress: () => {
+                        const callApiCancelBooking = async () => {
+                            const response = await cancelBooking(id);
+                            if (response.status === 200) {
+                                Alert.alert(
+                                    "Cancel booking",
+                                    "Cancel booking successfully",
+                                    [
+                                        {
+                                            text: "OK",
+                                            onPress: () => navigation.navigate("Home"),
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                );
+                            } else {
+                                Alert.alert(
+                                    "Cancel booking",
+                                    "Cancel booking failed",
+                                    [
+                                        {
+                                            text: "OK",
+                                            onPress: () => {},
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                );
+                            }
+                        }
+                        callApiCancelBooking();
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+
     return (
         <View
             style={{
@@ -94,13 +146,12 @@ const DetailLockerScreen = ({route}) => {
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.buttonUntil}
-                        onPress={() => {
-
-                        }}
                     >
                         <Feather style={styles.iconRandom} name="refresh-ccw" size={30} color={Colors.blue} />                      
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonUntil}>
+                    <TouchableOpacity style={styles.buttonUntil}
+                        onPress={() => handleCancelBooking(data.id)}
+                    >
                         <AntDesign style={styles.iconRandom} name="delete" size={30} color={Colors.red} />                      
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.buttonUntil}>

@@ -37,4 +37,14 @@ const postMethod = async (url, data) => {
     }
 };
 
-export { getMethod, postMethod };
+const deleteMethod = async (url) => {
+    const axiosInstance = await setAxiosInstance();
+    try {
+        const response = await axiosInstance.delete(url);
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+};
+
+export { getMethod, postMethod, deleteMethod };

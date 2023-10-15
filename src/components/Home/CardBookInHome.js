@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, Pressable, Animated } from "r
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { cancelBooking } from "../../api/bookingApi";
+import { Alert } from "react-native";
 
-const CardBookInHome = ({ book }) => {
+const CardBookInHome = ({ book, setRefresh }) => {
     const navigation = useNavigation();
     const animatedValue = React.useRef(new Animated.Value(0)).current;
     const [isShow, setIsShow] = React.useState(false);
@@ -14,6 +16,57 @@ const CardBookInHome = ({ book }) => {
             outputRange: [180, 280],
         }),
     };
+
+    const handleCancelBooking = async (id) => {
+        Alert.alert(
+            "Cancel booking",
+            "Are you sure you want to cancel this booking?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "OK",
+                    onPress: () => {
+                        const callApiCancelBooking = async () => {
+                            const response = await cancelBooking(id);
+                            if (response.status === 200) {
+                                Alert.alert(
+                                    "Cancel booking",
+                                    "Cancel booking successfully",
+                                    [
+                                        {
+                                            text: "OK",
+                                            onPress: () => {
+                                                setRefresh(true);
+                                            },
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                );
+                            } else {
+                                Alert.alert(
+                                    "Cancel booking",
+                                    "Cancel booking failed",
+                                    [
+                                        {
+                                            text: "OK",
+                                            onPress: () => navigation.navigate("Home"),
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                );
+                            }
+                        }
+                        callApiCancelBooking();
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+    
     return (
         <Animated.View
             style={[
@@ -151,9 +204,7 @@ const CardBookInHome = ({ book }) => {
                                 marginTop: 10,
                                 backgroundColor: Colors.gray,
                             }}
-                            onPress={() => navigation.navigate("DetailLocker", {
-                                data: book,
-                            })}
+                            onPress={() => handleCancelBooking(book.id)}
                         >
                             <Text
                             style={{

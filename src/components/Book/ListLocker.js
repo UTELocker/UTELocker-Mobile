@@ -25,8 +25,8 @@ const ListLocker = ({
 
         const searchListLockers = async () => {
             const res = await searchLockers({
-                start_date: dateStart,
-                end_date: dateEnd,
+                start_date: dateStart.date + " " + dateStart.time,
+                end_date: dateEnd.date + " " + dateEnd.time,
             });
             switch(res.status) {
                 case STATUS_CODE.OK:

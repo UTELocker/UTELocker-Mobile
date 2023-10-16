@@ -15,6 +15,9 @@ import { useNavigation } from "@react-navigation/native"
 import Button from "../ui/Button"
 import { postModuleOfLocker } from "../../api/lockersApi"
 import STATUS_CODE from "../../constants/statusCode"
+import { showNotification } from "../../redux/notificationSlice"
+import { useDispatch } from "react-redux"
+import { TYPE_NOTIFICATION } from "../../constants/typeNotification"
 
 
 const LockerSimulation = ({
@@ -23,6 +26,7 @@ const LockerSimulation = ({
 }) => {
 
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     const [data, setData] = useState([])
 
@@ -33,8 +37,8 @@ const LockerSimulation = ({
 
         const getModules = async () => {
             const params = {
-                start_date: date.end.date + ' ' + date.end.time,
-                end_date: date.start.date + ' ' + date.start.time,
+                end_date: date.end.date + ' ' + date.end.time,
+                start_date: date.start.date + ' ' + date.start.time,
             }
             const res = await postModuleOfLocker(locker.id, params);
             switch (res.status) {
@@ -49,6 +53,14 @@ const LockerSimulation = ({
                         })
                     })
                     setData(DATA)
+                    break;
+                case STATUS_CODE.UNPROCESSABLE_ENTITY:
+                    dispatch(showNotification({
+                        title: 'Error Booking',
+                        type: TYPE_NOTIFICATION.ERROR,
+                        message: res.data.message,
+                        isReturnHome: true,
+                    }))
                     break;
                 default:
                     break;
@@ -146,7 +158,7 @@ const LockerSimulation = ({
 
             return (
                 <View
-                    key={index}
+                    key={item[0].id}
                     style={{
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -155,7 +167,6 @@ const LockerSimulation = ({
                     }}
                 >
                     {item.map((item, index) => {
-                        console.log(item.type, item.statusSlot)
                         return (
                             <TouchableOpacity
                                 key={item.id}

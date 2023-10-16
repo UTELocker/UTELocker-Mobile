@@ -1,18 +1,27 @@
 import { Button, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Colors } from "../../constants/styles";
 import { useDispatch } from "react-redux";
+import { invisibleNotification } from "../../redux/notificationSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const ModalNoti = ({
     title = 'Error',
     titleButton = 'Close',
     message = 'Error',
     show = false,
+    isReturnHome = false,
     onClose = () => {},
 }) => {
     const dispatch = useDispatch();
 
+    const navigation = useNavigation();
+
     const handleClick = () => {
+        if (isReturnHome) {
+            navigation.navigate('Home');
+        }
         onClose();
+        dispatch(invisibleNotification());
     }
     return (
         <Modal visible={show} animationType="none" transparent={true}>

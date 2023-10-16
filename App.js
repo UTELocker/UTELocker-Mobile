@@ -11,13 +11,14 @@ import SplashScreen from './src/screens/SplashScreen';
 import STATUS_CODE from './src/constants/statusCode';
 import NetInfo from "@react-native-community/netinfo";
 import ModalError from './src/components/ui/ModalError';
+import ModalNoti from './src/components/ui/ModalNoti';
 
 function Navigation() {
   const [ isLoading, setIsLoading ] = useState(true);
   const [isConnected, setIsConnected] = useState(true);
   const [modalVisible, setModalVisible] = useState(false)
   const isLogin = useSelector((state) => state.auth.isLogin);
-  // const isLogin = true;
+  const notification = useSelector((state) => state.notification);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -82,7 +83,14 @@ function Navigation() {
           }
         }} 
       />
-    </NavigationContainer>
+      <ModalNoti
+        title={notification.title}
+        titleButton='OK'
+        message={notification.message}
+        show={notification.show}
+        isReturnHome={notification.isReturnHome}
+      />
+    </NavigationContainer>        
   );
 }
 

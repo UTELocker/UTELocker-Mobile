@@ -72,6 +72,7 @@ const DateTimePickerModal = ({
                                 });
                             }}
                             minimumDate={new Date()}
+                            minuteInterval={30}
                         />
                     )
                 }

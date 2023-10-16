@@ -146,7 +146,11 @@ const FormBooking = ({
                             <Text>
                                 Locker address:
                             </Text>
-                            <Text>
+                            <Text
+                                style={{
+                                    width: '60%',
+                                }}
+                            >
                                 {locker.address}
                             </Text>
                         </View>

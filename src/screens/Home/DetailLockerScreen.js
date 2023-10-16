@@ -17,7 +17,17 @@ const DetailLockerScreen = ({route}) => {
         data,
     } = route.params;
 
-    console.log(data);
+    useEffect(() => {
+        navigation.getParent()?.setOptions({
+            tabBarStyle: {
+              display: "none"
+            }
+          });
+          return () => navigation.getParent()?.setOptions({
+            tabBarStyle: undefined
+          });
+    }, []);
+
     const DATA = [
         {
             title: 'Address',

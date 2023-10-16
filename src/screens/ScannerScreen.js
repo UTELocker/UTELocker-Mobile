@@ -4,20 +4,33 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from '@expo/vector-icons';
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from "../utils/dimensionScreen";
+import { Animated } from "react-native";
+import { useRef } from "react";
+import { Svg, Defs, Rect, Mask } from 'react-native-svg';
 
 const ScannerScreen = () => {
     const navigation = useNavigation();
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+
+    useEffect(() => {
+        navigation.getParent()?.setOptions({
+            tabBarStyle: {
+              display: "none"
+            }
+          });
+          return () => navigation.getParent()?.setOptions({
+            tabBarStyle: undefined
+          });
+    }, []);
   
     useEffect(() => {
       const getBarCodeScannerPermissions = async () => {
         const { status } = await BarCodeScanner.requestPermissionsAsync();
         setHasPermission(status === 'granted');
       };
-  
       getBarCodeScannerPermissions();
-
     }, []);
 
     const handleBarCodeScanned = ({ type, data }) => {
@@ -35,6 +48,29 @@ const ScannerScreen = () => {
             <Text>No access to camera</Text>
         </View>
     }
+
+    const SvgCircle = (props) => {
+        return (
+          <Svg height="100%" width="100%">
+            <Defs>
+              <Mask id="mask" x="0" y="0" height="100%" width="100%">
+                <Rect height="100%" width="100%" fill="#fff" />
+                <Rect
+                  height="300"
+                  width="300"
+                  fill="#000"
+                  rx="30"
+                  ry="30"
+                  x="50%"
+                  y="50%"
+                  transform="translate(-150, -150)"
+                />
+              </Mask>
+            </Defs>
+            <Rect height="100%" width="100%" fill="rgba(0, 0, 0, 0.5)" mask="url(#mask)" fill-opacity="0" />
+          </Svg>
+        );
+      }
 
     return (
         <View style={styles.cameraContainer}>
@@ -71,9 +107,32 @@ const ScannerScreen = () => {
             <View
                 style={styles.container}
             >
+                <View style={{
+                    position: 'static',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    flex: 1,
+                    zIndex: 200,
+                }}>
+                    <SvgCircle />
+                </View>
                 <BarCodeScanner
                     onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                    style={StyleSheet.absoluteFillObject}
+                    style={
+                        Platform.OS === "android"
+                          ? {
+                            position: "absolute",
+                            top: 0,
+                            transform: [{ translateX: WINDOW_WIDTH / 2 }],
+                            right: 0,
+                            bottom: 0,
+                            width: WINDOW_WIDTH * 2.5,
+                            height: WINDOW_HEIGHT * 1,
+                            }
+                          : StyleSheet.absoluteFillObject
+                      }
                     barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
                 />
             </View>
@@ -91,8 +150,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     cameraContainer: {
-        height: '100%',
-        width: '100%'
-    },
-
+        flex: 1,
+    }
 });

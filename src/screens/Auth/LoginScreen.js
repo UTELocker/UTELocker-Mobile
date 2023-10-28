@@ -5,7 +5,7 @@ import PrepareLoginComponent from "../../components/Auth/PrepareLoginComponent";
 import LoginComponent from "../../components/Auth/LoginComponent";
 import { ListGroup } from "../../api/authAPi";
 import {STATUS_CODE} from "../../constants/systemConstant";
-import OtpVerification from "../../firebase/OtpVerification";
+import OtpVerification from "../../components/Auth/OTP/OtpVerification";
 
 const LoginScreen = () => {
     const [ email, setEmail ] = useState('');

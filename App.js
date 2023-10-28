@@ -12,7 +12,6 @@ import {STATUS_CODE} from "./src/constants/systemConstant";
 import NetInfo from "@react-native-community/netinfo";
 import ModalError from './src/components/ui/ModalError';
 import ModalNoti from './src/components/ui/ModalNoti';
-import OtpVerification from './src/firebase/OtpVerification';
 
 function Navigation() {
   const [ isLoading, setIsLoading ] = useState(true);

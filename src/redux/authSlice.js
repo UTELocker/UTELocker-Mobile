@@ -13,7 +13,6 @@ const initialState =  {
     },
     isLogin: false,
     isLoginFirebase: false,
-    userFirebase: null,
 };
 
 export const authSlice = createSlice({
@@ -31,12 +30,11 @@ export const authSlice = createSlice({
             token: action.payload.accessToken,
             email: action.payload.email ?? '',
             name: action.payload.name ?? '',
-            phone: action.payload.phone ?? '',
+            phone: action.payload.mobile ?? '',
             address: action.payload.address ?? '',
             clientId: action.payload.clientId ?? '',
             id: action.payload.id ?? '',
         };
-        state.isLogin = true;
     },
     setLogout: (state) => {
         const deleteToken = async () => {
@@ -55,12 +53,12 @@ export const authSlice = createSlice({
     setLoginFirebase: (state, action) => {
         state.isLoginFirebase = action.payload;
     },
-    setUserFirebase: (state, action) => {
-        state.userFirebase = action.payload;
+    setIsLogin: (state, action) => {
+        state.isLogin = action.payload;
     },
   },
 });
 
-export const { setLogin, setLogout, setUserFirebase } = authSlice.actions;
+export const { setLogin, setLogout, setLoginFirebase, setIsLogin } = authSlice.actions;
 
 export default authSlice.reducer;

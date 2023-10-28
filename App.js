@@ -6,12 +6,13 @@ import AuthTab from './src/routes/AuthTab';
 import AuthenticatedTab from './src/routes/AuthenticatedTab';
 import { useEffect, useState, useRef } from 'react';
 import { userDetail } from './src/api/authAPi';
-import { setLogin } from './src/redux/authSlice';
+import { setLogin, setLogout } from './src/redux/authSlice';
 import SplashScreen from './src/screens/SplashScreen';
 import {STATUS_CODE} from "./src/constants/systemConstant";
 import NetInfo from "@react-native-community/netinfo";
 import ModalError from './src/components/ui/ModalError';
 import ModalNoti from './src/components/ui/ModalNoti';
+import OtpVerification from './src/firebase/OtpVerification';
 
 function Navigation() {
   const [ isLoading, setIsLoading ] = useState(true);
@@ -41,17 +42,12 @@ function Navigation() {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await userDetail();
-
       switch (res.status) {
         case STATUS_CODE.OK:
-          dispatch(setLogin({
-            id: res.data.data.id,
-            email: res.data.data.email,
-            name: res.data.data.name,
-            phone: res.data.data.phone,
-            address: res.data.data.address,
-            clientId: res.data.data.client_id,
-          }));
+          dispatch(setLogin(res.data.data));
+          break;
+        case STATUS_CODE.UNAUTHORIZED:
+          dispatch(setLogout());
           break;
         default:
           break;

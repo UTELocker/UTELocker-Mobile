@@ -15,7 +15,6 @@ const DetailHistoryScreen = ({
     route
  }) => {
     const { item } = route.params;
-    console.log(item);
     const navigation = useNavigation();
 
     useEffect(() => {

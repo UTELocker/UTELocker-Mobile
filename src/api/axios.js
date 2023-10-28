@@ -2,8 +2,6 @@ import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
 import {BASE_URL} from "@env";
 import { useDispatch } from "react-redux";
-import { setLogout } from "../redux/authSlice";
-import {STATUS_CODE} from "../constants/systemConstant";
 
 const setAxiosInstance = async () => {
     const token = await SecureStore.getItemAsync('token');
@@ -20,20 +18,12 @@ const setAxiosInstance = async () => {
     });
 }
 
-const unauthorized = (error) => {
-    const dispatch = useDispatch();
-    dispatch(setLogout());
-}
-
 const getMethod = async (url) => {
     const axiosInstance = await setAxiosInstance();
     try {
         const response = await axiosInstance.get(url);
         return response;
     } catch (error) {
-        if (error.response.status === STATUS_CODE.UNAUTHORIZED) {
-            unauthorized(error);
-        }
         return error.response;
     }
 };
@@ -44,9 +34,6 @@ const postMethod = async (url, data) => {
         const response = await axiosInstance.post(url, data);
         return response;
     } catch (error) {
-        if (error.response.status === STATUS_CODE.UNAUTHORIZED) {
-            unauthorized(error);
-        }
         return error.response;
     }
 };
@@ -57,9 +44,6 @@ const deleteMethod = async (url) => {
         const response = await axiosInstance.delete(url);
         return response;
     } catch (error) {
-        if (error.response.status === STATUS_CODE.UNAUTHORIZED) {
-            unauthorized(error);
-        }
         return error.response;
     }
 };

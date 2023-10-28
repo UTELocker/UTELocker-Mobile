@@ -9,12 +9,13 @@ import { Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { login } from "../../api/authAPi";
 import LoadingOverlay from "../ui/LoadingOverlay";
-import { setLogin } from "../../redux/authSlice";
+import { setIsLogin, setLogin } from "../../redux/authSlice";
 import {STATUS_CODE} from "../../constants/systemConstant";
 
 const LoginComponent = ({
     email,
     listGroup,
+    setStep,
 }) => {
     const [ password, setPassword ] = useState('');
     const [ group, setGroup ] = useState('');
@@ -28,6 +29,11 @@ const LoginComponent = ({
         if (res.status === STATUS_CODE.OK) {
             dispatch(setLogin(res.data.data));
             setIsLoadingOverlayVisible(false);
+            if (res.data.data.isAuthTwo) {
+                setStep(2);
+            } else {
+                dispatch(setIsLogin(true));
+            }
         } else {
             Alert.alert('Login failed', res.data.message);
             setIsLoadingOverlayVisible(false);

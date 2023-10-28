@@ -15,9 +15,7 @@ import { useNavigation } from "@react-navigation/native"
 import Button from "../ui/Button"
 import { postModuleOfLocker } from "../../api/lockersApi"
 import {STATUS_CODE} from "../../constants/systemConstant";
-import { showNotification } from "../../redux/notificationSlice"
 import { useDispatch } from "react-redux"
-import { TYPE_NOTIFICATION } from "../../constants/typeNotification"
 
 
 const LockerSimulation = ({
@@ -55,12 +53,7 @@ const LockerSimulation = ({
                     setData(DATA)
                     break;
                 case STATUS_CODE.UNPROCESSABLE_ENTITY:
-                    dispatch(showNotification({
-                        title: 'Error Booking',
-                        type: TYPE_NOTIFICATION.ERROR,
-                        message: res.data.message,
-                        isReturnHome: true,
-                    }))
+
                     break;
                 default:
                     break;

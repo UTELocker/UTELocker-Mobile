@@ -18,7 +18,6 @@ const BookingScreen = ({
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log('getHistory');
             const res = await getHistory();
             if (res.status === STATUS_CODE.OK) {
                 const data = res.data.data;

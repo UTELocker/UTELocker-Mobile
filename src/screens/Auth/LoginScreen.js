@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ImageBackground, Alert, TouchableOpacity } from "react-native";
 import { Colors } from "../../constants/styles";
 import PrepareLoginComponent from "../../components/Auth/PrepareLoginComponent";
 import LoginComponent from "../../components/Auth/LoginComponent";
 import { ListGroup } from "../../api/authAPi";
 import {STATUS_CODE} from "../../constants/systemConstant";
+import OtpVerification from "../../firebase/OtpVerification";
 
 const LoginScreen = () => {
     const [ email, setEmail ] = useState('');
@@ -21,7 +22,6 @@ const LoginScreen = () => {
         }
         const fetchGroup = async () => {
             const res = await ListGroup(email);
-            console.log(res);
             if (res.status === STATUS_CODE.OK) {
                 const data = res.data.data;
                 setListGroup([]);
@@ -61,20 +61,20 @@ const LoginScreen = () => {
                     {
                         step === 1 ?
                         <TouchableOpacity
-                        onPress={() => {
-                            setStep(0);
-                        }}
-                        style={{
-                            position: 'absolute',
-                            top: 30,
-                            left: 30,
+                            onPress={() => {
+                                setStep(0);
+                            }}
+                            style={{
+                                position: 'absolute',
+                                top: 30,
+                                left: 30,
 
-                        }}
-                    >
-                        <Text>
-                            Return
-                        </Text>
-                    </TouchableOpacity> : null
+                            }}
+                        >
+                            <Text>
+                                Return
+                            </Text>
+                        </TouchableOpacity> : null
                     }
                     <Text
                         style={{
@@ -109,13 +109,31 @@ const LoginScreen = () => {
                                 onPress={onLogin}
                                 setEmail={setEmail}
                             />
-                        </View> :
+                        </View> : null
+                    }
+                    {
+                        step === 1 ?
                         <LoginComponent
                             email={email}
                             listGroup={listGroup}
-                        />
+                            setStep={setStep}
+                        /> : null
                     }
-
+                    {
+                        step === 2 ?
+                        <View
+                            style={{
+                                alignItems: 'center',
+                                marginTop: 20,
+                                backgroundColor: Colors.white,
+                                width: '100%',
+                            }}
+                        >
+                            <OtpVerification
+                                isSendOTP={step === 2}
+                            />
+                        </View> : null
+                    }
                 </View>
             </ImageBackground>
         </View>

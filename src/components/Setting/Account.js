@@ -29,7 +29,6 @@ const Account = () => {
             nameTab: 'Logout',
             onPress: async () => {
                 const res = await logout();
-                console.log(res);
                 if (res.status === STATUS_CODE.OK) {
                     dispatch(setLogout());
                 } else {

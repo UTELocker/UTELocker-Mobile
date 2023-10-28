@@ -33,7 +33,6 @@ const ContentLocation = () => {
                 let closest = [];
                 let other = [];
                 const listLockers = fetchLocations.data.data;
-                console.log(listLockers);
                 listLockers.forEach(element => {
                     distance = getPreciseDistance(
                         { latitude: location?.coords.latitude, longitude: location?.coords.longitude },

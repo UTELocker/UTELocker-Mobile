@@ -1,5 +1,5 @@
 import { Colors } from "../constants/styles";
-import { METHOD_TRANSFER, STATUS_TRANSFER, TYPE_TRANSFER } from "../constants/wallet";
+import { METHOD_TRANSFER, STATUS_TRANSFER, TYPE_TRANSFER } from "../constants/walletConstant";
 import { AntDesign } from '@expo/vector-icons';
 
 export const handleIconPayment = (type) => {

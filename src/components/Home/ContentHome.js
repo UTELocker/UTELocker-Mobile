@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import CardBookInHome from "./CardBookInHome";
 import FeatureWallet from "./FeatureWallet";
 import { getAll } from "../../api/bookingApi";
-import STATUS_CODE from "../../constants/statusCode";
+import {STATUS_CODE} from "../../constants/systemConstant";
 import { ActivityIndicator } from "react-native";
 import { RefreshControl } from "react-native";
 
@@ -235,6 +235,10 @@ const ContentHome = () => {
                         onRefresh={onRefresh}
                     />
                 }
+                contentContainerStyle={{
+                    paddingBottom: 100,
+                    backgroundColor: Colors.lightGray2,
+                }}
             >
                 <View style={styles.paddingForHeader} >
                     <Animated.View
@@ -334,7 +338,7 @@ const styles = StyleSheet.create({
         zIndex: 105,
     },
     scrollViewContent: {
-        height: WINDOW_HEIGHT + 100,
+        height: 'auto',
         backgroundColor: Colors.lightGray2,
     },
     paddingForHeader: {

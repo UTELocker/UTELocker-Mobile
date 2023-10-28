@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Keyboard, View } from 'react-native';
 import { useEffect } from 'react';
 import Header from '../ui/Header';
-import { FILTER_LOCATION, FILTER_METHOD, FILTER_MOTH, FILTER_STATUS, FILTER_TYPE_TRANSFER } from '../../constants/fieldFilter';
+import { FILTER_LOCATION, FILTER_METHOD, FILTER_MOTH, FILTER_STATUS, FILTER_TYPE_TRANSFER } from '../../constants/systemConstant';
 
 const Tab = createMaterialTopTabNavigator();
 

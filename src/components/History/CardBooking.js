@@ -1,7 +1,7 @@
 import { Pressable, Text, View } from "react-native"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import STATUS_LOCKER from "../../constants/statusBooking";
+import { STATUS_LOCKER } from "../../constants/lockerConstant";
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
 import DateBooked from "../ui/DateBooked";

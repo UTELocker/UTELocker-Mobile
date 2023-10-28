@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Colors } from '../../../constants/styles';
 import { handleBy, handleIconPayment, handleIconStatus, handleTransferType } from '../../../utils/wallet';
-import { TYPE_TRANSFER } from '../../../constants/wallet';
+import { TYPE_TRANSFER } from '../../../constants/walletConstant';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 

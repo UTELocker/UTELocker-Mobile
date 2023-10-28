@@ -13,7 +13,7 @@ const CardBookInHome = ({ book, setRefresh }) => {
     const animatedCardStyle = {
         height: animatedValue.interpolate({
             inputRange: [0, 1],
-            outputRange: [180, 280],
+            outputRange: [200, 300],
         }),
     };
 
@@ -83,33 +83,22 @@ const CardBookInHome = ({ book, setRefresh }) => {
                     <MaterialCommunityIcons name="locker-multiple" size={50} color="black" />
                 </View>
                 <View style={{ flex: 4, justifyContent: 'center', paddingLeft: 10}}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, color: Colors.gray}}>
+                        { book.lockerCode }
+                    </Text>
                     <View
-                        style={{
-                            flexDirection: 'row'
-                        }}
+                        style={styles.containerCode}
                     >
-                        <View
-                            style={styles.containerCode}
-                        >
-                            <Text style={styles.containerPassword}>
-                                Key: <Text style={styles.password}>{book.pin_code}</Text>
-                            </Text>
-                        </View>
-                        <View
-                            style={{
-                                flex: 1,
-                                justifyContent: 'center',
-                                alignItems: 'flex-end',
-                            }}
-                        >
-                        </View>
+                        <Text style={styles.containerPassword}>
+                            Key: <Text style={styles.password}>{book.pin_code}</Text>
+                        </Text>
                     </View>
                     <View style={{flexDirection:"row"}}>
-                        <Text style={{ color: Colors.green, marginRight: 5 }}>
-                            { book.timeOut }
-                        </Text>
                         <Text>
-                            remaining
+                            Remaining
+                        </Text>
+                        <Text style={{ color: Colors.green, marginLeft: 5 }}>
+                            { book.timeOut.days } days { book.timeOut.hours }:{ book.timeOut.minutes }
                         </Text>
                     </View>
                     <Text style={{ fontWeight: '300', color: Colors.gray}}>
@@ -225,7 +214,7 @@ const CardBookInHome = ({ book, setRefresh }) => {
 const styles = StyleSheet.create({
     cardContainer: {
         width: '100%',
-        height: 180,
+        height: 200,
         backgroundColor: Colors.white,
         borderRadius: 10,
         marginBottom: 10,
@@ -259,7 +248,6 @@ const styles = StyleSheet.create({
         color: Colors.red,
     },
     containerCode: {
-        flex: 4,
         justifyContent: 'flex-start',
         flexDirection: 'row',
         alignItems: 'center',
@@ -274,7 +262,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
     },
     content: {
-        height: 140,
+        height: 160,
         paddingHorizontal: 10,
         flexDirection: 'row',
     },

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native"
 import CardLocker from "./CardLocker";
 import { searchLockers } from "../../api/lockersApi";
-import STATUS_CODE from "../../constants/statusCode";
+import {STATUS_CODE} from "../../constants/systemConstant";
 
 const ListLocker = ({
     dateStart,

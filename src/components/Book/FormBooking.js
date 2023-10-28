@@ -13,7 +13,7 @@ import {
   import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import ContentPolicy from "./ContentPolicy";
 import { createBooking } from "../../api/bookingApi";
-import STATUS_CODE from "../../constants/statusCode";
+import {STATUS_CODE} from "../../constants/systemConstant";
 
 const FormBooking = ({
     locker,

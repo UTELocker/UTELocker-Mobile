@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FILTER_LOCATION, FILTER_METHOD, FILTER_MOTH, FILTER_STATUS, FILTER_TYPE_TRANSFER } from '../../constants/fieldFilter';
+import { FILTER_LOCATION, FILTER_METHOD, FILTER_MOTH, FILTER_STATUS, FILTER_TYPE_TRANSFER } from '../../constants/systemConstant';
 import { StyleSheet, Text, View } from 'react-native';
 import { Colors } from '../../constants/styles';
 import DropdownComponent from "../Auth/DropdownComponent";

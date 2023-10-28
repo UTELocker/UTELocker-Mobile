@@ -8,13 +8,13 @@ import {
     StyleSheet, 
     Dimensions 
 } from "react-native"
-import { TYPE_LOCKER } from "../../constants/typeLocker"
-import STATUS_LOCKER from "../../constants/statusBooking"
+import { TYPE_LOCKER } from "../../constants/lockerConstant"
+import { STATUS_LOCKER } from "../../constants/lockerConstant";
 import { Colors } from "../../constants/styles"
 import { useNavigation } from "@react-navigation/native"
 import Button from "../ui/Button"
 import { postModuleOfLocker } from "../../api/lockersApi"
-import STATUS_CODE from "../../constants/statusCode"
+import {STATUS_CODE} from "../../constants/systemConstant";
 import { showNotification } from "../../redux/notificationSlice"
 import { useDispatch } from "react-redux"
 import { TYPE_NOTIFICATION } from "../../constants/typeNotification"

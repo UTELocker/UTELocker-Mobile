@@ -1,101 +1,87 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Colors } from "../../constants/styles";
 import CardBooking from "../../components/History/CardBooking";
-import STATUS_LOCKER from "../../constants/statusBooking";
+import { STATUS_LOCKER } from "../../constants/lockerConstant";
 import CardTime from "../../components/History/CardTime";
 import { useEffect, useState } from "react";
-import { FILTER_LOCATION, FILTER_MOTH, FILTER_STATUS } from "../../constants/fieldFilter";
+import { FILTER_LOCATION, FILTER_MOTH, FILTER_STATUS } from "../../constants/systemConstant";
+import { getHistory } from "../../api/hisgoryApi";
+import { STATUS_CODE } from "../../constants/systemConstant";
 
 const BookingScreen = ({
     contentSearch,
     setListLocation,
     filters
 }) => {
-    const defaultData =[
-        {
-            date: '2021-09',
-            bookings: [
-                {
-                    id: 1,
-                    address: 'KTX Khu B',
-                    locker: 'A2',
-                    date: '2021-09-20',
-                    status: STATUS_LOCKER.FINISHED,
-                    price: 10000,
-                    timesOpen: 2,
-                    location: {
-                        latitude: 10.762622,
-                        longitude: 106.660172,
-                    },
-                    time: {
-                        start: {
-                            date: '2021-08-12',
-                            time: '10:00',
-                        },
-                        end: {
-                            date: '2021-08-12',
-                            time: '11:00',
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            date: '2021-08',
-            bookings: [
-                {
-                    id: 3,
-                    address: 'KTYX Khu B',
-                    locker: 'A1',
-                    date: '2021-08-16',
-                    status: STATUS_LOCKER.ERROR,
-                    price: 10000,
-                    timesOpen: 2,
-                    location: {
-                        latitude: 10.762622,
-                        longitude: 106.660172,
-                    },
-                    time: {
-                        start: {
-                            date: '2021-08-12',
-                            time: '10:00',
-                        },
-                        end: {
-                            date: '',
-                            time: '',
-                        }
-                    }
-                },
-                {
-                    id: 1,
-                    address: 'KTRX Khu C',
-                    locker: 'A3',
-                    date: '2021-08-12',
-                    status: STATUS_LOCKER.FINISHED,
-                    price: 10000,
-                    timesOpen: 2,
-                    location: {
-                        latitude: 10.762622,
-                        longitude: 106.660172,
-                    },
-                    time: {
-                        start: {
-                            date: '2021-08-12',
-                            time: '10:00',
-                        },
-                        end: {
-                            date: '2021-08-12',
-                            time: '11:00',
-                        }
-                    }
-                }
-            ]           
-        }
-    ];
-    const [data, setData] = useState(defaultData);
+
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        const filterData = defaultData.map((item) => {
+        const fetchData = async () => {
+            console.log('getHistory');
+            const res = await getHistory();
+            if (res.status === STATUS_CODE.OK) {
+                const data = res.data.data;
+                let listBookingsOfMoth = [];
+                const listBookings = [];
+                let monthTemp = '';
+                const listLocations = [];
+                data.forEach((item) => {
+                    const monthYear = item.start_date.split('-').slice(0, 2);
+
+                    if (monthTemp !== monthYear[1]) {
+                        monthTemp = monthYear[1];
+                        listBookings.push({
+                            date: monthYear[1] + '-' + monthYear[0],
+                            bookings: listBookingsOfMoth,
+                        })
+                        listBookingsOfMoth = [];
+                    }
+                    const totalTime = (new Date(item.end_date) - new Date(item.start_date)) / 1000 / 60;
+                    const totalPrice = (item.config?.price_per_minute === undefined 
+                        ? 10 
+                        : item.config?.price_per_minute) 
+                        * totalTime
+                    const dateStart = item.start_date.split(' ');
+                    const dateEnd = item.end_date.split(' ');
+                    
+                    listBookingsOfMoth.push({
+                        id: item.id,
+                        address: item.address,
+                        locker: item.id,
+                        date: item.created_at,
+                        status: item.status,
+                        price: totalPrice,
+                        timesOpen: 2,
+                        location: {
+                            latitude: item.latitude,
+                            longitude: item.longitude,
+                        },
+                        time: {
+                            start: {
+                                date: dateStart[0],
+                                time: dateStart[1],
+                            },
+                            end: {
+                                date: dateEnd[0],
+                                time: dateEnd[1],
+                            }
+                        }
+                    });
+
+                    if (!listLocations.includes(item.address)) {
+                        listLocations.push(item.address);
+                    }
+                });
+                setListLocation(listLocations);
+                setData(listBookings);
+            }
+        }
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const filterData = data.map((item) => {
             let isFilterMoth = true;
             if(filters.moth !== FILTER_MOTH[0].value) {
                 const date = new Date(item.date);
@@ -147,7 +133,6 @@ const BookingScreen = ({
         } else {
             setData(filterData);
         }
-        console.log('data', data);
     }, [filters,contentSearch])
 
     const isEmptyAllBooking = () => {

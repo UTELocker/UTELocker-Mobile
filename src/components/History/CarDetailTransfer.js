@@ -1,6 +1,6 @@
 import { Alert, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Colors } from "../../constants/styles";
-import STATUS_LOCKER from "../../constants/statusBooking";
+import { STATUS_LOCKER } from "../../constants/lockerConstant";
 import { Entypo } from '@expo/vector-icons';
 
 const CardDetailTransfer = ({ history }) => {

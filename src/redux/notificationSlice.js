@@ -1,34 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { NOTIFICATION_TYPE } from "../constants/notificationConstant";
 
 const initialState =  {
-    title: '',
-    message: '',
-    type: '',
-    show: false,
-    isReturnHome: false,
+    notifications: [],
+    notificationsPayment: [],
+    notificationsBooking: [],
 };
 
 export const notificationSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
-    showNotification: (state, action) => {
-        state.title = action.payload.title;
-        state.message = action.payload.message;
-        state.type = action.payload.type;
-        state.isReturnHome = action.payload.isReturnHome;
-        state.show = true;
-    },
-    invisibleNotification: (state) => {
-        state.title = '';
-        state.message = '';
-        state.type = '';
-        state.isReturnHome = false;
-        state.show = false;
+    loadNotifications: (state, action) => {
+        const notifications = action.payload;
+        const notificationsPayment = [];
+        const notificationsBooking = [];
+        notifications.map((notification) => {
+          const item = {
+            id: notification.id,
+            content: notification.content,
+            status: notification.status,
+            type: notification.type,
+            created_at: notification.created_at,
+          };
+          if (notification.type === NOTIFICATION_TYPE.PAYMENT) {
+            notificationsPayment.push(item);
+          }
+          if (notification.type === NOTIFICATION_TYPE.BOOKING) {
+            notificationsBooking.push(item);
+          }
+          return item;
+        });
+        state.notifications = notifications;
+        state.notificationsPayment = notificationsPayment;
+        state.notificationsBooking = notificationsBooking;
     },
   },
 });
 
-export const { showNotification, invisibleNotification } = notificationSlice.actions;
+export const { loadNotifications } = notificationSlice.actions;
 
 export default notificationSlice.reducer;

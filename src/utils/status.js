@@ -1,4 +1,4 @@
-import STATUS_LOCKER from "../constants/statusBooking"
+import { STATUS_LOCKER } from "../constants/lockerConstant";
 
 export const stylesStatus = (status) => {
     switch (status) {

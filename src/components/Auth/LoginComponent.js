@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../api/authAPi";
 import LoadingOverlay from "../ui/LoadingOverlay";
 import { setLogin } from "../../redux/authSlice";
-import STATUS_CODE from "../../constants/statusCode";
+import {STATUS_CODE} from "../../constants/systemConstant";
 
 const LoginComponent = ({
     email,

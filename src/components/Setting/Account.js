@@ -6,7 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { useDispatch } from "react-redux";
 import { setLogout } from "../../redux/authSlice";
 import { logout } from "../../api/authAPi";
-import STATUS_CODE from "../../constants/statusCode";
+import {STATUS_CODE} from "../../constants/systemConstant";
 const Account = () => {
     const dispatch = useDispatch();
     const data = [

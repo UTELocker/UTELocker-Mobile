@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { TYPE_TRANSFER } from '../../../../constants/wallet'
+import { TYPE_TRANSFER } from '../../../../constants/walletConstant'
 import { handleBy, handleTransferType } from '../../../../utils/wallet'
 import { Colors } from '../../../../constants/styles'
 

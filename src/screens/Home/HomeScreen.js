@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
-import CardBookInHome from '../../components/Home/CardBookInHome';
+import { StyleSheet, View } from 'react-native';
 import ContentHome from '../../components/Home/ContentHome';
 
 function HomeScreen() {

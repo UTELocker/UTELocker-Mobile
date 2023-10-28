@@ -9,4 +9,13 @@ const STATUS_LOCKER = {
     PENDING: 7,
 };
 
-export default STATUS_LOCKER;
+const TYPE_LOCKER = {
+    SLOT: 'SLOT',
+    CPU: 'CPU',
+    EMPTY: 'EMPTY'
+}
+
+export {
+    STATUS_LOCKER,
+    TYPE_LOCKER,
+};

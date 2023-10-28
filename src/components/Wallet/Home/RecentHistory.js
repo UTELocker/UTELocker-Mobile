@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Colors } from '../../../constants/styles';
-import { METHOD_TRANSFER, STATUS_TRANSFER, TYPE_TRANSFER } from '../../../constants/wallet';
+import { METHOD_TRANSFER, STATUS_TRANSFER, TYPE_TRANSFER } from '../../../constants/walletConstant';
 import CardHistory from '../History/CardHistory';
 import { useNavigation } from '@react-navigation/native';
 

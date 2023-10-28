@@ -7,7 +7,7 @@ import SearchLocation from "./SearchLocation";
 import ListLocation from "./ListLocation";
 import MapLocation from "./MapLocation";
 import ListLocationSearch from "./ListLocationSearch";
-import STATUS_CODE from "../../constants/statusCode";
+import {STATUS_CODE} from "../../constants/systemConstant";
 
 const ContentLocation = () => {
     const [ typeLocationSearch, setTypeLocationSearch ] = useState('list')

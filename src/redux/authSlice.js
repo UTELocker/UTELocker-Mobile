@@ -12,6 +12,8 @@ const initialState =  {
         clientId: null,
     },
     isLogin: false,
+    isLoginFirebase: false,
+    userFirebase: null,
 };
 
 export const authSlice = createSlice({
@@ -49,10 +51,16 @@ export const authSlice = createSlice({
             address: null,
         };
         state.isLogin = false;
-    }
+    },
+    setLoginFirebase: (state, action) => {
+        state.isLoginFirebase = action.payload;
+    },
+    setUserFirebase: (state, action) => {
+        state.userFirebase = action.payload;
+    },
   },
 });
 
-export const { setLogin, setLogout } = authSlice.actions;
+export const { setLogin, setLogout, setUserFirebase } = authSlice.actions;
 
 export default authSlice.reducer;

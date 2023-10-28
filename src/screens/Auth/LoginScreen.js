@@ -4,7 +4,7 @@ import { Colors } from "../../constants/styles";
 import PrepareLoginComponent from "../../components/Auth/PrepareLoginComponent";
 import LoginComponent from "../../components/Auth/LoginComponent";
 import { ListGroup } from "../../api/authAPi";
-import STATUS_CODE from "../../constants/statusCode";
+import {STATUS_CODE} from "../../constants/systemConstant";
 
 const LoginScreen = () => {
     const [ email, setEmail ] = useState('');

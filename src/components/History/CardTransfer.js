@@ -1,6 +1,6 @@
 import { Text, View, TextInput, Pressable, StyleSheet } from "react-native"
 import { Entypo, AntDesign } from '@expo/vector-icons';
-import STATUS_LOCKER from "../../constants/statusBooking";
+import { STATUS_LOCKER } from "../../constants/lockerConstant";
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
 

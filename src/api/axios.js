@@ -1,12 +1,9 @@
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
 import {BASE_URL} from "@env";
-import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { setLogout } from "../redux/authSlice";
-import STATUS_CODE from "../constants/statusCode";
-import { showNotification } from "../redux/notificationSlice";
-import { TYPE_NOTIFICATION } from "../constants/typeNotification";
+import {STATUS_CODE} from "../constants/systemConstant";
 
 const setAxiosInstance = async () => {
     const token = await SecureStore.getItemAsync('token');

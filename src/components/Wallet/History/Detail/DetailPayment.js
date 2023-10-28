@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Colors } from '../../../../constants/styles'
-import { TYPE_TRANSFER } from '../../../../constants/wallet'
+import { TYPE_TRANSFER } from '../../../../constants/walletConstant'
 import { getColorStatus, getLabelStatus, handleIconStatus } from '../../../../utils/wallet'
 
 const DetailPayment = ({ item }) => {

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import CardTime from "../../components/History/CardTime";
 import CardBooking from "../../components/History/CardBooking";
-import STATUS_LOCKER from "../../constants/statusBooking";
+import { STATUS_LOCKER } from "../../constants/lockerConstant";
 import CardTransfer from "../../components/History/CardTransfer";
 import { useEffect, useState } from "react";
 

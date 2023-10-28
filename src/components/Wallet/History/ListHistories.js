@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { Colors } from '../../../constants/styles';
-import { METHOD_TRANSFER, STATUS_TRANSFER, TYPE_TRANSFER } from '../../../constants/wallet';
+import { METHOD_TRANSFER, STATUS_TRANSFER, TYPE_TRANSFER } from '../../../constants/walletConstant';
 import { handleBy, handleIconPayment, handleTransferType } from '../../../utils/wallet';
 import CardHistory from './CardHistory';
 

@@ -1,7 +1,5 @@
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
-import {BASE_URL} from "@env";
-import { useDispatch } from "react-redux";
 
 const setAxiosInstance = async () => {
     const token = await SecureStore.getItemAsync('token');
@@ -13,7 +11,7 @@ const setAxiosInstance = async () => {
         header['Authorization'] = 'Bearer ' + token;
     }
     return axios.create({
-        baseURL: BASE_URL,
+        baseURL: process.env.EXPO_PUBLIC_BASE_URL,
         headers: header,
     });
 }

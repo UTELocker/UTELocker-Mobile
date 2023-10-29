@@ -5,12 +5,12 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 
 Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const ConfigPushNotification = () => {
     const [expoPushToken, setExpoPushToken] = useState('');
@@ -58,7 +58,7 @@ const ConfigPushNotification = () => {
     );
 }
 
-async function schedulePushNotification() {
+async function sendNotification() {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "You've got mail! 📬",
@@ -68,7 +68,7 @@ async function schedulePushNotification() {
       trigger: { seconds: 2 },
     });
 }
-  
+
 async function registerForPushNotificationsAsync() {
     let token;
 

@@ -6,7 +6,7 @@ import AuthTab from './src/routes/AuthTab';
 import AuthenticatedTab from './src/routes/AuthenticatedTab';
 import { useEffect, useState, useRef } from 'react';
 import { userDetail } from './src/api/authAPi';
-import { setLogin, setLogout } from './src/redux/authSlice';
+import { setIsLogin, setLogin, setLogout } from './src/redux/authSlice';
 import SplashScreen from './src/screens/SplashScreen';
 import {STATUS_CODE} from "./src/constants/systemConstant";
 import NetInfo from "@react-native-community/netinfo";
@@ -44,6 +44,7 @@ function Navigation() {
       switch (res.status) {
         case STATUS_CODE.OK:
           dispatch(setLogin(res.data.data));
+          dispatch(setIsLogin(true));
           break;
         case STATUS_CODE.UNAUTHORIZED:
           dispatch(setLogout());

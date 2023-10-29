@@ -6,3 +6,8 @@ export const NOTIFICATION_TYPE = Object.freeze({
     SITE_GROUP: 'site_group',
     REPORT: 'report',
 });
+
+export const NOTIFICATION_STATUS = Object.freeze({
+    UNREAD: 'N',
+    READ: 'Y',
+});

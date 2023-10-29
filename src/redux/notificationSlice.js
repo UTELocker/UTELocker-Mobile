@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { NOTIFICATION_TYPE } from "../constants/notificationConstant";
+import { NOTIFICATION_STATUS, NOTIFICATION_TYPE } from "../constants/notificationConstant";
 
 const initialState =  {
     notifications: [],
     notificationsPayment: [],
     notificationsBooking: [],
+    notificationsCount: 0,
 };
 
 export const notificationSlice = createSlice({
@@ -15,6 +16,7 @@ export const notificationSlice = createSlice({
         const notifications = action.payload;
         const notificationsPayment = [];
         const notificationsBooking = [];
+        let count = 0;
         notifications.map((notification) => {
           const item = {
             id: notification.id,
@@ -29,8 +31,12 @@ export const notificationSlice = createSlice({
           if (notification.type === NOTIFICATION_TYPE.BOOKING) {
             notificationsBooking.push(item);
           }
+          if (notification.status === NOTIFICATION_STATUS.UNREAD) {
+            count += 1;
+          }
           return item;
         });
+        state.notificationsCount = count;
         state.notifications = notifications;
         state.notificationsPayment = notificationsPayment;
         state.notificationsBooking = notificationsBooking;

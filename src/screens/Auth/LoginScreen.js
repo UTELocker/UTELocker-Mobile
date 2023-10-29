@@ -5,7 +5,7 @@ import PrepareLoginComponent from "../../components/Auth/PrepareLoginComponent";
 import LoginComponent from "../../components/Auth/LoginComponent";
 import { ListGroup } from "../../api/authAPi";
 import {STATUS_CODE} from "../../constants/systemConstant";
-import OtpVerification from "../../components/Auth/OTP/OtpVerification";
+// import OtpVerification from "../../components/Auth/OTP/OtpVerification";
 
 const LoginScreen = () => {
     const [ email, setEmail ] = useState('');
@@ -129,9 +129,9 @@ const LoginScreen = () => {
                                 width: '100%',
                             }}
                         >
-                            <OtpVerification
+                            {/* <OtpVerification
                                 isSendOTP={step === 2}
-                            />
+                            /> */}
                         </View> : null
                     }
                 </View>

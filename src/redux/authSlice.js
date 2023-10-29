@@ -32,7 +32,7 @@ export const authSlice = createSlice({
             name: action.payload.name ?? '',
             phone: action.payload.mobile ?? '',
             address: action.payload.address ?? '',
-            clientId: action.payload.clientId ?? '',
+            clientId: action.payload.client_id ?? '',
             id: action.payload.id ?? '',
         };
     },

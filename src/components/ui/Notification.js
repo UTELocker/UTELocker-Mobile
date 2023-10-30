@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from '@expo/vector-icons'; 
 import { useNavigation } from "@react-navigation/native";
-import getNotifications from "../../api/notificationApi";
 import { STATUS_CODE } from "../../constants/systemConstant";
 import { useDispatch, useSelector } from "react-redux";
 import { loadNotifications } from "../../redux/notificationSlice";
@@ -10,7 +9,7 @@ import {
     Pusher,
     PusherEvent,
 } from '@pusher/pusher-websocket-react-native';
-
+import { getNotifications } from "../../api/notificationApi";
 // import * as Device from 'expo-device';
 // import * as Notifications from 'expo-notifications';
 
@@ -25,7 +24,7 @@ import {
 const Notification = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const notifications = useSelector((state) => state.notification);
+    const notificationsCount = useSelector((state) => state.notification.notificationsCount);
     const account = useSelector(state => state.auth.user);
     const [expoPushToken, setExpoPushToken] = useState('');
     const [notification, setNotification] = useState(false);
@@ -77,7 +76,6 @@ const Notification = () => {
           await pusher?.subscribe({
             channelName: "notification.report." + account.clientId + "." + account.id,
             onEvent: (event: PusherEvent) => async () => {
-                await sendNotification();
                 console.log('event', event);
             },
           });
@@ -102,7 +100,7 @@ const Notification = () => {
                 </TouchableOpacity>
             </View>
             {
-                notifications.notificationsCount > 0 && (
+                notificationsCount > 0 && (
                     <View
                         style={{
                             position: 'absolute',
@@ -122,7 +120,7 @@ const Notification = () => {
                                 fontWeight: 'bold',
                             }}
                         >
-                            {notifications.notificationsCount > 100 ? '99+' : notifications.notificationsCount}
+                            {notificationsCount > 100 ? '99+' : notificationsCount}
                         </Text>
                     </View>
                 )

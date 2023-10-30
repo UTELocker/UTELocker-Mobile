@@ -32,3 +32,22 @@ export const getLabelMonth = (value) => {
             return 'All months';
     }
 }
+
+export const getLabelNotificationType = (value) => {
+    switch (value) {
+        case 'payment':
+            return 'Payment';
+        case 'booking':
+            return 'Booking';
+        case 'super_admin':
+            return 'Super Admin';
+        case 'locker_system':
+            return 'Locker System';
+        case 'site_group':
+            return 'Site Group';
+        case 'report':
+            return 'Report';
+        default:
+            return 'All';
+    }
+}

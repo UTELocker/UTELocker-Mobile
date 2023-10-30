@@ -1,4 +1,4 @@
-import MapView, { Marker } from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE }from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
@@ -36,14 +36,15 @@ const MapShowLocation = ({ location }) => {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             }}
+            provider={PROVIDER_GOOGLE}
         >
-            <Marker
+            {/* <Marker
                 id='1'
                 coordinate={{
                     latitude: parseFloat(location.latitude),
                     longitude: parseFloat(location.longitude),
                 }}
-            />
+            /> */}
         </MapView>
     )
 }

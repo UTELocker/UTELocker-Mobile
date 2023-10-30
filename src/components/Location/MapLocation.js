@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 const MapLocation = ({
     currentLocation,
@@ -27,6 +27,7 @@ const MapLocation = ({
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }}
+                provider={PROVIDER_GOOGLE}
             >
                 {
                     currentLocation !== null ? (

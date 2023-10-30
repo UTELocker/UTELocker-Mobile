@@ -20,7 +20,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.5.0",
     "cors": "^2.8.5",
-    "expo": "^49.0.16",
+    "expo": "^48.0.0",
     "expo-asset": "~8.10.1",
     "expo-barcode-scanner": "~12.5.3",
     "expo-calendar": "~11.3.2",

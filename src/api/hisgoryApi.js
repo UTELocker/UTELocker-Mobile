@@ -4,4 +4,8 @@ const getHistory = () => {
     return getMethod('/histories/booking');
 }
 
-export { getHistory };
+const getTransaction = () => {
+    return getMethod('/payments/transactions');
+}
+
+export { getHistory, getTransaction };

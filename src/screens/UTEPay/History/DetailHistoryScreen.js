@@ -7,8 +7,6 @@ import { TouchableOpacity } from "react-native";
 import Card from "../../../components/Wallet/History/Detail/Card";
 import DetailPayment from "../../../components/Wallet/History/Detail/DetailPayment";
 import DetailTransaction from "../../../components/Wallet/History/Detail/DetailTransaction";
-import { Alert } from "react-native";
-import { Linking } from "react-native";
 import ContactUs from "../../../components/Wallet/History/Detail/ContactUs";
 
 const DetailHistoryScreen = ({ 

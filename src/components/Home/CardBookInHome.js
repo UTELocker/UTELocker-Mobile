@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Pressable, Animated } from "r
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { cancelBooking } from "../../api/bookingApi";
+import { cancelBooking, openLockerBooking } from "../../api/bookingApi";
 import { Alert } from "react-native";
 
 const CardBookInHome = ({ book, setRefresh }) => {
@@ -16,6 +16,21 @@ const CardBookInHome = ({ book, setRefresh }) => {
             outputRange: [200, 300],
         }),
     };
+
+    const calTimeOut = (dateStart, dateEnd) => {
+        const dateStartArr = dateStart.date.split("-");
+        const timeStartArr = dateStart.time.split(":");
+        const dateEndArr = dateEnd.date.split("-");
+        const timeEndArr = dateEnd.time.split(":");
+        const dateStartObj = new Date(dateStartArr[0], dateStartArr[1], dateStartArr[2], timeStartArr[0], timeStartArr[1], timeStartArr[2]);
+        const dateEndObj = new Date(dateEndArr[0], dateEndArr[1], dateEndArr[2], timeEndArr[0], timeEndArr[1], timeEndArr[2]);
+        const timeOut = dateEndObj - dateStartObj;
+        const days = Math.floor(timeOut / (1000 * 60 * 60 * 24));
+        const hours = days * 24 + Math.floor((timeOut % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeOut % (1000 * 60 * 60)) / (1000 * 60));
+        return hours + ":" + minutes;
+    }
+
 
     const handleCancelBooking = async (id) => {
         Alert.alert(
@@ -66,6 +81,56 @@ const CardBookInHome = ({ book, setRefresh }) => {
             { cancelable: false }
         );
     }
+
+    const openLocker = async (id) => {
+        Alert.alert(
+            "Open Locker",
+            "Are you sure you want to open this locker?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "OK",
+                    onPress: () => {
+                        const callApiOpenLocker = async () => {
+                            const response = await openLockerBooking(id);
+                            if (response.status === 200) {
+                                Alert.alert(
+                                    "Open Locker",
+                                    "Open Locker successfully",
+                                    [
+                                        {
+                                            text: "OK",
+                                            onPress: () => {
+                                                setRefresh(true);
+                                            },
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                );
+                            } else {
+                                Alert.alert(
+                                    "Open Locker",
+                                    "Open Locker failed",
+                                    [
+                                        {
+                                            text: "OK",
+                                            onPress: () => navigation.navigate("Home"),
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                );
+                            }
+                        }
+                        callApiOpenLocker();
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
+    }
     
     return (
         <Animated.View
@@ -98,14 +163,17 @@ const CardBookInHome = ({ book, setRefresh }) => {
                             Remaining
                         </Text>
                         <Text style={{ color: Colors.green, marginLeft: 5 }}>
-                            { book.timeOut.days } days { book.timeOut.hours }:{ book.timeOut.minutes }
+                            { calTimeOut(book.dateBooked.start, book.dateBooked.end) }
                         </Text>
                     </View>
                     <Text style={{ fontWeight: '300', color: Colors.gray}}>
                         { book.address }
                     </Text>
                 </View>
-                <View style={{ flex: 2, justifyContent: 'center', alignItems:'center'}}>
+                <TouchableOpacity 
+                    style={{ flex: 2, justifyContent: 'center', alignItems:'center'}}
+                    onPress={() => openLocker(book.id)}
+                >
                     <View
                         style={{
                             height: 80,
@@ -127,7 +195,7 @@ const CardBookInHome = ({ book, setRefresh }) => {
                             Click to open
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             </View>
             <TouchableOpacity 
                 style={styles.footer}

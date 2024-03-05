@@ -2,9 +2,6 @@ import { Text, View, StyleSheet, Pressable, TextInput, Alert, Image } from "reac
 import { Colors } from "../../constants/styles";
 import { useState } from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { TouchableOpacity } from "react-native";
 import { formatNumber } from "../../utils/formatNumber";
 import FeatureWallet from "./FeatureWallet";
 

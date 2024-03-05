@@ -247,6 +247,11 @@ const DynamicHeader = ({
     const dateStartCompare = new Date(dateStart.date + ' ' + dateStart.time);
     const dateEndCompare = new Date(dateEnd.date + ' ' + dateEnd.time);
 
+    if (dateStartCompare.getTime() <= Date.now()) {
+      Alert.alert('Date Start must be less than current date');
+      return;
+    }
+
     if (dateStartCompare.getTime() == dateEndCompare.getTime()) {
       Alert.alert('Date Start and Date End must be different');
       return;

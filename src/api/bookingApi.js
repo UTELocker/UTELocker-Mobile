@@ -12,4 +12,8 @@ const cancelBooking = (id) => {
     return deleteMethod(`/bookings/${id}`);
 }
 
-export { getAll, createBooking, cancelBooking };
+const openLockerBooking = (id) => {
+    return getMethod('/bookings/open-locker/' + id);
+}
+
+export { getAll, createBooking, cancelBooking, openLockerBooking };

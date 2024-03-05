@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Colors } from '../../constants/styles'
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -12,7 +12,7 @@ const FeatureWallet = ({isShowTitle = true}) => {
         >
             <TouchableOpacity
                 style={styles.containerButton}
-                onPress={() => navigation.navigate('TopUp')}
+                onPress={() => Linking.openURL(process.env.EXPO_PUBLIC_URL + '/wallet/topup/mobile')}
             >
                 <MaterialIcons name="attach-money" size={30} color={
                     isShowTitle ? Colors.primary : Colors.white
@@ -25,7 +25,7 @@ const FeatureWallet = ({isShowTitle = true}) => {
                     )
                 }
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 style={styles.containerButton}  
                 onPress={() => navigation.navigate('Withdraw')}
             >
@@ -43,7 +43,7 @@ const FeatureWallet = ({isShowTitle = true}) => {
                         </Text>
                     )
                 }
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
                 style={styles.containerButton}
                 onPress={() => {

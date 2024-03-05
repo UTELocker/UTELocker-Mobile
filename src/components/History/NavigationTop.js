@@ -1,17 +1,10 @@
 import * as React from 'react';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Colors } from '../../constants/styles';
 import BookingScreen from '../../screens/History/BookingScreen';
-import TransferScreen from '../../screens/History/TransferScreen';
 import SearchHistory from './SearchHistory';
 import { useState } from 'react';
-import { Keyboard, View } from 'react-native';
-import { useEffect } from 'react';
+import { View } from 'react-native';
 import Header from '../ui/Header';
-import { FILTER_LOCATION, FILTER_METHOD, FILTER_MOTH, FILTER_STATUS, FILTER_TYPE_TRANSFER } from '../../constants/systemConstant';
-
-const Tab = createMaterialTopTabNavigator();
+import { FILTER_LOCATION, FILTER_MOTH, FILTER_STATUS } from '../../constants/systemConstant';
 
 export default NavigationTop = () => {
     const [balanceVisibility, setBalanceVisibility] = useState(false);
@@ -20,9 +13,7 @@ export default NavigationTop = () => {
     const [ filters, setFilters ] = useState({
         moth: FILTER_MOTH[0].value ,
         location: FILTER_LOCATION[0].value,
-        typeTransfers: FILTER_TYPE_TRANSFER[0].value,
         status: FILTER_STATUS[0].value,
-        method: FILTER_METHOD[0].value,
     });
     const [ listLocation, setListLocation ] = useState([]);
 
@@ -51,45 +42,11 @@ export default NavigationTop = () => {
                 filters={filters}
                 listLocation={listLocation}
             />
-            <Tab.Navigator
-                tabBarOptions={{
-                    activeTintColor: Colors.primary,
-                    inactiveTintColor: Colors.gray,
-                    indicatorStyle: {
-                        backgroundColor: Colors.primary,
-                    },
-                    labelStyle: {
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                    },
-                    style: {
-                        backgroundColor: 'white',
-                    },
-                }}
-            >
-            <Tab.Screen
-                name="Feed"
-                options={{ tabBarLabel: 'Booking' }}
-            >
-                {props => <BookingScreen 
-                    {...props} 
-                    contentSearch={contentSearch}
-                    setListLocation={setListLocation}
-                    filters={filters}
-                />}
-            </Tab.Screen>
-            <Tab.Screen
-                name="Notifications"
-                options={{ tabBarLabel: 'Transfer' }}
-            >
-                {props => <TransferScreen 
-                    {...props} 
-                    balanceVisibility={balanceVisibility}
-                    contentSearch={contentSearch}
-                    filters={filters}
-                />}
-            </Tab.Screen>
-            </Tab.Navigator>
+            <BookingScreen 
+                contentSearch={contentSearch}
+                setListLocation={setListLocation}
+                filters={filters}
+            />
         </View>
     );
 }

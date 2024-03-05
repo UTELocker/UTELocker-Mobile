@@ -41,7 +41,7 @@ const CardHistory = ({ item }) => {
                     }}
                 >
                     <Image
-                        source={handleIconPayment(item.method)}
+                        source={handleIconPayment(item.type)}
                         style={{
                             width: 40,
                             height: 40,
@@ -86,21 +86,25 @@ const CardHistory = ({ item }) => {
                             fontSize: 18
                         }}
                     >
-                        {handleTransferType(item.method)}
+                        {handleTransferType(item.type)}
                     </Text>
                     <Text
                         style={{
                             fontSize: 18,
-                            color: item.method === TYPE_TRANSFER.TOP_UP ? Colors.green : Colors.red
+                            color: item.type === TYPE_TRANSFER.TOP_UP ? Colors.green : Colors.red
                         }}
                     >{
-                        item.method === TYPE_TRANSFER.TOP_UP
-                            ? `+${item.amount}đ`
-                            : `-${item.amount}đ`
+                        item.type === TYPE_TRANSFER.TOP_UP
+                            ? `+${
+                                item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            }đ`
+                            : `-${
+                                item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            }đ`
                     }</Text>
                 </View>
-                <Text>{handleBy(item.by)}</Text>
-                <Text>{item.date}</Text>
+                <Text>{item.payment_method.type}</Text>
+                <Text>{item.time}</Text>
             </View>
         </TouchableOpacity>
     )

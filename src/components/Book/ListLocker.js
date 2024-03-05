@@ -32,9 +32,11 @@ const ListLocker = ({
                 case STATUS_CODE.OK:
                     setData(res.data.data);
                     setIsLoad(true);
+                    setRefreshing(false);
                     break;
                 default:
                     setIsLoad(false);
+                    setRefreshing(false);
                     break;
             }
         }

@@ -8,6 +8,10 @@ import DateBooked from "../ui/DateBooked";
 
 function IconStatus({ status }) {
     switch (status) {
+        case STATUS_LOCKER.APPROVED:
+            return <AntDesign name="checkcircle" size={24} color="blue" />
+        case STATUS_LOCKER.EXPIRED:
+            return <AntDesign name="clockcircle" size={24} color="purple" />
         case STATUS_LOCKER.FINISHED:
             return <AntDesign name="checkcircle" size={24} color="green" />
         case STATUS_LOCKER.CANCEL:
@@ -26,7 +30,7 @@ const CardBooking = ({ booking }) => {
         <Pressable
             style={{
                 width: '100%',
-                height: 160,
+                height: 170,
                 backgroundColor: '#fff',
                 borderRadius: 10,
                 flexDirection: 'row',

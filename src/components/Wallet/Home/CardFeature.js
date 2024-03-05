@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from "react-native"
 import { Colors } from "../../../constants/styles";
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import { Alert } from "react-native";
@@ -12,7 +12,7 @@ const CardFeature = () => {
         >
             <TouchableOpacity
                 style={styles.containerButton}
-                onPress={() => navigation.navigate('TopUp')}
+                onPress={() => Linking.openURL(process.env.EXPO_PUBLIC_URL + '/wallet/topup')}
             >
                 <MaterialIcons name="attach-money" size={30} color={Colors.primary}/>
                 <Text style={styles.title}>

@@ -53,22 +53,36 @@ const FormBooking = ({
             });
             switch (res.status) {
                 case STATUS_CODE.OK:
-                    const data = res.data.data.map(item => {
-                        const cabinet = listCabinetBooked.filter(cabinet => cabinet.id === item.locker_slot_id)[0];
-                        item.code = cabinet.code;
-                        return item;
-                    })
-                    navigator.reset({
-                        index: 0,
-                        routes: [
-                            { 
-                                name: 'SuccessBooking',
-                                params: {
-                                    data: data,
-                                } 
-                            }
-                        ],
-                    });
+                    if (res.data.status == 'success') {
+                        const data = res.data.data.map(item => {
+                            const cabinet = listCabinetBooked.filter(cabinet => cabinet.id === item.locker_slot_id)[0];
+                            item.code = cabinet.code;
+                            return item;
+                        })
+                        navigator.reset({
+                            index: 0,
+                            routes: [
+                                { 
+                                    name: 'SuccessBooking',
+                                    params: {
+                                        data: data,
+                                    } 
+                                }
+                            ],
+                        });
+                    } else {
+                        Alert.alert(
+                            "Booking failed!",
+                            res.data.message,
+                            [
+                                {
+                                    text: "OK",
+                                    onPress: () => navigator.navigate('ManualBooking'),
+                                    style: "cancel"
+                                },
+                            ]
+                        );
+                    }
                     break;
                 default:
                     break;

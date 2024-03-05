@@ -20,14 +20,13 @@ const BookingScreen = ({
         const fetchData = async () => {
             const res = await getHistory();
             if (res.status === STATUS_CODE.OK) {
-                const data = res.data.data;
+                const data = res.data.data.bookings;
                 let listBookingsOfMoth = [];
                 const listBookings = [];
                 let monthTemp = '';
                 const listLocations = [];
                 data.forEach((item) => {
                     const monthYear = item.start_date.split('-').slice(0, 2);
-
                     if (monthTemp !== monthYear[1]) {
                         monthTemp = monthYear[1];
                         listBookings.push({
@@ -72,6 +71,12 @@ const BookingScreen = ({
                         listLocations.push(item.address);
                     }
                 });
+                if (listBookingsOfMoth.length > 0) {
+                    listBookings.push({
+                        date: monthTemp,
+                        bookings: listBookingsOfMoth,
+                    })
+                }
                 setListLocation(listLocations);
                 setData(listBookings);
             }
@@ -80,6 +85,7 @@ const BookingScreen = ({
     }, []);
 
     useEffect(() => {
+        console.log('data', FILTER_MOTH[0].value);
         const filterData = data.map((item) => {
             let isFilterMoth = true;
             if(filters.moth !== FILTER_MOTH[0].value) {

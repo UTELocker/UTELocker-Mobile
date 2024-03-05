@@ -21,10 +21,16 @@ export const handleTransferType = (type) => {
             return 'Transfer';
         case TYPE_TRANSFER.WITHDRAW:
             return 'Withdraw';
-        case TYPE_TRANSFER.TOP_UP:
+        case TYPE_TRANSFER.DEPOSIT:
             return 'Top up';
         case TYPE_TRANSFER.ALL_TYPE:
             return 'All Transaction';
+        case TYPE_TRANSFER.PAYMENT:
+            return 'Payment';
+        case TYPE_TRANSFER.REFUND:
+            return 'Refund';
+        case TYPE_TRANSFER.PROMOTION:
+            return 'Promotion';
         default:
             return 'Payment';
     }

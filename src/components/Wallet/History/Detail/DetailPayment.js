@@ -24,7 +24,7 @@ const DetailPayment = ({ item }) => {
                     item.method === TYPE_TRANSFER.TOP_UP ? '+' : '-'
                 }
                 {
-                    item.amount
+                    item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }đ
             </Text>
             <View
@@ -62,7 +62,7 @@ const DetailPayment = ({ item }) => {
                 }}
             >
                 Complete time: {
-                    item.date
+                    item.time
                 }
             </Text>
         </View>

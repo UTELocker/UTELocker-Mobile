@@ -19,9 +19,13 @@ const FILTER_LOCATION = [
 ];
 
 const FILTER_TYPE_TRANSFER = [
-    { value: 0, label: 'All' },
-    { value: 1, label: 'Top Up' },
-    { value: 3, label: 'Withdraw' },
+    { value: 6, label: 'All' },
+    { value: 0, label: 'Deposit' },
+    { value: 1, label: 'Withdraw' },
+    { value: 2, label: 'Transfer' },
+    { value: 3, label: 'Payment' },
+    { value: 4, label: 'Refund' },
+    { value: 5, label: 'Promotion' },
 ];
 
 const FILTER_STATUS = [

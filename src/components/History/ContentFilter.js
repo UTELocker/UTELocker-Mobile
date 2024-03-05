@@ -10,9 +10,7 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
     const navigation = useNavigation();
     const [moth, setMoth] = useState(filters.moth);
     const [location, setLocation] = useState(filters.location);
-    const [typeTransfers, setTypeTransfers] = useState(filters.typeTransfers);
     const [status, setStatus] = useState(filters.status);
-    const [method, setMethod] = useState(filters.method);
     const locations = FILTER_LOCATION.concat(listLocation);
 
     return (
@@ -73,37 +71,6 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
             />
 
             </View>
-            <Text>By type transfer</Text>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                }}
-            >
-                {
-                    FILTER_TYPE_TRANSFER.map((item, index) => (
-                        <Text
-                            key={index}
-                            onPress={() => {
-                                setTypeTransfers(item.value);
-                            }}
-                            style={[
-                                styles.cardFilter,
-                                {
-                                    backgroundColor: item.value === typeTransfers ?
-                                    Colors.gray :
-                                    Colors.white,
-                                    color: item.value === typeTransfers ?
-                                    Colors.white :
-                                    Colors.dark
-                                }
-                            ]}
-                        >
-                            {item.label}
-                        </Text>
-                    ))
-                }
-            </View>
             <Text>By status</Text>
             <View
                 style={{
@@ -135,37 +102,6 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                     ))
                 }
             </View>
-            <Text>By method</Text>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                }}
-            >
-                {
-                    FILTER_METHOD.map((item, index) => (
-                        <Text
-                            key={index}
-                            onPress={() => {
-                                setMethod(item.value);
-                            }}
-                            style={[
-                                styles.cardFilter,
-                                {
-                                    backgroundColor: item.value === method ?
-                                    Colors.gray :
-                                    Colors.white,
-                                    color: item.value === method ?
-                                    Colors.white :
-                                    Colors.dark
-                                }
-                            ]}
-                        >
-                            {item.label}
-                        </Text>
-                    ))
-                }
-            </View>
             <View
                 style={styles.containerButton}
             >
@@ -174,9 +110,7 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                         setFilters({
                             moth,
                             location,
-                            typeTransfers,
                             status,
-                            method,
                         });
                         navigation.goBack();
                     }}
@@ -193,9 +127,7 @@ const ContentFilter = ({ setFilters, filters, listLocation }) => {
                     onPress={() => {
                         setMoth(FILTER_MOTH[0].value);
                         setLocation(FILTER_LOCATION[0].value);
-                        setTypeTransfers(FILTER_TYPE_TRANSFER[0].value);
                         setStatus(FILTER_STATUS[0].value);
-                        setMethod(FILTER_METHOD[0].value);
                     }}
                     style={[
                         styles.buttonTitle,

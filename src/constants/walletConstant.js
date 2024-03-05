@@ -8,11 +8,13 @@ export const STATUS_TRANSFER = {
 };
 
 export const TYPE_TRANSFER = {
-    TOP_UP: 0,
-    TRANSFER: 1,
-    WITHDRAW: 2,
+    DEPOSIT: 0,
+    WITHDRAW: 1,
+    TRANSFER: 2,
     PAYMENT: 3,
-    ALL_TYPE: 4,
+    REFUND: 4,
+    PROMOTION: 5,
+    ALL_TYPE: 6,
 };
 
 export const METHOD_TRANSFER = {

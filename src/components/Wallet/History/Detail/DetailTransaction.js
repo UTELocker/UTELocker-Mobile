@@ -3,9 +3,12 @@ import { View, Text } from 'react-native'
 import { TYPE_TRANSFER } from '../../../../constants/walletConstant'
 import { handleBy, handleTransferType } from '../../../../utils/wallet'
 import { Colors } from '../../../../constants/styles'
+import { useSelector } from 'react-redux'
 
 const DetailTransaction = ({ item }) => {
 
+    const account = useSelector((state) => state.auth.user);
+    
     const CONSTANT_DETAIL_PAYMENT = [
         {
             label: 'Type Transaction',
@@ -17,15 +20,15 @@ const DetailTransaction = ({ item }) => {
         },
         {
             label: 'From',
-            value: item.from,
+            value: account.name,
         },
         {
             label: 'To',
-            value: item.to,
+            value: 'UTE Lockers',
         },
         {
             label: 'Trading code',
-            value: item.tradingCode,
+            value: item.reference,
         },
     ]
 

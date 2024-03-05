@@ -1,105 +1,69 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { Colors } from '../../../constants/styles';
-import { METHOD_TRANSFER, STATUS_TRANSFER, TYPE_TRANSFER } from '../../../constants/walletConstant';
-import { handleBy, handleIconPayment, handleTransferType } from '../../../utils/wallet';
 import CardHistory from './CardHistory';
+import { getTransaction } from '../../../api/hisgoryApi';
+import { MONTH, STATUS_CODE } from '../../../constants/systemConstant';
+import { TYPE_TRANSFER } from '../../../constants/walletConstant';
 
-const ListHistories = () => {
-    const DATA = [
-        [
-            {
-                id: '1',
-                status: STATUS_TRANSFER.PENDING,
-                amount: '200',
-                date: '2021-12-21',
-                method: TYPE_TRANSFER.PAYMENT,
-                by: METHOD_TRANSFER.UTE_PAY,
-                from: 'Nguyen Van A',
-                to: 'UTE Lockers',
-                tradingCode: '123456789',
-            },
-            {
-                id: '2',
-                status: STATUS_TRANSFER.SUCCESS,
-                amount: '200',
-                date: '2021-12-01',
-                method: TYPE_TRANSFER.WITHDRAW,
-                by: METHOD_TRANSFER.ZALO_PAY,
-                from: 'UTE Pay',
-                to: 'Nguyen Van A',
-                tradingCode: '123456789',
-            },
-        ],
-        [
-            {
-                id: '3',
-                status: STATUS_TRANSFER.ERROR,
-                amount: '200',
-                date: '2021-09-15',
-                method: TYPE_TRANSFER.TRANSFER,
-                by: METHOD_TRANSFER.UTE_PAY,
-                from: 'Nguyen Van A',
-                to: 'Nguyen Van B',
-                tradingCode: '123456789',
-            },
-            {
-                id: '4',
-                status: STATUS_TRANSFER.SUCCESS,
-                amount: '200',
-                date: '2021-09-07',
-                method: TYPE_TRANSFER.TOP_UP,
-                by: METHOD_TRANSFER.BANK_TRANSFER,
-                from: 'Nguyen Van A',
-                to: 'UTE Pay',
-                tradingCode: '123456789',
-            },
-        ],
-        [
-            {
-                id: '5',
-                status: STATUS_TRANSFER.SUCCESS,
-                amount: '200',
-                date: '2021-06-16',
-                method: TYPE_TRANSFER.TOP_UP,
-                by: METHOD_TRANSFER.MOMO,
-                from: 'Nguyen Van A',
-                to: 'UTE Pay',
-                tradingCode: '123456789',
-            },
-        ],
-        [
-            {
-                id: '6',
-                status: STATUS_TRANSFER.SUCCESS,
-                amount: '200',
-                date: '2021-02-31',
-                method: TYPE_TRANSFER.TOP_UP,
-                by: METHOD_TRANSFER.MOMO,
-                from: 'Nguyen Van A',
-                to: 'UTE Pay',
-                tradingCode: '123456789',
-            },
-            {
-                id: '7',
-                status: STATUS_TRANSFER.SUCCESS,
-                amount: '200',
-                date: '2021-02-01',
-                method: TYPE_TRANSFER.WITHDRAW,
-                by: METHOD_TRANSFER.BANK_TRANSFER,
-                from: 'UTE Pay',
-                to: 'Nguyen Van A',
-                tradingCode: '123456789',
-            },
-        ]
-    ]
+const ListHistories = ({
+    filterMonth,
+    filterTypePayment,
+}) => {
+    const [histories, setHistories] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await getTransaction();
+            if (res.status == STATUS_CODE.OK) {
+                const data = separateByMonth(res.data.data);
+                setHistories(data);
+            }
+        }
+        fetchData();
+    }, []);
+
+    const separateByMonth = (data) => {
+        const result = {};
+        data.forEach((item) => {
+            const month = item.time.split(' ')[0].split('-')[1];
+            if (!result[month]) {
+                result[month] = [];
+            }
+            result[month].push(item);
+        });
+        return Object.entries(result);
+    }
+
+    useEffect(() => {
+        console.log('filterMonth', filterMonth);
+        if (histories.length > 0 && filterMonth != MONTH.ALL_MONTH) {
+            console.log('pass', filterMonth);
+            const data = histories.filter((item) => {
+                return item[0] == filterMonth;
+            });
+            setHistories(data);
+        }
+    }, [filterMonth, histories]);
+
+    useEffect(() => {
+        if (histories.length > 0 && filterTypePayment != TYPE_TRANSFER.ALL_TYPE) {
+            const data = histories.filter((item) => {
+                const result = item[1].filter((item) => {
+                    return item.type == filterTypePayment;
+                });
+                return result;
+            });
+            setHistories(data);
+        }
+    }, [filterTypePayment, histories]);
+
 
     return (
         <View
             style={styles.container}
         >
             <FlatList
-                data={DATA}
+                data={histories}
                 keyExtractor={
                     item => item[0].id
                 }
@@ -120,24 +84,23 @@ const ListHistories = () => {
                                     paddingVertical: 20,
                                 }}
                             >
-                                Month {
-                                    item[0].date.split('-')[1]
-                                }
+                                Month {item[0]}
                             </Text>
                             <FlatList
-                                data={item}
-                                renderItem={({item}) => (
-                                    <CardHistory
-                                        item={item}
-                                    />
-                                )}
+                                data={item[1]}
                                 keyExtractor={item => item.id}
+                                renderItem={({ item }) => {
+                                    return (
+                                        <CardHistory
+                                            item={item}
+                                        />
+                                    )
+                                }}
                             />
                         </View>
                     )
                 }}
             />
-
         </View>
     )
 }
